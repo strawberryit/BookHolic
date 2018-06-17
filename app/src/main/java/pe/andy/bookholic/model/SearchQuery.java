@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 @Data
 @Builder
@@ -14,7 +15,8 @@ public class SearchQuery {
 
 	@Getter @Setter String keyword;
 	@Getter @Setter SearchField field;
-	@Getter @Setter Integer page;
+	@Builder.Default
+	@Getter	@Setter Integer page = 1;
 	@Getter @Setter SortBy sortBy;
 	
 	public String getEncodedKeyword(){
@@ -31,5 +33,14 @@ public class SearchQuery {
 		} catch (UnsupportedEncodingException e) {
 			return "";
 		}
+	}
+
+	public String getPageString() {
+		return this.page != null ? Integer.toString(this.page) : "1";
+	}
+
+	public SearchQuery nextPage() {
+		page += 1;
+		return this;
 	}
 }
