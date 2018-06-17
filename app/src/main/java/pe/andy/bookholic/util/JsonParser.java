@@ -84,6 +84,34 @@ public class JsonParser {
 		}
 	}
 
+	/**
+	 * element에서 하위객체를 선택하여 숫자로 파싱한다.
+	 * @param e: 파싱할 객체
+	 * @param selector: CSS Selector
+	 * @return 파싱된 수 또는 에러가 발생하면 -1
+	 */
+	public static int parseOnlyIntFrom(Element e, String selector){
+		return parseOnlyIntFrom(e, selector, "");
+	}
+
+	/**
+	 * element에서 하위객체를 선택하여 숫자로 파싱한다.
+	 * @param e: root dom
+	 * @param selector: CSS Selector
+	 * @param removeRegex: 찾은 dom의 text에서 제거할 부분에 대한 RegEx 패턴
+	 * @return 파싱된 수 또는 에러가 발생하면 -1
+	 */
+	public static int parseOnlyIntFrom(Element e, String selector, String removeRegex){
+
+		try {
+			String text = e.select(selector).first().text();
+			text = StringUtils.replacePattern(text, removeRegex, "");
+			return parseOnlyInt(text);
+		} catch (Exception exception){
+			return -1;
+		}
+	}
+
 	public static String getTextOfFirstElement(Element e, String css){
 		return getTextOfElement(e, css, 0);
 	}

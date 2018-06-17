@@ -1,36 +1,66 @@
 package pe.andy.bookholic;
 
+import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
-import android.webkit.WebView;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import lombok.Getter;
 import pe.andy.bookholic.adapter.BookAdapter;
+import pe.andy.bookholic.adapter.LibraryAdapter;
+import pe.andy.bookholic.databinding.ActivityMainBinding;
 import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchField;
 import pe.andy.bookholic.model.SearchQuery;
-import pe.andy.bookholic.searcher.impl.SeoulLibrarySearchTask;
+import pe.andy.bookholic.model.SortBy;
+import pe.andy.bookholic.searcher.LibrarySearchTask;
 import pe.andy.bookholic.service.SearchService;
+import pe.andy.bookholic.ui.BookRecyclerUi;
+import pe.andy.bookholic.ui.LibraryRecyclerUi;
+import pe.andy.bookholic.util.SSLConnect;
 
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView booklistView;
-    SearchService searchService = new SearchService();
+    ActivityMainBinding mBinding;
+    public ActivityMainBinding getBinding() { return this.mBinding; }
+
+    @Getter LibraryRecyclerUi libraryRecyclerUi;
+    @Getter BookRecyclerUi bookRecyclerUi;
+
+    @Getter SearchService searchService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        booklistView = (RecyclerView) findViewById(R.id.booklist);
-        booklistView.setHasFixedSize(true);
-        booklistView.setLayoutManager(new LinearLayoutManager(this));
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
+        searchService = new SearchService(this);
+
+        libraryRecyclerUi = new LibraryRecyclerUi(this);
+        bookRecyclerUi = new BookRecyclerUi(this);
+
+        mBinding.fab.setOnClickListener(view -> {
+            mBinding.nestedScrollView.scrollTo(0,0);
+            searchView.setIconified(false);
+        });
+
+        // Test Data
+        //bookRecyclerUi.add(generateTestBooks());
+
+        /*
         SearchField sField = SearchField.valueOf("TITLE");
         SearchQuery query = SearchQuery.builder()
                 .keyword("과학")
@@ -44,42 +74,49 @@ public class MainActivity extends AppCompatActivity {
 
         BookAdapter adapter = new BookAdapter(this, books);
         booklistView.setAdapter(adapter);
-
-        /*
-        try {
-            SearchField sField = SearchField.valueOf("TITLE");
-            SearchQuery query = SearchQuery.builder()
-                    .keyword("과학")
-                    .field(sField)
-                    .page(1)
-                    .build();
-
-            SeoulLibrarySearchTask t = new SeoulLibrarySearchTask(query);
-            t.execute();
-            List<Ebook> books = t.get();
-            books.stream()
-                    .forEach(b -> {
-                        Log.d("BookHolic", b.getTitle());
-                    });
-
-            BookAdapter adapter = new BookAdapter(this, books);
-            booklistView.setAdapter(adapter);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
         */
-        /*
-        WebView webview = (WebView) findViewById(R.id.webview);
-        webview.setWebViewClient(new BookWebViewClient());
-        webview.setWebChromeClient(new BookWebChromeClient());
-        webview.getSettings().setJavaScriptEnabled(true);
-        webview.addJavascriptInterface(new AndroidBridge(), "Ebook");
 
-        WebView.setWebContentsDebuggingEnabled(true);
+    }
 
-        webview.loadUrl("file:///android_asset/main.html");
-        */
+    SearchView searchView;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("검색어");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d("BookHolic", "onQueryTextSubmit");
+                searchView.clearFocus();
+
+                SearchQuery sQuery = SearchQuery.builder()
+                        .field(SearchField.TITLE)
+                        .keyword(query.trim())
+                        .page(1)
+                        .sortBy(SortBy.TITLE)
+                        .build();
+
+                searchService.search(sQuery);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        searchService.cancelAll();
     }
 
     List<Ebook> generateTestBooks() {
@@ -121,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 .setCountTotal(5)
                 .setCountRent(5)
                 .setDate("2018-01-01");
+
 
         return Arrays.asList(b1, b2, b3, b1, b2, b3);
     }

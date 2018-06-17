@@ -1,6 +1,9 @@
 package pe.andy.bookholic.searcher;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Element;
@@ -14,29 +17,45 @@ import java.util.stream.Collectors;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import okhttp3.Response;
+import pe.andy.bookholic.MainActivity;
+import pe.andy.bookholic.adapter.BookAdapter;
 import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchQuery;
+import pe.andy.bookholic.service.SearchService;
+import pe.andy.bookholic.ui.BookRecyclerUi;
+import pe.andy.bookholic.ui.LibraryRecyclerUi;
 
+import static pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.DONE;
+import static pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.FAIL;
+import static pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.INITIAL;
+import static pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.PROGRESS;
+
+@Accessors(chain = true)
 public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook>> {
+
+    protected MainActivity mActivity;
 
     public static final String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36";
 
     @Getter
     protected String libraryName;
     protected String baseUrl;
-    SearchQuery query;
+    protected SearchQuery mQuery;
+    public SearchQuery getQuery() { return this.mQuery; }
+    public void setQuery(SearchQuery query) { this.mQuery = query; }
 
-    static final Charset Encoding_UTF8 = Charset.forName("UTF-8");
-    static final Charset Encoding_EUCKR = Charset.forName("EUC-KR");
+    protected static final Charset Encoding_UTF8 = Charset.forName("UTF-8");
+    protected static final Charset Encoding_EUCKR = Charset.forName("EUC-KR");
 
     @Getter @Setter
     Charset encoding = Encoding_UTF8;
 
-    public LibrarySearchTask(String libraryName, String baseUrl, SearchQuery query) {
+    public LibrarySearchTask(MainActivity activity, String libraryName, String baseUrl) {
+        this.mActivity = activity;
         this.libraryName = libraryName;
         this.baseUrl = baseUrl;
-        this.query = query;
     }
 
     @Getter @Setter protected int resultCount = -1;
@@ -46,9 +65,15 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
     @Getter boolean isError = false;
 
     @Override
+    protected void onPreExecute() {
+        this.setSearchStatus(PROGRESS);
+        mActivity.getLibraryRecyclerUi().refresh();
+    }
+
+    @Override
     protected List<Ebook> doInBackground(Void... voids) {
         try {
-            response = request(this.query);
+            response = request(this.mQuery);
             String text = this.getResponseText();
             List<Ebook> list = parse(text);
             return list;
@@ -71,34 +96,55 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
         }
     }
 
+    @Override
+    protected void onPostExecute(List<Ebook> books) {
+
+        // Update Library list
+        this.setSearchStatus(DONE);
+        mActivity.getLibraryRecyclerUi().refresh();
+
+        // Update Book list
+        BookRecyclerUi bookRecyclerUi = mActivity.getBookRecyclerUi();
+        bookRecyclerUi.add(books);
+
+        Log.d("BookHolic", this.libraryName + ": hasNext - " + this.hasNext());
+        if (this.hasNext()) {
+            bookRecyclerUi.hideLoadProgress();
+            bookRecyclerUi.showLoadMore();
+        }
+        else {
+            SearchService service = mActivity.getSearchService();
+            boolean isFinished = service.isFinished();
+            boolean isAllLastPage = service.isAllLastPage();
+
+            Log.d("BookHolic", this.libraryName + ": isFinished - " + isFinished + ", isAllLastPage - " + isAllLastPage);
+
+            if (isFinished && isAllLastPage) {
+                bookRecyclerUi.hideLoadProgress();
+                bookRecyclerUi.hideLoadMore();
+            }
+        }
+    }
+
+    @Override
+    protected void onCancelled() {
+        this.setSearchStatus(FAIL);
+        mActivity.getLibraryRecyclerUi().refresh();
+    }
+
+    public boolean hasNext() {
+        return this.resultCount > 0 && this.mQuery.getPage() < this.resultPageCount;
+    }
+
     protected abstract <T> T getField(SearchQuery query);
     protected abstract Response request(SearchQuery query) throws IOException;
     protected abstract List<Ebook> parse(String resp) throws IOException;
 
-    String getFirstElementText(Element e, String css){
-        return StringUtils.trimToEmpty(
-                e.select(css)
-                        .first()
-                        .text()
-        );
-    }
-
-    String getFirstElementAttr(Element e, String css, String attr){
-        return StringUtils.trimToEmpty(
-                e.select(css)
-                        .first()
-                        .attr(attr)
-        );
-    }
-
-    int parseCount(String text){
-        try {
-            return Integer.parseInt(
-                    StringUtils.replaceAll(text, "\\D*", ""));
-        } catch (NumberFormatException e){
-            return -1;
-        }
-    }
-
     public abstract String getLibraryCode();
+    public abstract LibrarySearchTask create();
+
+    @Getter @Setter LibrarySearchStatus searchStatus = INITIAL;
+    public enum LibrarySearchStatus {
+        INITIAL, PROGRESS, DONE, FAIL
+    }
 }

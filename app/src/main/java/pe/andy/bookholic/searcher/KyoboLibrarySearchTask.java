@@ -14,6 +14,7 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import pe.andy.bookholic.MainActivity;
 import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchField;
 import pe.andy.bookholic.model.SearchQuery;
@@ -24,8 +25,8 @@ import pe.andy.bookholic.util.Slicer;
 
 public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 	
-	public KyoboLibrarySearchTask(String libraryName, String baseUrl, SearchQuery query) {
-		super(libraryName, baseUrl, query);
+	public KyoboLibrarySearchTask(MainActivity activity, String libraryName, String baseUrl) {
+		super(activity, libraryName, baseUrl);
 		this.setEncoding(Encoding_EUCKR);
 	}
 

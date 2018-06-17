@@ -2,6 +2,7 @@ package pe.andy.bookholic.searcher.impl;
 
 import java.io.IOException;
 import java.lang.Integer;
+import java.lang.ref.SoftReference;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -11,6 +12,7 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import pe.andy.bookholic.MainActivity;
 import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchField;
 import pe.andy.bookholic.model.SearchQuery;
@@ -24,8 +26,14 @@ public class SeoulLibrarySearchTask extends LibrarySearchTask {
     static final String libraryName = "서울시 전자도서관";
     static final String baseUrl = "http://elib.seoul.go.kr";
 
-    public SeoulLibrarySearchTask(SearchQuery query) {
-        super(libraryName, baseUrl, query);
+    public SeoulLibrarySearchTask(MainActivity activity) {
+        super(activity, libraryName, baseUrl);
+    }
+
+    @Override
+    public LibrarySearchTask create() {
+        SoftReference<LibrarySearchTask> ref = new SoftReference<>(new SeoulLibrarySearchTask(this.mActivity));
+        return ref.get();
     }
 
     @Override

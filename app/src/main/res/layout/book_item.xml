@@ -8,7 +8,11 @@
     android:id="@+id/book_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="7dp"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginVertical="7dp"
+    android:padding="5dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
     card_view:cardCornerRadius="5dp" >
 
     <android.support.constraint.ConstraintLayout
@@ -184,7 +188,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:padding="3dp"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="3dp"
+            android:text="(1/2)"
 
             android:background="@color/colorPrimary"
             android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
