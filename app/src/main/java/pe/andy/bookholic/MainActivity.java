@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     @Getter LibraryRecyclerUi libraryRecyclerUi;
     @Getter BookRecyclerUi bookRecyclerUi;
 
+    SearchView searchView;
+
     @Getter SearchService searchService;
 
     @Override
@@ -53,8 +55,13 @@ public class MainActivity extends AppCompatActivity {
         bookRecyclerUi = new BookRecyclerUi(this);
 
         mBinding.fab.setOnClickListener(view -> {
-            mBinding.nestedScrollView.scrollTo(0,0);
-            searchView.setIconified(false);
+            if (searchView.hasFocus()) {
+                searchView.setQuery(searchView.getQuery(), true);
+            }
+            else {
+                mBinding.nestedScrollView.scrollTo(0, 0);
+                searchView.setIconified(false);
+            }
         });
 
         // Test Data
@@ -77,8 +84,6 @@ public class MainActivity extends AppCompatActivity {
         */
 
     }
-
-    SearchView searchView;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

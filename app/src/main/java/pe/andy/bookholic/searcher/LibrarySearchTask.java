@@ -79,7 +79,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
             return list;
 
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             this.isError = true;
         }
 
@@ -107,7 +107,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
         BookRecyclerUi bookRecyclerUi = mActivity.getBookRecyclerUi();
         bookRecyclerUi.add(books);
 
-        Log.d("BookHolic", this.libraryName + ": hasNext - " + this.hasNext());
+        //Log.d("BookHolic", this.libraryName + ": hasNext - " + this.hasNext());
         if (this.hasNext()) {
             bookRecyclerUi.hideLoadProgress();
             bookRecyclerUi.showLoadMore();
@@ -117,7 +117,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
             boolean isFinished = service.isFinished();
             boolean isAllLastPage = service.isAllLastPage();
 
-            Log.d("BookHolic", this.libraryName + ": isFinished - " + isFinished + ", isAllLastPage - " + isAllLastPage);
+            //Log.d("BookHolic", this.libraryName + ": isFinished - " + isFinished + ", isAllLastPage - " + isAllLastPage);
 
             if (isFinished && isAllLastPage) {
                 bookRecyclerUi.hideLoadProgress();
@@ -138,7 +138,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
 
     protected abstract <T> T getField(SearchQuery query);
     protected abstract Response request(SearchQuery query) throws IOException;
-    protected abstract List<Ebook> parse(String resp) throws IOException;
+    protected abstract List<Ebook> parse(final String resp) throws IOException;
 
     public abstract String getLibraryCode();
     public abstract LibrarySearchTask create();

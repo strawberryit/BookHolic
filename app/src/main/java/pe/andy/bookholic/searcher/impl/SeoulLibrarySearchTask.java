@@ -1,10 +1,13 @@
 package pe.andy.bookholic.searcher.impl;
 
+import org.jsoup.nodes.Element;
+
 import java.io.IOException;
 import java.lang.Integer;
 import java.lang.ref.SoftReference;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import lombok.Getter;
@@ -72,7 +75,7 @@ public class SeoulLibrarySearchTask extends LibrarySearchTask {
 
 
     @Override
-    protected List<Ebook> parse(String json) throws IOException {
+    protected List<Ebook> parse(final String json) throws IOException {
 
         this.resultCount = JsonParser.parseIntValue(json, "Contents", "TotalCount");
         this.resultPageCount = JsonParser.parseIntValue(json, "Contents", "TotalPage");
@@ -81,22 +84,24 @@ public class SeoulLibrarySearchTask extends LibrarySearchTask {
         list = JsonParser.parseJsonKVList(json, "Contents", "ContentDataList");
 
         List<Ebook> books = list.stream()
-                .map( map -> {
-                    Ebook ebook = new Ebook(libraryName);
-
-                    ebook.setSeq(map.get("ContentKey"));
-                    ebook.setTitle(map.get("ContentTitle"));
-                    ebook.setAuthor(map.get("ContentAuthor"));
-                    ebook.setThumbnailUrl(map.get("ContentCoverUrlS"));
-                    ebook.setDate(map.get("ContentPubDate"));
-
-                    ebook.setPlatform(map.get("OwnerCodeDesc"));
-                    ebook.setUrl("http://elib.seoul.go.kr/ebooks/detail.do?no=" + map.get("ContentKey"));
-
-                    return ebook;
-                })
+                .map(elementParser)
                 .collect(Collectors.toList());
 
         return books;
     }
+
+    private Function<Map<String, String>, Ebook> elementParser = map -> {
+        Ebook ebook = new Ebook(libraryName);
+
+        ebook.setSeq(map.get("ContentKey"));
+        ebook.setTitle(map.get("ContentTitle"));
+        ebook.setAuthor(map.get("ContentAuthor"));
+        ebook.setThumbnailUrl(map.get("ContentCoverUrlS"));
+        ebook.setDate(map.get("ContentPubDate"));
+
+        ebook.setPlatform(map.get("OwnerCodeDesc"));
+        ebook.setUrl("http://elib.seoul.go.kr/ebooks/detail.do?no=" + map.get("ContentKey"));
+
+        return ebook;
+    };
 }
