@@ -36,7 +36,7 @@ public class GangnamLibrarySearchTask extends LibrarySearchTask {
 
     @Getter final String libraryCode = "";
     static final String libraryName = "강남구 전자도서관";
-    static final String baseUrl = "https://ebook.gangnam.go.kr";
+    static final String baseUrl = "http://ebook.gangnam.go.kr";
 
     public GangnamLibrarySearchTask(MainActivity activity) {
         super(activity, libraryName, baseUrl);

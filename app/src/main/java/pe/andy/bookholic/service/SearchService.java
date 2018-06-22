@@ -15,10 +15,13 @@ import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.searcher.LibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.GangdongLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.GangnamLibrarySearchTask;
+import pe.andy.bookholic.searcher.impl.GyeongsanLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.GyunggidoCyberLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.SeoulEduLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.SeoulLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.epyrus.YangCheonLibrarySearchTask;
+import pe.andy.bookholic.searcher.impl.kyobo.AnsanLibrarySearchTask;
+import pe.andy.bookholic.searcher.impl.kyobo.GangJinLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.kyobo.SeodaemonLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.kyobo.YeosuLibrarySearcher;
 import pe.andy.bookholic.searcher.impl.yes24.GyeongjuLibrarySearchTask;
@@ -55,7 +58,10 @@ public class SearchService {
                         new SeoulEduLibrarySearchTask(mActivity),
                         new GyunggidoCyberLibrarySearchTask(mActivity),
                         new GangdongLibrarySearchTask(mActivity),
-                        new GangnamLibrarySearchTask(mActivity)
+                        new GangnamLibrarySearchTask(mActivity),
+                        new GyeongsanLibrarySearchTask(mActivity),
+                        new AnsanLibrarySearchTask(mActivity),
+                        new GangJinLibrarySearchTask(mActivity)
 
                         //new SeoulEduLibrarySearchTask()
                         //new UljuLibrarySearchTask(query) // Not works

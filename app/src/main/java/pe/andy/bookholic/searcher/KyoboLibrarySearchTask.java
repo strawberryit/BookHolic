@@ -72,7 +72,7 @@ public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 		Document doc = Jsoup.parse(html);
 		
 		this.resultCount = JsonParser.parseOnlyInt(doc.select(".list_sorting span.list_result strong").text());
-		this.resultPageCount = JsonParser.parseOnlyInt(doc.select(".list_sorting div.page_move form.form_pagemove span.total_count").text());
+		this.resultPageCount = JsonParser.parseOnlyInt(doc.select(".list_sorting span.total_count").text());
 		 
 		Elements elems = doc.select("div#list_books > ul > li");
 		List<Ebook> ebooks = elems.stream()
@@ -84,7 +84,12 @@ public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 				ebook.setThumbnailUrl(this.baseUrl + JsonParser.getAttrOfFirstElement(elem, "img", "src"));
 				
 				elem = e.select("dl > dt").first();
-				ebook.setPlatform(JsonParser.getAttrOfFirstElement(elem, "span.ico img", "alt"));
+				String platform = JsonParser.getAttrOfFirstElement(elem, "span.ico img", "alt");
+				if (platform.isEmpty()) {
+					platform = JsonParser.getAttrOfFirstElement(elem, "span.ico img", "src");
+					platform = platform.replaceAll(".*_|\\.png", "");
+				}
+				ebook.setPlatform(platform);
 				ebook.setTitle(JsonParser.getTextOfFirstElement(elem, "a"));
 
 				String textAuthorPublisherDate = StringUtils.replacePattern(e.select("dl > dd > em").first().text(), "(\\[|\\])", "");
