@@ -31,6 +31,20 @@ public enum SearchField {
 		
 	}
 
+	public static enum UijeongbuLibrarySearchField{
+		ALL("all"), TITLE("bookname"), AUTHOR("bookauthor"), PUBLISHER("bookpubname");
+
+		String value;
+		private UijeongbuLibrarySearchField(String value) {
+			this.value = value;
+		}
+
+		public static String getValue(SearchField f){
+			return valueOf(f.toString()).value;
+		}
+
+	}
+
 	public static enum Yes24LibrarySearchField{
 		ALL("title"), TITLE("title"), AUTHOR("author"), PUBLISHER("pub_name");
 		
