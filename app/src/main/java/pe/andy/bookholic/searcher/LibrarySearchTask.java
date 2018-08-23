@@ -11,6 +11,7 @@ import org.jsoup.nodes.Element;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.SocketTimeoutException;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,9 +76,17 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
         try {
             response = request(this.mQuery);
             String text = this.getResponseText();
+            if (text == null) {
+                this.isError = true;
+                cancel(true);
+                return null;
+            }
+
             List<Ebook> list = parse(text);
             return list;
 
+        } catch (SocketTimeoutException e) {
+            this.isError = true;
         } catch (IOException e) {
             //e.printStackTrace();
             this.isError = true;
@@ -91,8 +100,12 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
         if (encoding.compareTo(Encoding_UTF8) == 0){
             return response.body().string();
         } else {
-            return new BufferedReader(new InputStreamReader(response.body().byteStream(), encoding))
-                    .lines().collect(Collectors.joining("\n"));
+            try {
+                return new BufferedReader(new InputStreamReader(response.body().byteStream(), encoding))
+                        .lines().collect(Collectors.joining("\n"));
+            } catch (Exception e) {
+                return null;
+            }
         }
     }
 
