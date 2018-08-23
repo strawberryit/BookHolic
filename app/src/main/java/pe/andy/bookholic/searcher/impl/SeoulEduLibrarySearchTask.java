@@ -31,7 +31,7 @@ import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchField;
 import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.searcher.LibrarySearchTask;
-import pe.andy.bookholic.util.JsonParser;
+import pe.andy.bookholic.util.SSLConnect;
 import pe.andy.bookholic.util.Str;
 
 public class SeoulEduLibrarySearchTask extends LibrarySearchTask {
@@ -112,7 +112,8 @@ public class SeoulEduLibrarySearchTask extends LibrarySearchTask {
                 .build();
         */
 
-        Response resp = new OkHttpClient()
+        OkHttpClient client = SSLConnect.trustAllSslClient(new OkHttpClient());
+        Response resp = client
                 .newCall(req)
                 .execute();
 
@@ -123,7 +124,7 @@ public class SeoulEduLibrarySearchTask extends LibrarySearchTask {
     protected List<Ebook> parse(String html) throws IOException {
         Document doc = Jsoup.parse(html);
 
-        this.resultCount = Str.extractInt(doc.select(".elib_top").text());
+        this.resultCount = Str.extractInt(doc.select(".sub001 strong").text());
 
         Element lastPageElem = doc.select(".dataTables_paginate .paginate_button").last();
         if (lastPageElem == null) {
@@ -187,7 +188,7 @@ public class SeoulEduLibrarySearchTask extends LibrarySearchTask {
         ebook.setUrl(url);
 
         // Title
-        Element titleElement = li.select(".list-body a").first();
+        Element titleElement = li.select(".list-body a").not(".btn").first();
         if (titleElement != null) {
             ebook.setTitle(titleElement.text().trim());
         }
@@ -200,7 +201,15 @@ public class SeoulEduLibrarySearchTask extends LibrarySearchTask {
         queue.poll();
         ebook.setDate(queue.poll());
 
-        ebook.setPlatform("도서관");
+        String platform = "";
+        infos = li.select(".list-body .meta span").eachText();
+        if (infos.size() > 7) {
+            platform = infos.get(6);
+        }
+        if (infos.size() > 9) {
+            platform += " " + infos.get(8);
+        }
+        ebook.setPlatform(platform);
 
         return ebook;
     };
