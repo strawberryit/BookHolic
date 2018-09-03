@@ -28,6 +28,7 @@ import pe.andy.bookholic.searcher.impl.kyobo.GimpoLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.kyobo.IncheonSeoguLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.kyobo.SeodaemonLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.kyobo.SeongBukLibrarySearchTask;
+import pe.andy.bookholic.searcher.impl.kyobo.SongLimLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.kyobo.YeosuLibrarySearcher;
 import pe.andy.bookholic.searcher.impl.yes24.GyeongjuLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.yes24.JeollanamdoLibrarySearchTask;
@@ -73,7 +74,8 @@ public class SearchService {
                         new GimpoLibrarySearchTask(mActivity),
                         new SeongBukLibrarySearchTask(mActivity),
                         new AsanCityLibrarySearchTask(mActivity),
-                        new IncheonSeoguLibrarySearchTask(mActivity)
+                        new IncheonSeoguLibrarySearchTask(mActivity),
+                        new SongLimLibrarySearchTask(mActivity)
 
                         //new UljuLibrarySearchTask(query) // Not works
                 )
