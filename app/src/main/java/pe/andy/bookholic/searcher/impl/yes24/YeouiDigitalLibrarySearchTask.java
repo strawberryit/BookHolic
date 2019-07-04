@@ -20,6 +20,7 @@ import pe.andy.bookholic.searcher.Yes24LibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.GangdongLibrarySearchTask;
 import pe.andy.bookholic.util.JsonParser;
 
+@Deprecated
 public class YeouiDigitalLibrarySearchTask extends Yes24LibrarySearchTask {
 
     @Getter

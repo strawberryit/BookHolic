@@ -24,6 +24,7 @@ import pe.andy.bookholic.searcher.impl.epyrus.YangCheonLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.kyobo.AnsanLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.kyobo.AsanCityLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.kyobo.GangJinLibrarySearchTask;
+import pe.andy.bookholic.searcher.impl.kyobo.GangbukCultureLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.kyobo.GimpoLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.kyobo.IncheonSeoguLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.kyobo.SeodaemonLibrarySearchTask;
@@ -59,7 +60,6 @@ public class SearchService {
                         new SeoulLibrarySearchTask(mActivity),
                         new YeosuLibrarySearcher(mActivity),
                         new SeodaemonLibrarySearchTask(mActivity),
-                        new YeouiDigitalLibrarySearchTask(mActivity),
                         new GyeongjuLibrarySearchTask(mActivity),
                         new YangCheonLibrarySearchTask(mActivity),
                         new SeoulEduLibrarySearchTask(mActivity),
@@ -75,16 +75,14 @@ public class SearchService {
                         new SeongBukLibrarySearchTask(mActivity),
                         new AsanCityLibrarySearchTask(mActivity),
                         new IncheonSeoguLibrarySearchTask(mActivity),
-                        new SongLimLibrarySearchTask(mActivity)
-
-                        //new UljuLibrarySearchTask(query) // Not works
+                        new SongLimLibrarySearchTask(mActivity),
+                        new GangbukCultureLibrarySearchTask(mActivity)
                 )
         );
     }
 
     public void setQueryOnAllTask(SearchQuery query) {
-        tasks.stream()
-                .forEach(t -> t.setQuery(query));
+        tasks.forEach(t -> t.setQuery(query));
     }
 
     public void search(final SearchQuery query) {
