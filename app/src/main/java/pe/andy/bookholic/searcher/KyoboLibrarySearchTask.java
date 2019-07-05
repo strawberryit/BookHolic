@@ -24,7 +24,7 @@ import pe.andy.bookholic.util.JsonParser;
 import pe.andy.bookholic.util.Slicer;
 
 public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
-	
+
 	public KyoboLibrarySearchTask(MainActivity activity, String libraryName, String baseUrl) {
 		super(activity, libraryName, baseUrl);
 		this.setEncoding(Encoding_EUCKR);
@@ -45,6 +45,9 @@ public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 
 		String url = baseUrl + "/Kyobo_T3/Content/Content_Search.asp";
 		String keyword = query.getKeyword();
+		if (this.encoding == Encoding_EUCKR) {
+			keyword = EncodeUtil.toEuckr(query.getKeyword());
+		}
 		int page = query.getPage() != null ? query.getPage().intValue() : 1;
 
 		HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
@@ -53,13 +56,14 @@ public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 		urlBuilder.addQueryParameter("search_type", Integer.toString(this.getField(query)));
 		urlBuilder.addQueryParameter("order_key", this.getSortBy(query));
 		urlBuilder.addQueryParameter("now_page", Integer.toString(query.getPage()));
-		urlBuilder.addEncodedQueryParameter("search_keyword", EncodeUtil.toEuckr(query.getKeyword()));
+		urlBuilder.addEncodedQueryParameter("search_keyword", keyword);
 
+		String accept = this.encoding == Encoding_UTF8 ? "text/html; charset=utf-8" : "text/html; charset=euc-kr";
 		OkHttpClient client = new OkHttpClient();
 
 		Request req = new Request.Builder()
 				.url(urlBuilder.build().toString())
-				.addHeader("accept", "text/html; charset=euc-kr")
+				.addHeader("accept", accept)
 				.addHeader("user-agent", userAgent)
 				.build();
 
@@ -81,7 +85,12 @@ public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 				
 				Element elem = e.select("p.pic a").first();
 				ebook.setUrl(elem.attr("href"));
-				ebook.setThumbnailUrl(this.baseUrl + JsonParser.getAttrOfFirstElement(elem, "img", "src"));
+
+				String tUrl = JsonParser.getAttrOfFirstElement(elem, "img", "src");
+				if (! StringUtils.startsWith(tUrl, "http")) {
+					tUrl = this.baseUrl + "/" + tUrl;
+				}
+				ebook.setThumbnailUrl(tUrl);
 				
 				elem = e.select("dl > dt").first();
 				String platform = JsonParser.getAttrOfFirstElement(elem, "span.ico img", "alt");
