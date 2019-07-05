@@ -12,7 +12,7 @@ public class AnsanLibrarySearchTask extends KyoboLibrarySearchTask {
     @Getter
     final String libraryCode = "AnsanCentralLibrary";
     static final String libraryName = "안산시 중앙도서관";
-    static final String baseUrl = "http://ebook.iansan.net";
+    static final String baseUrl = "http://ebook.ansan.go.kr";
 
     public AnsanLibrarySearchTask(MainActivity activity) {
         super(activity, libraryName, baseUrl);
