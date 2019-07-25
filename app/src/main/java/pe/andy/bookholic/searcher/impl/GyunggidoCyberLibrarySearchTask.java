@@ -1,7 +1,6 @@
 package pe.andy.bookholic.searcher.impl;
 
-import android.text.TextUtils;
-
+import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,16 +12,15 @@ import java.lang.ref.SoftReference;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import lombok.Getter;
-import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 import pe.andy.bookholic.MainActivity;
 import pe.andy.bookholic.model.Ebook;
@@ -98,7 +96,7 @@ public class GyunggidoCyberLibrarySearchTask extends LibrarySearchTask {
         Elements elems = doc.select("ul.resultList.descType > li");
         List<Ebook> ebooks = elems.stream()
                 .map(this.elementParse)
-                .filter( e -> e != null)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
 
         return ebooks;
@@ -122,7 +120,7 @@ public class GyunggidoCyberLibrarySearchTask extends LibrarySearchTask {
 
         // Url
         String bookId = wrap.select("strong.tit a").attr("href");
-        bookId = StringUtils.replaceAll(bookId, "\\D*", "");
+        bookId = RegExUtils.replaceAll(bookId, "\\D*", "");
         ebook.setUrl("https://www.library.kr/cyber/ebook/ebookDetail.do?bookId=" + bookId);
 
         // Title

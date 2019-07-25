@@ -7,14 +7,12 @@ import org.jsoup.select.Elements;
 import java.lang.ref.SoftReference;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.function.Function;
 
 import lombok.Getter;
 import pe.andy.bookholic.MainActivity;
 import pe.andy.bookholic.model.Ebook;
-import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.searcher.LibrarySearchTask;
 import pe.andy.bookholic.searcher.Yes24LibrarySearchTask;
 import pe.andy.bookholic.util.JsonParser;

@@ -8,6 +8,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import lombok.Getter;
@@ -105,7 +106,7 @@ public abstract class EpyrusLibrarySearchTask extends LibrarySearchTask {
 
                     return ebook;
                 })
-                .filter( e -> e != null)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
 
         return ebooks;

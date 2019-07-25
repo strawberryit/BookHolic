@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Element;
 
@@ -78,7 +79,7 @@ public class JsonParser {
 
 	public static int parseOnlyInt(String text){
 		try {
-			return Integer.parseInt(StringUtils.replacePattern(text, "\\D*", ""));
+			return Integer.parseInt(RegExUtils.replacePattern(text, "\\D*", ""));
 		} catch (Exception e){
 			return -1;
 		}
@@ -105,7 +106,7 @@ public class JsonParser {
 
 		try {
 			String text = e.select(selector).first().text();
-			text = StringUtils.replacePattern(text, removeRegex, "");
+			text = RegExUtils.replacePattern(text, removeRegex, "");
 			return parseOnlyInt(text);
 		} catch (Exception exception){
 			return -1;

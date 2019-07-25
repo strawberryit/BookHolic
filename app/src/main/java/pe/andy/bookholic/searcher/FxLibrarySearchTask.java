@@ -1,13 +1,13 @@
 package pe.andy.bookholic.searcher;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.RegExUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -64,19 +64,19 @@ public abstract class FxLibrarySearchTask extends LibrarySearchTask {
     }
 
     @Override
-    protected List<Ebook> parse(String html) throws IOException {
+    protected List<Ebook> parse(String html) {
 
         Document doc = Jsoup.parse(html);
         Elements elems = doc.select("div#detail_list > ul.book_list > li");
 
-        if (elems.select("div.noresult").size() > 0)
-            return new ArrayList<>();
-
-        List<Ebook> list = elems.stream()
-                .map(this.elementParser)
-                .collect(Collectors.toList());
-
-        return list;
+        if (elems.select("div.noresult").size() > 0) {
+            return Collections.emptyList();
+        }
+        else {
+            return elems.stream()
+                    .map(this.elementParser)
+                    .collect(Collectors.toList());
+        }
     }
 
     private Function<Element, Ebook> elementParser = li -> {
@@ -94,15 +94,15 @@ public abstract class FxLibrarySearchTask extends LibrarySearchTask {
 
         Elements spans = infos.first().select("span");
         Queue<String> queue = new LinkedList<>(spans.eachText());
-        ebook.setAuthor(StringUtils.replacePattern(queue.poll(), " 저$", ""))
+        ebook.setAuthor(RegExUtils.replacePattern(queue.poll(), " 저$", ""))
                 .setPublisher(Str.def(queue.poll()))
                 .setDate(Str.def(queue.poll()));
 
-        String platform = StringUtils.replacePattern(queue.poll(), "(공급 : | \\([\\d\\-]+?\\)$|\\(주\\)|네트웍스| 전자책)", "");
+        String platform = RegExUtils.replacePattern(queue.poll(), "(공급 : | \\([\\d\\-]+?\\)$|\\(주\\)|네트웍스| 전자책)", "");
         ebook.setPlatform(platform);
 
         // Count
-        String text = StringUtils.replacePattern(infos.get(1).select("span").first().text(), "대출 ", "");
+        String text = RegExUtils.replacePattern(infos.get(1).select("span").first().text(), "대출 ", "");
         queue = Str.splitToQ(text, "/");
         ebook.setCountRent(JsonParser.parseOnlyInt(queue.poll()))
                 .setCountTotal(JsonParser.parseOnlyInt(queue.poll()));

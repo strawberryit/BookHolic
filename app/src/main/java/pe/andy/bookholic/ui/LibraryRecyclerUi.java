@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import java.util.List;
 
 import pe.andy.bookholic.MainActivity;
-import pe.andy.bookholic.R;
 import pe.andy.bookholic.adapter.LibraryAdapter;
 import pe.andy.bookholic.databinding.ActivityMainBinding;
 import pe.andy.bookholic.searcher.LibrarySearchTask;

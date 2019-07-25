@@ -1,6 +1,7 @@
 package pe.andy.bookholic.searcher.impl.yes24;
 
 
+import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -14,10 +15,8 @@ import java.util.function.Function;
 import lombok.Getter;
 import pe.andy.bookholic.MainActivity;
 import pe.andy.bookholic.model.Ebook;
-import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.searcher.LibrarySearchTask;
 import pe.andy.bookholic.searcher.Yes24LibrarySearchTask;
-import pe.andy.bookholic.searcher.impl.GangdongLibrarySearchTask;
 import pe.andy.bookholic.util.JsonParser;
 
 @Deprecated
@@ -47,7 +46,7 @@ public class YeouiDigitalLibrarySearchTask extends Yes24LibrarySearchTask {
             ebook.setThumbnailUrl(	baseUrl + JsonParser.getAttrOfFirstElement(e, "li.list_thumb > a > img", "src"));
 
             Elements info = e.select("li.list_info > dl").select("dt, dd");
-            ebook.setPlatform(		StringUtils.replacePattern(JsonParser.getAttrOfFirstElement(info.get(0), "img", "src"),
+            ebook.setPlatform(		RegExUtils.replacePattern(JsonParser.getAttrOfFirstElement(info.get(0), "img", "src"),
                     "(.*_|\\.gif)", ""));
             ebook.setTitle(			JsonParser.getTextOfFirstElement(info.get(1), "a"));
 

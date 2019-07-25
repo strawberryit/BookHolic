@@ -3,14 +3,11 @@ package pe.andy.bookholic.ui;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import pe.andy.bookholic.MainActivity;
-import pe.andy.bookholic.R;
 import pe.andy.bookholic.adapter.BookAdapter;
 import pe.andy.bookholic.databinding.ActivityMainBinding;
 import pe.andy.bookholic.model.Ebook;

@@ -1,6 +1,6 @@
 package pe.andy.bookholic.searcher.impl;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.RegExUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -142,7 +142,7 @@ public class GangnamLibrarySearchTask extends LibrarySearchTask {
         ebook.setTitle(JsonParser.getTextOfFirstElement(li, "h1.title a"));
         ebook.setAuthor(JsonParser.getTextOfFirstElement(li, "h2.writer"));
         ebook.setPublisher(JsonParser.getTextOfFirstElement(li, "h3.publisher"));
-        ebook.setDate(StringUtils.replaceAll(JsonParser.getTextOfFirstElement(li, "h3.date"), "출판일", ""));
+        ebook.setDate(RegExUtils.replaceAll(JsonParser.getTextOfFirstElement(li, "h3.date"), "출판일", ""));
 
         Elements spans = li.select("p.state span.number");
         Queue<String> queue = new LinkedList<>(spans.eachText());

@@ -1,7 +1,5 @@
 package pe.andy.bookholic.searcher.impl;
 
-import android.text.TextUtils;
-
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,7 +11,6 @@ import java.lang.ref.SoftReference;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;

@@ -3,10 +3,8 @@ package pe.andy.bookholic.searcher.impl.epyrus;
 import java.lang.ref.SoftReference;
 
 import pe.andy.bookholic.MainActivity;
-import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.searcher.EpyrusLibrarySearchTask;
 import pe.andy.bookholic.searcher.LibrarySearchTask;
-import pe.andy.bookholic.searcher.impl.kyobo.SeodaemonLibrarySearchTask;
 
 public class YangCheonLibrarySearchTask extends EpyrusLibrarySearchTask {
 

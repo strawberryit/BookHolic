@@ -1,13 +1,9 @@
 package pe.andy.bookholic.model;
 
-import android.text.TextUtils;
-
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Comparator;
 
-import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

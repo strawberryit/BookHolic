@@ -4,10 +4,8 @@ import java.lang.ref.SoftReference;
 
 import lombok.Getter;
 import pe.andy.bookholic.MainActivity;
-import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.searcher.KyoboLibrarySearchTask;
 import pe.andy.bookholic.searcher.LibrarySearchTask;
-import pe.andy.bookholic.searcher.impl.yes24.GyeongjuLibrarySearchTask;
 
 public class YeosuLibrarySearcher extends KyoboLibrarySearchTask {
 
