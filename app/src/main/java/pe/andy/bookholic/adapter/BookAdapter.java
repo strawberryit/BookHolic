@@ -3,6 +3,7 @@ package pe.andy.bookholic.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -45,14 +46,15 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     }
 
     @Override
-    public BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(this.mContext);
         View view = inflater.inflate(R.layout.book_item, parent, false);
         return new BookViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(BookViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
         Ebook book = this.books.get(position);
 
         holder.tvTitle.setText(book.getTitle());
@@ -72,7 +74,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.tvRentCount.setBackgroundColor(color);
 
         // Text
-        holder.tvRentCount.setText(book.getCountRent() + " / " + book.getCountTotal());
+        String count = book.getCountRent() + " / " + book.getCountTotal();
+        holder.tvRentCount.setText(count);
 
         // Bind onclick url
         holder.cardView.setOnClickListener(view -> {
@@ -113,7 +116,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         TextView tvTitle, tvAuthor, tvPublisher, tvDate, tvPlatform, tvRentCount, tvLibraryName;
         ImageView ivThumbnail;
 
-        public BookViewHolder(View itemView) {
+        BookViewHolder(View itemView) {
             super(itemView);
 
             cardView = itemView.findViewById(R.id.book_view);

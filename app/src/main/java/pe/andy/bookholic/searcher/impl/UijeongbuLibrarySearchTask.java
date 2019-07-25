@@ -9,7 +9,6 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.util.List;
-import java.util.Queue;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -22,7 +21,6 @@ import pe.andy.bookholic.MainActivity;
 import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.searcher.LibrarySearchTask;
-import pe.andy.bookholic.util.JsonParser;
 import pe.andy.bookholic.util.Str;
 
 public class UijeongbuLibrarySearchTask extends LibrarySearchTask {

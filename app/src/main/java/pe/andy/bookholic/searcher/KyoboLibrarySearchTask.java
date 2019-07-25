@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -101,7 +102,7 @@ public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 				ebook.setPlatform(platform);
 				ebook.setTitle(JsonParser.getTextOfFirstElement(elem, "a"));
 
-				String textAuthorPublisherDate = StringUtils.replacePattern(e.select("dl > dd > em").first().text(), "(\\[|\\])", "");
+				String textAuthorPublisherDate = RegExUtils.replacePattern(e.select("dl > dd > em").first().text(), "(\\[|\\])", "");
 				Slicer slicer = new Slicer(textAuthorPublisherDate, "/").trim();
 				ebook.setAuthor(	slicer.pop());
 				ebook.setPublisher(	slicer.pop());

@@ -2,8 +2,6 @@ package pe.andy.bookholic.util;
 
 import android.text.TextUtils;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;

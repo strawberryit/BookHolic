@@ -2,10 +2,10 @@ package pe.andy.bookholic.service;
 
 import android.os.AsyncTask;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import lombok.Getter;
@@ -38,7 +38,7 @@ import pe.andy.bookholic.searcher.impl.yes24.YeouiDigitalLibrarySearchTask;
 
 public class SearchService {
 
-    MainActivity mActivity;
+    private MainActivity mActivity;
 
     @Getter
     List<LibrarySearchTask> tasks;
@@ -52,7 +52,7 @@ public class SearchService {
         this.createNewTaskGroup();
     }
 
-    public void createNewTaskGroup() {
+    private void createNewTaskGroup() {
         if (tasks != null)
             tasks.clear();
 
@@ -83,7 +83,7 @@ public class SearchService {
         );
     }
 
-    public void setQueryOnAllTask(SearchQuery query) {
+    private void setQueryOnAllTask(SearchQuery query) {
         tasks.forEach(t -> t.setQuery(query));
     }
 
@@ -129,30 +129,26 @@ public class SearchService {
 
             tasks.stream()
                     .parallel()
-                    .filter(x -> x != null && x.getStatus() == AsyncTask.Status.PENDING)
+                    .filter(Objects::nonNull)
+                    .filter(LibrarySearchTask::isTaskPending)
                     .forEach(AsyncTask::execute);
         }
     }
 
     public void cancelAll() {
-        tasks.stream()
-                .forEach(t -> t.cancel(true));
+        tasks.forEach(t -> t.cancel(true));
     }
 
     public boolean isFinished() {
         boolean ret = tasks.stream()
-                .filter(t -> t.getSearchStatus() == LibrarySearchTask.LibrarySearchStatus.PROGRESS)
-                .findAny()
-                .isPresent();
+                .anyMatch(LibrarySearchTask::isProgress);
 
         return (! ret);
     }
 
     public boolean isAllLastPage() {
         boolean hasNextPage = tasks.stream()
-                .filter(t -> t.hasNext())
-                .findAny()
-                .isPresent();
+                .anyMatch(LibrarySearchTask::hasNext);
 
         return (! hasNextPage);
     }

@@ -1,7 +1,5 @@
 package pe.andy.bookholic.searcher.impl;
 
-import org.jsoup.nodes.Element;
-
 import java.io.IOException;
 import java.lang.Integer;
 import java.lang.ref.SoftReference;

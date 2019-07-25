@@ -1,35 +1,25 @@
 package pe.andy.bookholic;
 
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import lombok.Getter;
-import pe.andy.bookholic.adapter.BookAdapter;
-import pe.andy.bookholic.adapter.LibraryAdapter;
 import pe.andy.bookholic.databinding.ActivityMainBinding;
 import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchField;
 import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.model.SortBy;
-import pe.andy.bookholic.searcher.LibrarySearchTask;
 import pe.andy.bookholic.service.SearchService;
 import pe.andy.bookholic.ui.BookRecyclerUi;
 import pe.andy.bookholic.ui.LibraryRecyclerUi;
-import pe.andy.bookholic.util.SSLConnect;
 
 public class MainActivity extends AppCompatActivity {
 

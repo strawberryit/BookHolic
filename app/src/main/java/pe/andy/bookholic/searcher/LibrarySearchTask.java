@@ -1,12 +1,6 @@
 package pe.andy.bookholic.searcher;
 
-import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-
-import org.apache.commons.lang3.StringUtils;
-import org.jsoup.nodes.Element;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,12 +15,10 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import okhttp3.Response;
 import pe.andy.bookholic.MainActivity;
-import pe.andy.bookholic.adapter.BookAdapter;
 import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.service.SearchService;
 import pe.andy.bookholic.ui.BookRecyclerUi;
-import pe.andy.bookholic.ui.LibraryRecyclerUi;
 
 import static pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.DONE;
 import static pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.FAIL;
@@ -159,5 +151,13 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
     @Getter @Setter LibrarySearchStatus searchStatus = INITIAL;
     public enum LibrarySearchStatus {
         INITIAL, PROGRESS, DONE, FAIL
+    }
+
+    public boolean isProgress() {
+        return this.searchStatus == PROGRESS;
+    }
+
+    public boolean isTaskPending() {
+        return this.getStatus() == AsyncTask.Status.PENDING;
     }
 }

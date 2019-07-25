@@ -1,7 +1,6 @@
 package pe.andy.bookholic.searcher;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;

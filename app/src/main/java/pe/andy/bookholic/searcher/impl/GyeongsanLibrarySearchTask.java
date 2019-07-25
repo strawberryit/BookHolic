@@ -1,5 +1,6 @@
 package pe.andy.bookholic.searcher.impl;
 
+import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -58,7 +59,7 @@ public class GyeongsanLibrarySearchTask extends Yes24LibrarySearchTask {
         ebook.setTitle(titleElement.select("a").text());
 
         // Platform
-        String platform = StringUtils.replaceAll(
+        String platform = RegExUtils.replaceAll(
                 titleElement.select("img").attr("src"), ".*_|.gif", "");
 
         switch(platform) {
