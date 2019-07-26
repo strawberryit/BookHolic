@@ -1,59 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/library_item_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="10dp"
-    android:id="@+id/library_item_view"
-    >
+    android:paddingHorizontal="10dp">
 
     <ImageView
         android:id="@+id/library_icon"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:src="@android:drawable/presence_invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
     <ProgressBar
         android:id="@+id/search_progress"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         app:layout_constraintLeft_toRightOf="@id/library_icon"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
     <ImageView
         android:id="@+id/search_done"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:src="@android:drawable/presence_online"
         app:layout_constraintLeft_toRightOf="@id/search_progress"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
     <ImageView
         android:id="@+id/search_fail"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:src="@android:drawable/presence_busy"
         app:layout_constraintLeft_toRightOf="@id/search_done"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
     <TextView
         android:id="@+id/library_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:text="도서관 이름"
+        android:textSize="16sp"
         app:layout_constraintLeft_toRightOf="@id/search_fail"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 
     <TextView
         android:id="@+id/search_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:text="(123)"
+        android:layout_marginStart="10dp"
+        android:background="@color/bgGreen"
+        android:paddingHorizontal="5dp"
+        android:visibility="gone"
+
+        android:text="123"
+        android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/library_name"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

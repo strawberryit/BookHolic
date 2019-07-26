@@ -1,6 +1,8 @@
 package pe.andy.bookholic.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Locale;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,8 +26,8 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryV
     @Getter @Setter
     private List<LibrarySearchTask> tasks;
 
-    static int textDefault;
-    static int textMuted;
+    private static int textDefault;
+    private static int textMuted;
 
     public LibraryAdapter(Context mContext, List<LibrarySearchTask> tasks) {
         this.mContext = mContext;
@@ -34,8 +37,9 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryV
         textDefault = ContextCompat.getColor(mContext, android.R.color.tab_indicator_text);
     }
 
+    @NonNull
     @Override
-    public LibraryAdapter.LibraryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public LibraryAdapter.LibraryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(this.mContext);
         View view = inflater.inflate(R.layout.library_item, parent, false);
         return new LibraryAdapter.LibraryViewHolder(view);
@@ -43,7 +47,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryV
 
 
     @Override
-    public void onBindViewHolder(LibraryAdapter.LibraryViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull LibraryAdapter.LibraryViewHolder holder, int position) {
         LibrarySearchTask task = this.tasks.get(position);
 
         holder.tvLibraryName.setText(task.getLibraryName());
@@ -67,27 +71,20 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryV
                 holder.ivFail.setVisibility(View.VISIBLE);
         }
 
-        if (task.getSearchStatus() == LibrarySearchTask.LibrarySearchStatus.DONE) {
+        // UI를 초기화
+        holder.tvLibraryName.setTextColor(textDefault);
+        holder.tvSearchCount.setVisibility(View.GONE);
+
+        if (task.isSearchDone()) {
             if (task.getResultCount() == 0) {
                 holder.tvLibraryName.setTextColor(textMuted);
-
-                holder.tvSearchCount.setText("(결과 없음)");
-                holder.tvSearchCount.setTextColor(textMuted);
             }
             else {
-                holder.tvLibraryName.setTextColor(textDefault);
-
-                holder.tvSearchCount.setText("(" + task.getResultCount() + ")");
-                holder.tvSearchCount.setTextColor(textDefault);
+                holder.tvSearchCount.setText(String.format(Locale.KOREA, "%d", task.getResultCount()));
+                holder.tvSearchCount.setTextColor(Color.WHITE);
+                holder.tvSearchCount.setVisibility(View.VISIBLE);
             }
         }
-        else {
-            holder.tvLibraryName.setTextColor(textDefault);
-
-            holder.tvSearchCount.setText("");
-            holder.tvSearchCount.setTextColor(textDefault);
-        }
-
     }
 
     @Override
@@ -102,7 +99,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryV
         ImageView ivIcon, ivDone, ivFail;
 
 
-        public LibraryViewHolder(View itemView) {
+        LibraryViewHolder(View itemView) {
             super(itemView);
 
             pbSearchProgress = itemView.findViewById(R.id.search_progress);

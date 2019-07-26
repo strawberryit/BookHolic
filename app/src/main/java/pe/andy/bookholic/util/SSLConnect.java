@@ -2,10 +2,8 @@ package pe.andy.bookholic.util;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
-import javax.net.ssl.HostnameVerifier;
+
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
@@ -16,24 +14,19 @@ public class SSLConnect {
     public static OkHttpClient trustAllSslClient(OkHttpClient client) {
         OkHttpClient.Builder builder = client.newBuilder();
         builder.sslSocketFactory(trustAllSslSocketFactory, (X509TrustManager)trustAllCerts[0]);
-        builder.hostnameVerifier(new HostnameVerifier() {
-            @Override
-            public boolean verify(String hostname, SSLSession session) {
-                return true;
-            }
-        });
+
+        // SSL hostname 검증 비활성화
+        builder.hostnameVerifier((hostname, session) -> true);
         return builder.build();
     }
 
     private static final TrustManager[] trustAllCerts = new TrustManager[] {
             new X509TrustManager() {
                 @Override
-                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                }
+                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {}
 
                 @Override
-                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                }
+                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) {}
 
                 @Override
                 public java.security.cert.X509Certificate[] getAcceptedIssuers() {
