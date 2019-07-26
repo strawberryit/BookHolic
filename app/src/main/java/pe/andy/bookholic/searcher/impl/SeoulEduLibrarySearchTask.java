@@ -204,10 +204,12 @@ public class SeoulEduLibrarySearchTask extends LibrarySearchTask {
             platform = infos.get(6);
         }
         if (infos.size() > 9) {
-            platform += " " + infos.get(8);
+            if (! StringUtils.startsWith(infos.get(8), "대출"))
+                platform += " " + infos.get(8);
         }
         ebook.setPlatform(platform);
 
+        // TODO 서울시교육청 전자도서관은 검색 리스트에서 도서 권수가 나오지 않는다.
         return ebook;
     };
 }
