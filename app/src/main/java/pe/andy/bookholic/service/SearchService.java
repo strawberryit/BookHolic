@@ -56,30 +56,30 @@ public class SearchService {
         if (tasks != null)
             tasks.clear();
 
-        tasks = new ArrayList<>(
-                Arrays.asList(
-                        new SeoulLibrarySearchTask(mActivity),
-                        new YeosuLibrarySearcher(mActivity),
-                        new SeodaemonLibrarySearchTask(mActivity),
-                        new GyeongjuLibrarySearchTask(mActivity),
-                        new YangCheonLibrarySearchTask(mActivity),
-                        new SeoulEduLibrarySearchTask(mActivity),
-                        new GyunggidoCyberLibrarySearchTask(mActivity),
-                        new GangdongLibrarySearchTask(mActivity),
-                        new GangnamLibrarySearchTask(mActivity),
-                        new GyeongsanLibrarySearchTask(mActivity),
-                        new AnsanLibrarySearchTask(mActivity),
-                        new GangJinLibrarySearchTask(mActivity),
-                        new UijeongbuLibrarySearchTask(mActivity),
-                        new JeollanamdoLibrarySearchTask(mActivity),
-                        new GimpoLibrarySearchTask(mActivity),
-                        new SeongBukLibrarySearchTask(mActivity),
-                        new AsanCityLibrarySearchTask(mActivity),
-                        new IncheonSeoguLibrarySearchTask(mActivity),
-                        new SongLimLibrarySearchTask(mActivity),
-                        new GangbukCultureLibrarySearchTask(mActivity),
-                        new GimjeLibrarySearchTask(mActivity)
-                )
+        // List.clear() 메서드를 사용하기 위해 새로 ArrayList 생성
+        tasks = new ArrayList<>(Arrays.asList(
+                    new SeoulLibrarySearchTask(mActivity),
+                    new YeosuLibrarySearcher(mActivity),
+                    new SeodaemonLibrarySearchTask(mActivity),
+                    new GyeongjuLibrarySearchTask(mActivity),
+                    new YangCheonLibrarySearchTask(mActivity),
+                    new SeoulEduLibrarySearchTask(mActivity),
+                    new GyunggidoCyberLibrarySearchTask(mActivity),
+                    new GangdongLibrarySearchTask(mActivity),
+                    new GangnamLibrarySearchTask(mActivity),
+                    new GyeongsanLibrarySearchTask(mActivity),
+                    new AnsanLibrarySearchTask(mActivity),
+                    new GangJinLibrarySearchTask(mActivity),
+                    new UijeongbuLibrarySearchTask(mActivity),
+                    new JeollanamdoLibrarySearchTask(mActivity),
+                    new GimpoLibrarySearchTask(mActivity),
+                    new SeongBukLibrarySearchTask(mActivity),
+                    new AsanCityLibrarySearchTask(mActivity),
+                    new IncheonSeoguLibrarySearchTask(mActivity),
+                    new SongLimLibrarySearchTask(mActivity),
+                    new GangbukCultureLibrarySearchTask(mActivity),
+                    new GimjeLibrarySearchTask(mActivity)
+            )
         );
     }
 
@@ -140,16 +140,12 @@ public class SearchService {
     }
 
     public boolean isFinished() {
-        boolean ret = tasks.stream()
-                .anyMatch(LibrarySearchTask::isProgress);
-
-        return (! ret);
+        return tasks.stream()
+                .noneMatch(LibrarySearchTask::isProgress);
     }
 
     public boolean isAllLastPage() {
-        boolean hasNextPage = tasks.stream()
-                .anyMatch(LibrarySearchTask::hasNext);
-
-        return (! hasNextPage);
+        return tasks.stream()
+                .noneMatch(LibrarySearchTask::hasNext);
     }
 }

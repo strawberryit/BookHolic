@@ -153,6 +153,10 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
         INITIAL, PROGRESS, DONE, FAIL
     }
 
+    public boolean isSearchDone() {
+        return this.searchStatus == DONE;
+    }
+
     public boolean isProgress() {
         return this.searchStatus == PROGRESS;
     }
