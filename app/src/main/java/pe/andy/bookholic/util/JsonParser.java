@@ -19,17 +19,16 @@ import org.jsoup.nodes.Element;
 
 public class JsonParser {
 
-	static DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static DateFormat formatter = SimpleDateFormat.getDateTimeInstance();
 
     /**
      * 결과를 특정 Class의 리스트에 맞게 파싱한다.
      * @param clazz : 변환 될 클래스
      * @param key : root element가 될 키 이름
      * @return 파싱된 결과 인스턴스
-     * @throws ParseException
      * @throws IOException
      */
-    public static <T> List<T> parseJsonList(String json, Class<T> clazz, String... keys) throws JsonProcessingException, IOException, ParseException{
+    public static <T> List<T> parseJsonList(String json, Class<T> clazz, String... keys) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.setDateFormat(formatter);
 		

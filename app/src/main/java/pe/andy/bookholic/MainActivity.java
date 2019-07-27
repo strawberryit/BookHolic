@@ -1,6 +1,8 @@
 package pe.andy.bookholic;
 
+import android.content.pm.ApplicationInfo;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -20,6 +22,7 @@ import pe.andy.bookholic.model.SortBy;
 import pe.andy.bookholic.service.SearchService;
 import pe.andy.bookholic.ui.BookRecyclerUi;
 import pe.andy.bookholic.ui.LibraryRecyclerUi;
+import pe.andy.bookholic.ui.ScrollToTopButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Getter LibraryRecyclerUi libraryRecyclerUi;
     @Getter BookRecyclerUi bookRecyclerUi;
+    @Getter ScrollToTopButton scrollToTopButton;
 
     SearchView searchView;
 
@@ -43,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         libraryRecyclerUi = new LibraryRecyclerUi(this);
         bookRecyclerUi = new BookRecyclerUi(this);
+        scrollToTopButton = new ScrollToTopButton(this);
 
         mBinding.fab.setOnClickListener(view -> {
             if (searchView.hasFocus()) {
@@ -54,25 +59,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Test Data
+        // 테스트를 위한 리스트
         //bookRecyclerUi.add(generateTestBooks());
-
-        /*
-        SearchField sField = SearchField.valueOf("TITLE");
-        SearchQuery query = SearchQuery.builder()
-                .keyword("과학")
-                .field(sField)
-                .page(1)
-                .build();
-
-        List<Ebook> books =
-                //generateTestBooks();
-                searchService.search(query);
-
-        BookAdapter adapter = new BookAdapter(this, books);
-        booklistView.setAdapter(adapter);
-        */
-
     }
 
     @Override

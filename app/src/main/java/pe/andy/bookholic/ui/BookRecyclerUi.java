@@ -50,10 +50,6 @@ public class BookRecyclerUi {
 
     }
 
-    <T> T findViewById(int resId) {
-        return (T) mActivity.findViewById(resId);
-    }
-
     public void add(List<Ebook> list) {
         bookList.addAll(list);
         bookAdapter.notifyDataSetChanged();
