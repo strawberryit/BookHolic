@@ -1,5 +1,7 @@
 package pe.andy.bookholic.searcher.impl;
 
+import org.apache.commons.lang3.RegExUtils;
+
 import java.io.IOException;
 import java.lang.Integer;
 import java.lang.ref.SoftReference;
@@ -95,7 +97,7 @@ public class SeoulLibrarySearchTask extends LibrarySearchTask {
         ebook.setTitle(map.get("ContentTitle"));
         ebook.setAuthor(map.get("ContentAuthor"));
         ebook.setThumbnailUrl(map.get("ContentCoverUrlS"));
-        ebook.setDate(map.get("ContentPubDate"));
+        ebook.setDate(RegExUtils.replaceAll(map.get("ContentPubDate"), " 00:00:00.0", ""));
 
         ebook.setPlatform(map.get("OwnerCodeDesc"));
         ebook.setUrl("http://elib.seoul.go.kr/ebooks/detail.do?no=" + map.get("ContentKey"));
