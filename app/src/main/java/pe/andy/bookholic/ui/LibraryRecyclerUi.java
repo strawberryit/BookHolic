@@ -35,15 +35,6 @@ public class LibraryRecyclerUi {
 
     }
 
-    <T> T findViewById(int resId) {
-        return (T) mActivity.findViewById(resId);
-    }
-
-    public void add(List<LibrarySearchTask> list) {
-        libraryTaskList.addAll(list);
-        libraryAdapter.notifyDataSetChanged();
-    }
-
     public void set(List<LibrarySearchTask> list) {
         libraryTaskList.clear();
         libraryTaskList.addAll(list);

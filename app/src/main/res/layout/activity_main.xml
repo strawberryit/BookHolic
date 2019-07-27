@@ -24,7 +24,7 @@
                     android:id="@+id/library_list_wrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="10dp"
                     android:minHeight="50dp"
                     app:cardUseCompatPadding="true"
@@ -36,24 +36,32 @@
                     <android.support.constraint.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="10dp">
+                        android:paddingVertical="10dp">
 
                         <ImageView
                             android:id="@+id/title_icon"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:src="@drawable/book_black" />
+                            app:srcCompat="@drawable/ic_local_library"
+
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginStart="10dp"
+                            />
 
                         <TextView
                             android:id="@+id/library_list_title"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="32dp"
-                            android:text="전자도서관 목록"
+                            android:text="전자도서관"
                             android:textAppearance="@style/TextAppearance.AppCompat.Large"
                             android:textStyle="bold"
-                            app:layout_constraintBaseline_toBaselineOf="@id/title_icon"
-                            app:layout_constraintLeft_toRightOf="@id/title_icon" />
+                            android:layout_marginStart="5dp"
+
+                            app:layout_constraintStart_toEndOf="@id/title_icon"
+                            app:layout_constraintTop_toTopOf="@id/title_icon"
+                            app:layout_constraintBottom_toBottomOf="@id/title_icon"
+                            />
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/library_recyclerview"
@@ -101,6 +109,18 @@
             </android.support.constraint.ConstraintLayout>
 
         </android.support.v4.widget.NestedScrollView>
+
+        <ImageView
+            android:id="@+id/go_to_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/go_to_top"
+            android:layout_marginBottom="20dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"

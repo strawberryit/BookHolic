@@ -57,19 +57,20 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryV
         holder.ivDone.setVisibility(View.GONE);
         holder.ivFail.setVisibility(View.GONE);
 
+        View icon = holder.ivIcon;
         switch(task.getSearchStatus()) {
-            case INITIAL:
-                holder.ivIcon.setVisibility(View.VISIBLE);
-                break;
             case PROGRESS:
-                holder.pbSearchProgress.setVisibility(View.VISIBLE);
+                icon = holder.pbSearchProgress;
                 break;
             case DONE:
-                holder.ivDone.setVisibility(View.VISIBLE);
+                if (task.getResultCount() > 0) {
+                    icon = holder.ivDone;
+                }
                 break;
             case FAIL:
-                holder.ivFail.setVisibility(View.VISIBLE);
+                icon = holder.ivFail;
         }
+        icon.setVisibility(View.VISIBLE);
 
         // UI를 초기화
         holder.tvLibraryName.setTextColor(textDefault);
