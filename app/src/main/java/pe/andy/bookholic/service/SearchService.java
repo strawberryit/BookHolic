@@ -31,9 +31,11 @@ import pe.andy.bookholic.searcher.impl.kyobo.IncheonSeoguLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.kyobo.SeodaemonLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.kyobo.SeongBukLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.kyobo.SongLimLibrarySearchTask;
+import pe.andy.bookholic.searcher.impl.kyobo.SuncheonLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.kyobo.YeosuLibrarySearcher;
 import pe.andy.bookholic.searcher.impl.yes24.GyeongjuLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.yes24.JeollanamdoLibrarySearchTask;
+import pe.andy.bookholic.searcher.impl.yes24.UljuLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.yes24.YeouiDigitalLibrarySearchTask;
 
 public class SearchService {
@@ -78,7 +80,9 @@ public class SearchService {
                     new IncheonSeoguLibrarySearchTask(mActivity),
                     new SongLimLibrarySearchTask(mActivity),
                     new GangbukCultureLibrarySearchTask(mActivity),
-                    new GimjeLibrarySearchTask(mActivity)
+                    new GimjeLibrarySearchTask(mActivity),
+                    new SuncheonLibrarySearchTask(mActivity),
+                    new UljuLibrarySearchTask(mActivity)
             )
         );
     }
