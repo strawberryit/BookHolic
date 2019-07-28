@@ -31,10 +31,6 @@ public class BookRecyclerUi {
         mBinding.bookRecyclerview.setNestedScrollingEnabled(false);
         mBinding.bookRecyclerview.setHasFixedSize(true);
 
-        RecyclerView.LayoutManager layoutMgr = new LinearLayoutManager(mActivity);
-        layoutMgr.setAutoMeasureEnabled(true);
-        mBinding.bookRecyclerview.setLayoutManager(layoutMgr);
-
         bookList = new ArrayList<>();
         bookAdapter = new BookAdapter(mActivity, bookList);
         mBinding.bookRecyclerview.setAdapter(bookAdapter);

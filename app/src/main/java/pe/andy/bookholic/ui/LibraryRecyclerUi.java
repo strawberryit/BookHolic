@@ -25,10 +25,6 @@ public class LibraryRecyclerUi {
 
         mBinding.libraryRecyclerview.setNestedScrollingEnabled(false);
 
-        RecyclerView.LayoutManager libraryLayoutMgr = new LinearLayoutManager(mActivity);
-        libraryLayoutMgr.setAutoMeasureEnabled(true);
-        mBinding.libraryRecyclerview.setLayoutManager(libraryLayoutMgr);
-
         libraryTaskList = mActivity.getSearchService().getTasks();
         libraryAdapter = new LibraryAdapter(mActivity, libraryTaskList);
         mBinding.libraryRecyclerview.setAdapter(libraryAdapter);
