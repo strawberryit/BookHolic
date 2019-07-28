@@ -1,19 +1,19 @@
 package pe.andy.bookholic.ui;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import pe.andy.bookholic.MainActivity;
 import pe.andy.bookholic.adapter.LibraryAdapter;
-import pe.andy.bookholic.databinding.ActivityMainBinding;
+import pe.andy.bookholic.databinding.MainActivityBinding;
 import pe.andy.bookholic.searcher.LibrarySearchTask;
 
 public class LibraryRecyclerUi {
 
     MainActivity mActivity;
-    ActivityMainBinding mBinding;
+    MainActivityBinding mBinding;
 
     // Library List
     LibraryAdapter libraryAdapter;
@@ -21,7 +21,7 @@ public class LibraryRecyclerUi {
 
     public LibraryRecyclerUi(MainActivity activity) {
         this.mActivity = activity;
-        this.mBinding = activity.getBinding();
+        this.mBinding = activity.getMBinding();
 
         mBinding.libraryRecyclerview.setNestedScrollingEnabled(false);
 

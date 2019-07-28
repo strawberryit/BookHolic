@@ -1,21 +1,22 @@
 package pe.andy.bookholic.ui;
 
-import android.support.v4.widget.NestedScrollView;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 
+import androidx.core.widget.NestedScrollView;
+
 import pe.andy.bookholic.MainActivity;
-import pe.andy.bookholic.databinding.ActivityMainBinding;
+import pe.andy.bookholic.databinding.MainActivityBinding;
 
 public class ScrollToTopButton {
 
-    ActivityMainBinding mBinding;
+    MainActivityBinding mBinding;
     ImageView gotoTop;
 
     public ScrollToTopButton(MainActivity activity) {
-        this.mBinding = activity.getBinding();
+        this.mBinding = activity.getMBinding();
 
         this.gotoTop = this.mBinding.goToTop;
         this.gotoTop.setVisibility(View.GONE);
