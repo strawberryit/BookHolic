@@ -21,6 +21,7 @@
         android:layout_height="24dp"
         app:layout_constraintLeft_toRightOf="@id/library_icon"
         app:layout_constraintTop_toTopOf="parent"
+        android:indeterminateTint="@color/bgPurple"
         />
 
     <ImageView

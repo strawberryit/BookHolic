@@ -12,7 +12,9 @@
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            >
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -27,9 +29,10 @@
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="10dp"
                     android:minHeight="50dp"
+                    android:elevation="5dp"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintTop_toTopOf="parent"
-                    card_view:cardCornerRadius="5dp">
+                    card_view:cardCornerRadius="10dp">
 
                     <!--app:layout_constraintBottom_toTopOf="@id/booklist"-->
 
@@ -84,11 +87,14 @@
 
                 <TextView
                     android:id="@+id/load_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:padding="15dp"
                     android:text="더 찾아보기"
+                    android:textAlignment="center"
+                    android:textAppearance="?android:textAppearanceMedium"
                     android:visibility="gone"
+
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/book_recyclerview"
@@ -104,6 +110,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/book_recyclerview"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    android:indeterminateTint="@color/design_default_color_primary_dark"
                 />
 
             </android.support.constraint.ConstraintLayout>

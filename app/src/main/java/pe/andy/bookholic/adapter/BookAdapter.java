@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,9 +84,15 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             mContext.startActivity(browserIntent);
         });
 
-        Glide.with(this.mContext)
-                .load(book.getThumbnailUrl())
-                .into(holder.ivThumbnail);
+        try {
+            Glide.with(this.mContext)
+                    .load(book.getThumbnailUrl())
+                    .into(holder.ivThumbnail);
+        }
+        catch (Exception ex) {
+            Log.d("Bookholic", "Thumbnail url loadin failure: " + book.getThumbnailUrl());
+        }
+
     }
 
     private int getPlatformBGColor(CharSequence platform) {
