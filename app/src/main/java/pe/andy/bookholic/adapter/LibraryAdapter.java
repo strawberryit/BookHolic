@@ -2,15 +2,13 @@ package pe.andy.bookholic.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 import java.util.Locale;
@@ -18,7 +16,10 @@ import java.util.Locale;
 import lombok.Getter;
 import lombok.Setter;
 import pe.andy.bookholic.R;
+import pe.andy.bookholic.databinding.LibraryItemBinding;
 import pe.andy.bookholic.searcher.LibrarySearchTask;
+
+import static android.view.View.GONE;
 
 public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryViewHolder>  {
 
@@ -40,9 +41,10 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryV
     @NonNull
     @Override
     public LibraryAdapter.LibraryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(this.mContext);
-        View view = inflater.inflate(R.layout.library_item, parent, false);
-        return new LibraryAdapter.LibraryViewHolder(view);
+        LibraryItemBinding binding = LibraryItemBinding.inflate(
+                LayoutInflater.from(mContext), parent, false);
+
+        return new LibraryViewHolder(binding.getRoot(), binding);
     }
 
 
@@ -50,40 +52,39 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryV
     public void onBindViewHolder(@NonNull LibraryAdapter.LibraryViewHolder holder, int position) {
         LibrarySearchTask task = this.tasks.get(position);
 
-        holder.tvLibraryName.setText(task.getLibraryName());
+        holder.binding.libraryName.setText(task.getLibraryName());
+        holder.binding.libraryIcon.setVisibility(GONE);
+        holder.binding.searchProgress.setVisibility(GONE);
+        holder.binding.searchDone.setVisibility(GONE);
+        holder.binding.searchFail.setVisibility(GONE);
 
-        holder.ivIcon.setVisibility(View.GONE);
-        holder.pbSearchProgress.setVisibility(View.GONE);
-        holder.ivDone.setVisibility(View.GONE);
-        holder.ivFail.setVisibility(View.GONE);
-
-        View icon = holder.ivIcon;
+        View icon = holder.binding.libraryIcon;
         switch(task.getSearchStatus()) {
             case PROGRESS:
-                icon = holder.pbSearchProgress;
+                icon = holder.binding.searchProgress;
                 break;
             case DONE:
                 if (task.getResultCount() > 0) {
-                    icon = holder.ivDone;
+                    icon = holder.binding.searchDone;
                 }
                 break;
             case FAIL:
-                icon = holder.ivFail;
+                icon = holder.binding.searchFail;
         }
         icon.setVisibility(View.VISIBLE);
 
         // UI를 초기화
-        holder.tvLibraryName.setTextColor(textDefault);
-        holder.tvSearchCount.setVisibility(View.GONE);
+        holder.binding.libraryName.setTextColor(textDefault);
+        holder.binding.searchCount.setVisibility(GONE);
 
         if (task.isSearchDone()) {
             if (task.getResultCount() == 0) {
-                holder.tvLibraryName.setTextColor(textMuted);
+                holder.binding.libraryName.setTextColor(textMuted);
             }
             else {
-                holder.tvSearchCount.setText(String.format(Locale.KOREA, "%d", task.getResultCount()));
-                holder.tvSearchCount.setTextColor(Color.WHITE);
-                holder.tvSearchCount.setVisibility(View.VISIBLE);
+                holder.binding.searchCount.setText(String.format(Locale.KOREA, "%d", task.getResultCount()));
+                holder.binding.searchCount.setTextColor(Color.WHITE);
+                holder.binding.searchCount.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -94,22 +95,11 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.LibraryV
     }
 
     class LibraryViewHolder extends RecyclerView.ViewHolder {
+        LibraryItemBinding binding;
 
-        TextView tvLibraryName, tvSearchCount;
-        ProgressBar pbSearchProgress;
-        ImageView ivIcon, ivDone, ivFail;
-
-
-        LibraryViewHolder(View itemView) {
+        public LibraryViewHolder(@NonNull View itemView, LibraryItemBinding binding) {
             super(itemView);
-
-            pbSearchProgress = itemView.findViewById(R.id.search_progress);
-            ivIcon = itemView.findViewById(R.id.library_icon);
-            ivDone = itemView.findViewById(R.id.search_done);
-            ivFail = itemView.findViewById(R.id.search_fail);
-
-            tvLibraryName = itemView.findViewById(R.id.library_name);
-            tvSearchCount = itemView.findViewById(R.id.search_count);
+            this.binding = binding;
         }
     }
 

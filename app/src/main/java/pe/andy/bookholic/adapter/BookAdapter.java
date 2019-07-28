@@ -3,16 +3,14 @@ package pe.andy.bookholic.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
@@ -21,6 +19,7 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import pe.andy.bookholic.R;
+import pe.andy.bookholic.databinding.BookItemBinding;
 import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.util.Str;
 
@@ -49,37 +48,41 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     @Override
     @NonNull
     public BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(this.mContext);
-        View view = inflater.inflate(R.layout.book_item, parent, false);
-        return new BookViewHolder(view);
+
+        BookItemBinding binding = BookItemBinding.inflate(
+                LayoutInflater.from(mContext), parent, false);
+
+        return new BookViewHolder(binding.getRoot(), binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
         Ebook book = this.books.get(position);
 
-        holder.tvTitle.setText(book.getTitle());
-        holder.tvAuthor.setText(book.getAuthor());
-        holder.tvPublisher.setText(book.getPublisher());
-        holder.tvDate.setText(book.getDate());
-        holder.tvPlatform.setText(book.getPlatform());
-        holder.tvPlatform.setBackgroundColor(getPlatformBGColor(holder.tvPlatform.getText()));
-        holder.tvLibraryName.setText(book.getLibraryName());
+        BookItemBinding binding = holder.binding;
+
+        binding.title.setText(book.getTitle());
+        binding.author.setText(book.getAuthor());
+        binding.publisher.setText(book.getPublisher());
+        binding.date.setText(book.getDate());
+        binding.platform.setText(book.getPlatform());
+        binding.platform.setBackgroundColor(getPlatformBGColor(binding.platform.getText()));
+        binding.libraryName.setText(book.getLibraryName());
 
         // Visibility
         int visibility = (book.getCountTotal() < 0) ? View.INVISIBLE : View.VISIBLE;
-        holder.tvRentCount.setVisibility(visibility);
+        binding.rentCount.setVisibility(visibility);
 
         // Color
         int color = (book.getCountRent() < book.getCountTotal()) ? this.bgGreen : this.bgRed;
-        holder.tvRentCount.setBackgroundColor(color);
+        binding.rentCount.setBackgroundColor(color);
 
         // Text
         String count = book.getCountRent() + " / " + book.getCountTotal();
-        holder.tvRentCount.setText(count);
+        binding.rentCount.setText(count);
 
         // Bind onclick url
-        holder.cardView.setOnClickListener(view -> {
+        binding.bookView.setOnClickListener(view -> {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(book.getUrl()));
             mContext.startActivity(browserIntent);
         });
@@ -87,10 +90,10 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         try {
             Glide.with(this.mContext)
                     .load(book.getThumbnailUrl())
-                    .into(holder.ivThumbnail);
+                    .into(binding.thumbnail);
         }
         catch (Exception ex) {
-            Log.d("Bookholic", "Thumbnail url loadin failure: " + book.getThumbnailUrl());
+            Log.d("Bookholic", "Thumbnail url loading failure: " + book.getThumbnailUrl());
         }
 
     }
@@ -119,23 +122,11 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
     class BookViewHolder extends RecyclerView.ViewHolder {
 
-        CardView cardView;
-        TextView tvTitle, tvAuthor, tvPublisher, tvDate, tvPlatform, tvRentCount, tvLibraryName;
-        ImageView ivThumbnail;
+        BookItemBinding binding;
 
-        BookViewHolder(View itemView) {
+        BookViewHolder(@NonNull View itemView, BookItemBinding binding) {
             super(itemView);
-
-            cardView = itemView.findViewById(R.id.book_view);
-            tvTitle = itemView.findViewById(R.id.title);
-            tvAuthor = itemView.findViewById(R.id.author);
-            tvPublisher = itemView.findViewById(R.id.publisher);
-            tvDate = itemView.findViewById(R.id.date);
-            tvPlatform = itemView.findViewById(R.id.platform);
-            tvLibraryName = itemView.findViewById(R.id.libraryName);
-            tvRentCount = itemView.findViewById(R.id.rentCount);
-
-            ivThumbnail = itemView.findViewById(R.id.thumbnail);
+            this.binding = binding;
         }
     }
 

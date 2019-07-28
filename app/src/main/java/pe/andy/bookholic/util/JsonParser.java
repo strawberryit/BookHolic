@@ -24,7 +24,7 @@ public class JsonParser {
     /**
      * 결과를 특정 Class의 리스트에 맞게 파싱한다.
      * @param clazz : 변환 될 클래스
-     * @param key : root element가 될 키 이름
+     * @param keys : root element가 될 키 이름
      * @return 파싱된 결과 인스턴스
      * @throws IOException
      */

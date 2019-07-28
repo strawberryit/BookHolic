@@ -1,219 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data class="BookItemBinding">
+    </data>
 
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/book_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="15dp"
-    android:layout_marginVertical="7dp"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:clickable="true"
-    card_view:cardCornerRadius="5dp" >
-
-    <android.support.constraint.ConstraintLayout
+    <androidx.cardview.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/book_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="10dp"
-        android:paddingHorizontal="10dp"
-        >
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginVertical="7dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        card_view:cardCornerRadius="5dp" >
 
-        <!-- 제목 -->
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="10dp"
+            >
 
-            android:text="인프라 엔지니어 인프라 엔지니어 인프라 엔지니어 인프라 엔지니어"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"
-            android:maxLines="1"
-            android:ellipsize="end"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            <!-- 제목 -->
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
 
-        <ImageView
-            android:id="@+id/thumbnail"
-            android:layout_width="90.0dp"
-            android:layout_height="120.0dp"
-            android:layout_margin="5dp"
-            android:paddingVertical="5dp"
-            android:paddingStart="5dp"
-            android:paddingEnd="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            />
-            <!--
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            -->
+                android:text="인프라 엔지니어 인프라 엔지니어 인프라 엔지니어 인프라 엔지니어"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <ImageView
+                android:id="@+id/thumbnail"
+                android:layout_width="90.0dp"
+                android:layout_height="120.0dp"
+                android:layout_margin="5dp"
+                android:paddingVertical="5dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                />
+                <!--
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                -->
 
 
 
 
-        <!-- 저자 -->
-        <TextView
-            android:id="@+id/labelAuthor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/thumbnail"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            android:layout_margin="5dp"
-            android:padding="3dp"
+            <!-- 저자 -->
+            <TextView
+                android:id="@+id/labelAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@id/thumbnail"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                android:layout_margin="5dp"
+                android:padding="3dp"
 
-            android:background="@color/bgAqua"
-            android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:text="저자"
-            />
+                android:background="@color/bgAqua"
+                android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="저자"
+                />
 
-        <TextView
-            android:id="@+id/author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="12sp"
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:textSize="12sp"
 
-            app:layout_constraintLeft_toRightOf="@id/labelAuthor"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            app:layout_constraintBaseline_toBaselineOf="@id/labelAuthor"
-            />
+                app:layout_constraintLeft_toRightOf="@id/labelAuthor"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                app:layout_constraintBaseline_toBaselineOf="@id/labelAuthor"
+                />
 
-        <!-- 출판사 -->
-        <TextView
-            android:id="@+id/labelPublisher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="3dp"
+            <!-- 출판사 -->
+            <TextView
+                android:id="@+id/labelPublisher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="3dp"
 
-            android:background="@color/bgAqua"
-            android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:text="출판사"
+                android:background="@color/bgAqua"
+                android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="출판사"
 
-            app:layout_constraintLeft_toRightOf="@id/thumbnail"
-            app:layout_constraintTop_toBottomOf="@id/labelAuthor"
-            />
+                app:layout_constraintLeft_toRightOf="@id/thumbnail"
+                app:layout_constraintTop_toBottomOf="@id/labelAuthor"
+                />
 
-        <TextView
-            android:id="@+id/publisher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:textSize="12sp"
+            <TextView
+                android:id="@+id/publisher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:textSize="12sp"
 
-            app:layout_constraintLeft_toRightOf="@id/labelPublisher"
-            app:layout_constraintTop_toBottomOf="@id/author"
-            app:layout_constraintBaseline_toBaselineOf="@id/labelPublisher"
+                app:layout_constraintLeft_toRightOf="@id/labelPublisher"
+                app:layout_constraintTop_toBottomOf="@id/author"
+                app:layout_constraintBaseline_toBaselineOf="@id/labelPublisher"
 
-            />
+                />
 
-        <!-- 출판일 -->
-        <TextView
-            android:id="@+id/labelDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="3dp"
+            <!-- 출판일 -->
+            <TextView
+                android:id="@+id/labelDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="3dp"
 
-            android:background="@color/bgAqua"
-            android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
-            android:textSize="12sp"
+                android:background="@color/bgAqua"
+                android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
+                android:textSize="12sp"
 
-            android:textStyle="bold"
-            android:text="출판일"
+                android:textStyle="bold"
+                android:text="출판일"
 
-            app:layout_constraintLeft_toRightOf="@id/thumbnail"
-            app:layout_constraintTop_toBottomOf="@id/labelPublisher"
-            />
+                app:layout_constraintLeft_toRightOf="@id/thumbnail"
+                app:layout_constraintTop_toBottomOf="@id/labelPublisher"
+                />
 
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:textSize="12sp"
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textSize="12sp"
 
-            app:layout_constraintLeft_toRightOf="@id/labelDate"
-            app:layout_constraintTop_toBottomOf="@id/publisher"
-            app:layout_constraintBaseline_toBaselineOf="@id/labelDate"
-            />
+                app:layout_constraintLeft_toRightOf="@id/labelDate"
+                app:layout_constraintTop_toBottomOf="@id/publisher"
+                app:layout_constraintBaseline_toBaselineOf="@id/labelDate"
+                />
 
-        <!-- 플랫폼 -->
-        <TextView
-            android:id="@+id/platform"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="3dp"
+            <!-- 플랫폼 -->
+            <TextView
+                android:id="@+id/platform"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="3dp"
 
-            android:background="@color/bgAqua"
-            android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:text="교보문고"
+                android:background="@color/bgAqua"
+                android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="교보문고"
 
-            app:layout_constraintLeft_toRightOf="@id/thumbnail"
-            app:layout_constraintTop_toBottomOf="@id/labelDate"
-            />
+                app:layout_constraintLeft_toRightOf="@id/thumbnail"
+                app:layout_constraintTop_toBottomOf="@id/labelDate"
+                />
 
-        <!-- 도서관 이름 -->
-        <TextView
-            android:id="@+id/libraryName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:textSize="12sp"
+            <!-- 도서관 이름 -->
+            <TextView
+                android:id="@+id/libraryName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textSize="12sp"
 
-            app:layout_constraintLeft_toRightOf="@id/platform"
-            app:layout_constraintTop_toBottomOf="@id/date"
-            app:layout_constraintBaseline_toBaselineOf="@id/platform"
-            />
+                app:layout_constraintLeft_toRightOf="@id/platform"
+                app:layout_constraintTop_toBottomOf="@id/date"
+                app:layout_constraintBaseline_toBaselineOf="@id/platform"
+                />
 
-        <TextView
-            android:id="@+id/labelCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="3dp"
+            <TextView
+                android:id="@+id/labelCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:padding="3dp"
 
-            android:background="@color/bgLightBlue"
-            android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:text="대출"
+                android:background="@color/bgLightBlue"
+                android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="대출"
 
-            app:layout_constraintLeft_toRightOf="@id/thumbnail"
-            app:layout_constraintTop_toBottomOf="@id/platform"
+                app:layout_constraintLeft_toRightOf="@id/thumbnail"
+                app:layout_constraintTop_toBottomOf="@id/platform"
 
-            />
+                />
 
-        <TextView
-            android:id="@+id/rentCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:paddingHorizontal="5dp"
-            android:paddingVertical="3dp"
-            android:text="(1/2)"
+            <TextView
+                android:id="@+id/rentCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="3dp"
+                android:text="(1/2)"
 
-            android:background="@color/colorPrimary"
-            android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
-            android:textSize="12sp"
-            android:textStyle="bold"
+                android:background="@color/colorPrimary"
+                android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
+                android:textSize="12sp"
+                android:textStyle="bold"
 
-            app:layout_constraintLeft_toRightOf="@id/labelCount"
-            app:layout_constraintTop_toBottomOf="@id/platform"
-            app:layout_constraintBaseline_toBaselineOf="@id/labelCount"
-            />
+                app:layout_constraintLeft_toRightOf="@id/labelCount"
+                app:layout_constraintTop_toBottomOf="@id/platform"
+                app:layout_constraintBaseline_toBaselineOf="@id/labelCount"
+                />
 
-    </android.support.constraint.ConstraintLayout>
-</android.support.v7.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
