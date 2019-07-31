@@ -20,6 +20,7 @@ import pe.andy.bookholic.searcher.impl.GyunggidoCyberLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.SeoulEduLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.SeoulLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.UijeongbuLibrarySearchTask;
+import pe.andy.bookholic.searcher.impl.bookcube.JinjuLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.epyrus.YangCheonLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.kyobo.AnsanLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.kyobo.AsanCityLibrarySearchTask;
@@ -84,7 +85,8 @@ public class SearchService {
                     new GimjeLibrarySearchTask(mActivity),
                     new SuncheonLibrarySearchTask(mActivity),
                     new UljuLibrarySearchTask(mActivity),
-                    new YeongcheonLibrarySearchTask(mActivity)
+                    new YeongcheonLibrarySearchTask(mActivity),
+                    new JinjuLibrarySearchTask(mActivity)
             )
         );
     }

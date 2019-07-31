@@ -1,12 +1,6 @@
 package pe.andy.bookholic.util;
 
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import androidx.annotation.NonNull;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -16,6 +10,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class JsonParser {
 
@@ -123,6 +126,15 @@ public class JsonParser {
 						.text()
 		);
 	}
+
+	public static String getTextOf(@NonNull Elements elems, int index) {
+		return Optional.of(elems)
+				.filter(list -> list.size() > index)
+				.map(list -> list.get(index))
+				.map(Element::text)
+				.orElse("");
+	}
+
 	public static String getAttrOfFirstElement(Element e, String css, String attr){
 		return getAttrOfElement(e, css, 0, attr);
 	}

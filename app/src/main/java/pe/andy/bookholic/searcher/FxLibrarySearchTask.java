@@ -1,6 +1,7 @@
 package pe.andy.bookholic.searcher;
 
 import org.apache.commons.lang3.RegExUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -8,9 +9,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -23,7 +22,7 @@ import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchField;
 import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.util.JsonParser;
-import pe.andy.bookholic.util.Str;
+import pe.andy.bookholic.util.Slicer;
 
 public abstract class FxLibrarySearchTask extends LibrarySearchTask {
 
@@ -67,12 +66,22 @@ public abstract class FxLibrarySearchTask extends LibrarySearchTask {
     protected List<Ebook> parse(String html) {
 
         Document doc = Jsoup.parse(html);
-        Elements elems = doc.select("div#detail_list > ul.book_list > li");
+        Elements elems = doc.select("#container > h2 > span > em");
 
-        if (elems.select("div.noresult").size() > 0) {
+        this.resultCount = JsonParser.parseOnlyInt(
+            RegExUtils.replaceAll(elems.text(), ".*\\(|,|권\\).*", "")
+        );
+
+        elems = doc.select(".paging a.last");
+        this.resultPageCount = JsonParser.parseOnlyInt(
+            RegExUtils.replaceAll(elems.attr("href"), ".*,'|'\\).*", "")
+        );
+
+        if (this.resultCount == 0) {
             return Collections.emptyList();
         }
         else {
+            elems = doc.select("#detail_list .item");
             return elems.stream()
                     .map(this.elementParser)
                     .collect(Collectors.toList());
@@ -83,29 +92,40 @@ public abstract class FxLibrarySearchTask extends LibrarySearchTask {
         Ebook ebook = new Ebook(this.libraryName);
 
         // Thumbnail
-        ebook.setThumbnailUrl(JsonParser.getAttrOfFirstElement(li, "p.thumb img", "src"));
+        ebook.setThumbnailUrl(JsonParser.getAttrOfFirstElement(li, ".thumb img", "src"));
 
         // Title, Url
-        Element elem = li.select("ul.book_info").first();
-        ebook.setTitle(JsonParser.getTextOfFirstElement(elem, "li.subject a"))
-                .setUrl(this.baseUrl + JsonParser.getAttrOfFirstElement(elem, "li.subject a", "href"));
+        Element elem = li.select(".subject a").first();
+        ebook.setTitle(elem.text())
+                .setUrl(this.baseUrl + elem.attr("href"));
 
-        Elements infos = elem.select("li.inner_info");
+        Elements items = li.select(".info .i1 li");
 
-        Elements spans = infos.first().select("span");
-        Queue<String> queue = new LinkedList<>(spans.eachText());
-        ebook.setAuthor(RegExUtils.replacePattern(queue.poll(), " 저$", ""))
-                .setPublisher(Str.def(queue.poll()))
-                .setDate(Str.def(queue.poll()));
+        String author = JsonParser.getTextOf(items, 0);
+        author = RegExUtils.replaceAll(author, " 저$", "");
 
-        String platform = RegExUtils.replacePattern(queue.poll(), "(공급 : | \\([\\d\\-]+?\\)$|\\(주\\)|네트웍스| 전자책)", "");
-        ebook.setPlatform(platform);
+        String publisher = JsonParser.getTextOf(items, 1);
+        String date = JsonParser.getTextOf(items, 2);
+        String platform = JsonParser.getTextOf(items, 3);
+        platform = StringUtils.trimToEmpty(
+                RegExUtils.replaceAll(platform, "(공급 : | \\(.+?\\)|네트웍스| 전자책)", "")
+        );
 
-        // Count
-        String text = RegExUtils.replacePattern(infos.get(1).select("span").first().text(), "대출 ", "");
-        queue = Str.splitToQ(text, "/");
-        ebook.setCountRent(JsonParser.parseOnlyInt(queue.poll()))
-                .setCountTotal(JsonParser.parseOnlyInt(queue.poll()));
+        ebook.setAuthor(author)
+                .setPublisher(publisher)
+                .setDate(date)
+                .setPlatform(platform);
+
+
+        items = li.select(".info .i2 li");
+        String text = JsonParser.getTextOf(items, 0);
+        Slicer slicer = new Slicer(text, " |/");
+        slicer.pop();
+        int countRent = JsonParser.parseOnlyInt(slicer.pop());
+        int countTotal = JsonParser.parseOnlyInt(slicer.pop());
+
+        ebook.setCountRent(countRent);
+        ebook.setCountTotal(countTotal);
 
         return ebook;
     };
