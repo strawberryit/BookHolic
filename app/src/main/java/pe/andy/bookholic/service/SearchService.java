@@ -36,6 +36,7 @@ import pe.andy.bookholic.searcher.impl.kyobo.YeosuLibrarySearcher;
 import pe.andy.bookholic.searcher.impl.yes24.GyeongjuLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.yes24.JeollanamdoLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.yes24.UljuLibrarySearchTask;
+import pe.andy.bookholic.searcher.impl.yes24.YeongcheonLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.yes24.YeouiDigitalLibrarySearchTask;
 
 public class SearchService {
@@ -82,7 +83,8 @@ public class SearchService {
                     new GangbukCultureLibrarySearchTask(mActivity),
                     new GimjeLibrarySearchTask(mActivity),
                     new SuncheonLibrarySearchTask(mActivity),
-                    new UljuLibrarySearchTask(mActivity)
+                    new UljuLibrarySearchTask(mActivity),
+                    new YeongcheonLibrarySearchTask(mActivity)
             )
         );
     }
