@@ -22,6 +22,7 @@ import pe.andy.bookholic.service.SearchService;
 import pe.andy.bookholic.ui.BookRecyclerUi;
 import pe.andy.bookholic.ui.LibraryRecyclerUi;
 import pe.andy.bookholic.ui.ScrollToTopButton;
+import pe.andy.bookholic.ui.SearchDoneSnackBar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @Getter LibraryRecyclerUi libraryRecyclerUi;
     @Getter BookRecyclerUi bookRecyclerUi;
     @Getter ScrollToTopButton scrollToTopButton;
+    @Getter SearchDoneSnackBar searchDoneSnackBar;
 
     SearchView searchView;
 
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         libraryRecyclerUi = new LibraryRecyclerUi(this);
         bookRecyclerUi = new BookRecyclerUi(this);
         scrollToTopButton = new ScrollToTopButton(this);
+        searchDoneSnackBar = new SearchDoneSnackBar(this.mBinding);
 
         mBinding.fab.setOnClickListener(view -> {
             if (searchView.hasFocus()) {

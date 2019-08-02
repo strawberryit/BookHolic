@@ -113,21 +113,26 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
         bookRecyclerUi.add(books);
 
         //Log.d("BookHolic", this.libraryName + ": hasNext - " + this.hasNext());
+
+        SearchService service = mActivity.getSearchService();
+        boolean isFinished = service.isFinished();
+
         if (this.hasNext()) {
             bookRecyclerUi.hideLoadProgress();
             bookRecyclerUi.showLoadMore();
         }
         else {
-            SearchService service = mActivity.getSearchService();
-            boolean isFinished = service.isFinished();
             boolean isAllLastPage = service.isAllLastPage();
 
             //Log.d("BookHolic", this.libraryName + ": isFinished - " + isFinished + ", isAllLastPage - " + isAllLastPage);
-
             if (isFinished && isAllLastPage) {
                 bookRecyclerUi.hideLoadProgress();
                 bookRecyclerUi.hideLoadMore();
             }
+        }
+
+        if (isFinished) {
+            mActivity.getSearchDoneSnackBar().show();
         }
     }
 
