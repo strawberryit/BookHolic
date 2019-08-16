@@ -64,14 +64,16 @@ public class SearchService {
         // List.clear() 메서드를 사용하기 위해 새로 ArrayList 생성
         tasks = new ArrayList<>(Arrays.asList(
                     new SeoulLibrarySearchTask(mActivity),
-                    new YeosuLibrarySearcher(mActivity),
+                    new YeouiDigitalLibrarySearchTask(mActivity),
+                    new GangdongLibrarySearchTask(mActivity),
+                    new GangnamLibrarySearchTask(mActivity),
+                    new SeochoLibrarySearchTask(mActivity),
                     new SeodaemonLibrarySearchTask(mActivity),
+                    new YeosuLibrarySearcher(mActivity),
                     new GyeongjuLibrarySearchTask(mActivity),
                     new YangCheonLibrarySearchTask(mActivity),
                     new SeoulEduLibrarySearchTask(mActivity),
                     new GyunggidoCyberLibrarySearchTask(mActivity),
-                    new GangdongLibrarySearchTask(mActivity),
-                    new GangnamLibrarySearchTask(mActivity),
                     new GyeongsanLibrarySearchTask(mActivity),
                     new AnsanLibrarySearchTask(mActivity),
                     new GangJinLibrarySearchTask(mActivity),
@@ -87,9 +89,7 @@ public class SearchService {
                     new SuncheonLibrarySearchTask(mActivity),
                     new UljuLibrarySearchTask(mActivity),
                     new YeongcheonLibrarySearchTask(mActivity),
-                    new JinjuLibrarySearchTask(mActivity),
-                    new YeouiDigitalLibrarySearchTask(mActivity),
-                    new SeochoLibrarySearchTask(mActivity)
+                    new JinjuLibrarySearchTask(mActivity)
             )
         );
     }
