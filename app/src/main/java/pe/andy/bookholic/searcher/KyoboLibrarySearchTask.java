@@ -57,6 +57,7 @@ public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 		urlBuilder.addQueryParameter("search_type", Integer.toString(this.getField(query)));
 		urlBuilder.addQueryParameter("order_key", this.getSortBy(query));
 		urlBuilder.addQueryParameter("now_page", Integer.toString(query.getPage()));
+		urlBuilder.addQueryParameter("layout", Integer.toString(2));
 		urlBuilder.addEncodedQueryParameter("search_keyword", keyword);
 
 		String accept = this.encoding == Encoding_UTF8 ? "text/html; charset=utf-8" : "text/html; charset=euc-kr";
@@ -75,10 +76,9 @@ public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 	@Override
 	protected List<Ebook> parse(String html) throws IOException {
 		Document doc = Jsoup.parse(html);
-		
-		this.resultCount = JsonParser.parseOnlyInt(doc.select(".list_sorting span.list_result strong").text());
-		this.resultPageCount = JsonParser.parseOnlyInt(doc.select(".list_sorting span.total_count").text());
-		 
+
+		this.parseMetaCount(doc);
+
 		Elements elems = doc.select("div#list_books > ul > li");
 		List<Ebook> ebooks = elems.stream()
 			.map( e -> {
@@ -120,4 +120,8 @@ public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 		return ebooks;
 	}
 
+	protected void parseMetaCount (Document doc) {
+		this.resultCount = JsonParser.parseOnlyInt(doc.select(".list_sorting span.list_result strong").text());
+		this.resultPageCount = JsonParser.parseOnlyInt(doc.select(".list_sorting span.total_count").text());
+	}
 }
