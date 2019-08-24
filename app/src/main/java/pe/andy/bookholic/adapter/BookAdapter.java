@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -18,10 +17,9 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
-import pe.andy.bookholic.R;
 import pe.andy.bookholic.databinding.BookItemBinding;
 import pe.andy.bookholic.model.Ebook;
-import pe.andy.bookholic.util.Str;
+import pe.andy.bookholic.util.BookColor;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
 
@@ -29,20 +27,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     @Getter @Setter
     private List<Ebook> books;
 
-    private int bgOrange, bgGreen, bgRed, bgMaroon, bgLightBlue, bgPurple, bgGray;
+    private BookColor bookColor;
 
     public BookAdapter(Context mContext, List<Ebook> books) {
         this.mContext = mContext;
         this.books = books;
 
-        bgRed = ContextCompat.getColor(mContext, R.color.bgRed);
-        bgMaroon = ContextCompat.getColor(mContext, R.color.bgMaroon);
-        bgOrange = ContextCompat.getColor(mContext, R.color.bgOrange);
-        bgGreen = ContextCompat.getColor(mContext, R.color.bgGreen);
-        bgLightBlue = ContextCompat.getColor(mContext, R.color.bgLightBlue);
-        bgPurple = ContextCompat.getColor(mContext, R.color.bgPurple);
-        bgGray = ContextCompat.getColor(mContext, R.color.bgGray);
-
+        bookColor = new BookColor(mContext);
     }
 
     @Override
@@ -66,7 +57,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         binding.publisher.setText(book.getPublisher());
         binding.date.setText(book.getDate());
         binding.platform.setText(book.getPlatform());
-        binding.platform.setBackgroundColor(getPlatformBGColor(binding.platform.getText()));
+        binding.platform.setBackgroundColor(bookColor.getPlatformBGColor(book.getPlatform()));
         binding.libraryName.setText(book.getLibraryName());
 
         // Visibility
@@ -74,7 +65,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         binding.rentCount.setVisibility(visibility);
 
         // Color
-        int color = (book.getCountRent() < book.getCountTotal()) ? this.bgGreen : this.bgRed;
+        int color = bookColor.getRentStatusColor(book);
         binding.rentCount.setBackgroundColor(color);
 
         // Text
@@ -96,23 +87,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             Log.d("Bookholic", "Thumbnail url loading failure: " + book.getThumbnailUrl());
         }
 
-    }
-
-    private int getPlatformBGColor(CharSequence platform) {
-        String name = Str.def(platform.toString());
-
-        if (name.contains("교보"))
-            return bgGreen;
-        else if (name.contains("북큐브"))
-            return bgOrange;
-        else if (name.contains("예스24") || name.contains("YES24"))
-            return bgLightBlue;
-        else if (name.contains("메키아") || name.contains("MEKIA"))
-            return bgPurple;
-        else if (name.contains("ECO MOA"))
-            return bgMaroon;
-        else
-            return bgGray;
     }
 
     @Override

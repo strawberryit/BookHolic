@@ -28,8 +28,8 @@ public class Ebook {
 	String thumbnailUrl;
 	String url;
 	String isbn;
-	int countTotal = -1;
-	int countRent = -1;
+	public int countTotal = -1;
+	public int countRent = -1;
 	String date;
 
 	String platformClass;
