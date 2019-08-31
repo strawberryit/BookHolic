@@ -29,7 +29,8 @@ public class SeochoLibrarySearchTask extends KyoboLibrarySearchTask {
 
     @Override
     protected void parseMetaCount(Document doc) {
-        String text = doc.select("p.result").text();
+        String text = JsonParser.getTextOfFirstElement(doc, "p.result")
+                .replaceAll(".*\\(", "");
         this.resultCount = JsonParser.parseOnlyInt(text);
 
         text = doc.select(".total_count").text();
