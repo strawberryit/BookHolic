@@ -7,7 +7,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
@@ -24,7 +23,7 @@ import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.model.SortBy;
 import pe.andy.bookholic.util.EncodeUtil;
 import pe.andy.bookholic.util.JsonParser;
-import pe.andy.bookholic.util.Slicer;
+import pe.andy.bookholic.util.TextSlicer;
 
 public abstract class Yes24TypeBLibrarySearchTask extends LibrarySearchTask {
     String libraryName;
@@ -125,9 +124,9 @@ public abstract class Yes24TypeBLibrarySearchTask extends LibrarySearchTask {
                 ebook.setPlatform(platform);
             }
 
-            String txt = e.select(".info > .rentinfo").text();
-            Slicer slicer = new Slicer(txt, ",").trim();
-
+            // text: 보유 1, 대출 0, 예약 0, ...
+            String text = JsonParser.getTextOfFirstElement(e, ".info > .rentinfo");
+            TextSlicer slicer = new TextSlicer(text, ",");
             int totalCount = JsonParser.parseOnlyInt(slicer.pop());
             ebook.setCountTotal(totalCount);
 

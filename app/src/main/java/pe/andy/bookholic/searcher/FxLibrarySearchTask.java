@@ -22,7 +22,7 @@ import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchField;
 import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.util.JsonParser;
-import pe.andy.bookholic.util.Slicer;
+import pe.andy.bookholic.util.TextSlicer;
 
 public abstract class FxLibrarySearchTask extends LibrarySearchTask {
 
@@ -119,7 +119,9 @@ public abstract class FxLibrarySearchTask extends LibrarySearchTask {
 
         items = li.select(".info .i2 li");
         String text = JsonParser.getTextOf(items, 0);
-        Slicer slicer = new Slicer(text, " |/");
+
+        // text: "대출 0/1"
+        TextSlicer slicer = new TextSlicer(text, " |/");
         slicer.pop();
         int countRent = JsonParser.parseOnlyInt(slicer.pop());
         int countTotal = JsonParser.parseOnlyInt(slicer.pop());

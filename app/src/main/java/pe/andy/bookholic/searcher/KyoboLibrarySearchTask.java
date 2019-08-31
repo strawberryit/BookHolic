@@ -1,15 +1,14 @@
 package pe.andy.bookholic.searcher;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -22,7 +21,7 @@ import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.model.SortBy;
 import pe.andy.bookholic.util.EncodeUtil;
 import pe.andy.bookholic.util.JsonParser;
-import pe.andy.bookholic.util.Slicer;
+import pe.andy.bookholic.util.TextSlicer;
 
 public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 
@@ -102,14 +101,20 @@ public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 				ebook.setPlatform(platform);
 				ebook.setTitle(JsonParser.getTextOfFirstElement(elem, "a"));
 
-				String textAuthorPublisherDate = RegExUtils.replacePattern(e.select("dl > dd > em").first().text(), "(\\[|\\])", "");
-				Slicer slicer = new Slicer(textAuthorPublisherDate, "/").trim();
+				// textAuthorPublisherDate: "   Author / [ Publisher / 2019-01-01 ]   "
+				String textAuthorPublisherDate =
+						JsonParser.getTextOfFirstElement(e, "dl > dd > em")
+							.replaceAll("[\\[\\]]", "");
+
+				TextSlicer slicer = new TextSlicer(textAuthorPublisherDate, "/");
 				ebook.setAuthor(	slicer.pop());
 				ebook.setPublisher(	slicer.pop());
 				ebook.setDate(		slicer.pop());
 
-				String textCounts = JsonParser.getTextOfFirstElement(e, "div.service ul li.loan span.num");
-				slicer = new Slicer(textCounts, "/").trim();
+				// textCounts: 0/10
+				String textCounts =
+						JsonParser.getTextOfFirstElement(e, "div.service ul li.loan span.num");
+				slicer = new TextSlicer(textCounts, "/");
 				ebook.setCountRent(JsonParser.parseOnlyInt(slicer.pop()));
 				ebook.setCountTotal(JsonParser.parseOnlyInt(slicer.pop()));
 
