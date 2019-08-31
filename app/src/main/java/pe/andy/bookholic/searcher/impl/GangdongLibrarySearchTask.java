@@ -8,7 +8,6 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.util.List;
-import java.util.Queue;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -23,6 +22,7 @@ import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.searcher.LibrarySearchTask;
 import pe.andy.bookholic.util.JsonParser;
 import pe.andy.bookholic.util.Str;
+import pe.andy.bookholic.util.TextSlicer;
 
 public class GangdongLibrarySearchTask extends LibrarySearchTask {
 
@@ -45,7 +45,8 @@ public class GangdongLibrarySearchTask extends LibrarySearchTask {
 
     @Override
     protected String getField(SearchQuery query) {
-        return Str.def(query.getField().toString()).toLowerCase();
+        return Str.def(query.getField().toString())
+                    .toLowerCase();
     }
 
     @Override
@@ -80,12 +81,12 @@ public class GangdongLibrarySearchTask extends LibrarySearchTask {
 
         // .totalpage
         String text = doc.select(".totalpage").text();
-        Queue<String> queue = Str.splitToQ(text, "[\\(/]");
+        TextSlicer slicer = new TextSlicer(text, "[\\(/]");
 
         // Total Count
-        this.resultCount = Str.extractInt(queue.poll());
-        queue.poll();
-        this.resultPageCount = Str.extractInt(queue.poll());
+        this.resultCount = Str.extractInt(slicer.pop());
+        slicer.pop();
+        this.resultPageCount = Str.extractInt(slicer.pop());
 
         Elements elems = doc.select("div#booklist ul.list li.line");
         List<Ebook> list = elems.stream()
@@ -123,10 +124,10 @@ public class GangdongLibrarySearchTask extends LibrarySearchTask {
 
         // Count
         String info = li.select("div.info div.rentinfo").first().text();
-        Queue<String> queue = Str.splitToQ(info, ",");
+        TextSlicer slicer = new TextSlicer(info, ",");
 
-        ebook.setCountTotal(JsonParser.parseOnlyInt(queue.poll()));
-        ebook.setCountRent(JsonParser.parseOnlyInt(queue.poll()));
+        ebook.setCountTotal(Str.extractInt(slicer.pop()));
+        ebook.setCountRent(Str.extractInt(slicer.pop()));
 
         return ebook;
     };

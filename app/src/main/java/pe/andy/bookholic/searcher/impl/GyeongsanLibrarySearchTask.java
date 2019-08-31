@@ -6,7 +6,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.lang.ref.SoftReference;
-import java.util.Queue;
 import java.util.function.Function;
 
 import lombok.Getter;
@@ -16,6 +15,7 @@ import pe.andy.bookholic.searcher.LibrarySearchTask;
 import pe.andy.bookholic.searcher.Yes24LibrarySearchTask;
 import pe.andy.bookholic.util.JsonParser;
 import pe.andy.bookholic.util.Str;
+import pe.andy.bookholic.util.TextSlicer;
 
 public class GyeongsanLibrarySearchTask extends Yes24LibrarySearchTask {
 
@@ -74,11 +74,11 @@ public class GyeongsanLibrarySearchTask extends Yes24LibrarySearchTask {
 
         // Author, Publisher, Date
         Elements info = e.select("li.list_info dd.book_info");
-        Queue<String> queue = Str.splitToQ(info.text(), "\\|");
+        TextSlicer slicer = new TextSlicer(info.text(), "\\|");
 
-        ebook.setAuthor(	StringUtils.trimToEmpty(queue.poll()));
-        ebook.setPublisher(	StringUtils.trimToEmpty(queue.poll()));
-        ebook.setDate(		StringUtils.trimToEmpty(queue.poll()));
+        ebook.setAuthor(slicer.pop());
+        ebook.setPublisher(slicer.pop());
+        ebook.setDate(slicer.pop());
 
 
         // Count
@@ -86,11 +86,11 @@ public class GyeongsanLibrarySearchTask extends Yes24LibrarySearchTask {
 
         Element count = info.get(0);
         if (count != null)
-            ebook.setCountRent(JsonParser.parseOnlyInt(count.text()));
+            ebook.setCountRent(Str.extractInt(count.text()));
 
         count = info.get(2);
         if (count != null)
-            ebook.setCountTotal(JsonParser.parseOnlyInt(count.text()));
+            ebook.setCountTotal(Str.extractInt(count.text()));
 
         return ebook;
     };

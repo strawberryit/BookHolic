@@ -146,8 +146,8 @@ public class GangnamLibrarySearchTask extends LibrarySearchTask {
 
         Elements spans = li.select("p.state span.number");
         Queue<String> queue = new LinkedList<>(spans.eachText());
-        ebook.setCountTotal(JsonParser.parseOnlyInt(queue.poll()));
-        ebook.setCountRent(JsonParser.parseOnlyInt(queue.poll()));
+        ebook.setCountTotal(Str.extractInt(Str.def(queue.poll())));
+        ebook.setCountRent(Str.extractInt(Str.def(queue.poll())));
 
         return ebook;
     };

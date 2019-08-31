@@ -22,6 +22,8 @@ class TextSlicerTest {
         assertEquals("Test", slicer.pop())
         assertEquals("", slicer.pop())
         assertEquals("Hello", slicer.pop())
+        assertEquals("", slicer.pop())
+        assertEquals("", slicer.pop())
         assertEquals("world", slicer.pop())
         assertEquals("", slicer.pop())
         assertEquals("", slicer.pop())
