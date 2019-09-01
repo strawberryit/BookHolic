@@ -1,7 +1,6 @@
 package pe.andy.bookholic.searcher.impl;
 
 import org.apache.commons.lang3.RegExUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -9,7 +8,6 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.lang.ref.SoftReference;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -27,8 +25,8 @@ import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchField;
 import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.searcher.LibrarySearchTask;
-import pe.andy.bookholic.util.JsonParser;
 import pe.andy.bookholic.util.Str;
+import pe.andy.bookholic.util.TextSlicer;
 
 public class GyunggidoCyberLibrarySearchTask extends LibrarySearchTask {
 
@@ -131,22 +129,22 @@ public class GyunggidoCyberLibrarySearchTask extends LibrarySearchTask {
         Queue<String> queue = new LinkedList<>(list);
 
         // Author
-        ebook.setAuthor(StringUtils.defaultString(queue.poll())
+        ebook.setAuthor(Str.def(queue.poll())
                 .replaceAll(".*: ", ""));
 
         // Publisher
-        ebook.setPublisher(StringUtils.defaultString(queue.poll())
+        ebook.setPublisher(Str.def(queue.poll())
                 .replaceAll(".*: ", ""));
 
         // Date
-        ebook.setDate(StringUtils.defaultString(queue.poll())
+        ebook.setDate(Str.def(queue.poll())
                 .replaceAll(".*: ", ""));
 
         // Count
         String counts = wrap.select(".btnArea span").text();
-        Queue<String> countQ = new LinkedList<>(Arrays.asList(StringUtils.split(counts, '/')));
-        ebook.setCountRent(JsonParser.parseOnlyInt(countQ.poll()));
-        ebook.setCountTotal(JsonParser.parseOnlyInt(countQ.poll()));
+        TextSlicer slicer = new TextSlicer(counts, "/");
+        ebook.setCountRent(Str.extractInt(slicer.pop()));
+        ebook.setCountTotal(Str.extractInt(slicer.pop()));
 
         return ebook;
     };

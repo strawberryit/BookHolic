@@ -115,16 +115,17 @@ public class JsonParser {
 		}
 	}
 
-	public static String getTextOfFirstElement(Element e, String css){
-		return getTextOfElement(e, css, 0);
+	public static String getTextOfFirstElement(final Element e, final String css) {
+		return Optional.ofNullable(e.selectFirst(css))
+				.map(Element::text)
+				.orElse("");
 	}
 
-	public static String getTextOfElement(Element e, String css, int index){
-		return StringUtils.trimToEmpty(
-				e.select(css)
-						.get(index)
-						.text()
-		);
+	public static String getTextOfElement(final Element e, final String css, final int index) {
+		return Optional.ofNullable(e.select(css))
+				.map(elements -> elements.get(index))
+				.map(Element::text)
+				.orElse("");
 	}
 
 	public static String getTextOf(@NonNull Elements elems, int index) {
