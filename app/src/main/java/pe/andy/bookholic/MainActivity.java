@@ -18,7 +18,7 @@ import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchField;
 import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.model.SortBy;
-import pe.andy.bookholic.service.SearchService;
+import pe.andy.bookholic.service.BookSearchService;
 import pe.andy.bookholic.ui.BookRecyclerUi;
 import pe.andy.bookholic.ui.ScrollToTopButton;
 import pe.andy.bookholic.ui.LibraryRecyclerUi;
@@ -29,14 +29,14 @@ public class MainActivity extends AppCompatActivity {
     @Getter
     MainActivityBinding mBinding;
 
-    @Getter LibraryRecyclerUi libraryRecyclerUi;
-    @Getter BookRecyclerUi bookRecyclerUi;
-    @Getter ScrollToTopButton scrollToTopButton;
-    @Getter SearchDoneSnackBar searchDoneSnackBar;
+    @Getter public LibraryRecyclerUi libraryRecyclerUi;
+    @Getter public BookRecyclerUi bookRecyclerUi;
+    @Getter public ScrollToTopButton scrollToTopButton;
+    @Getter public SearchDoneSnackBar searchDoneSnackBar;
 
     SearchView searchView;
 
-    @Getter SearchService searchService;
+    @Getter BookSearchService searchService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        searchService = new SearchService(this);
+        searchService = new BookSearchService(this);
 
         libraryRecyclerUi = new LibraryRecyclerUi(this);
         bookRecyclerUi = new BookRecyclerUi(this);

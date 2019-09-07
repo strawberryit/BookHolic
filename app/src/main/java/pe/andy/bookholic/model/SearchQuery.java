@@ -15,7 +15,7 @@ public class SearchQuery {
 	@Getter @Setter String keyword;
 	@Getter @Setter SearchField field;
 	@Builder.Default
-	@Getter	@Setter Integer page = 1;
+	@Getter	@Setter public Integer page = 1;
 	@Getter @Setter SortBy sortBy;
 	
 	public String getEncodedKeyword(){

@@ -42,6 +42,7 @@ import pe.andy.bookholic.searcher.impl.yes24.UljuLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.yes24.YeongcheonLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.yes24.YeouiDigitalLibrarySearchTask;
 
+@Deprecated
 public class SearchService {
 
     private MainActivity mActivity;

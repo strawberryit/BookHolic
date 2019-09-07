@@ -17,7 +17,7 @@ import okhttp3.Response;
 import pe.andy.bookholic.MainActivity;
 import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchQuery;
-import pe.andy.bookholic.service.SearchService;
+import pe.andy.bookholic.service.BookSearchService;
 import pe.andy.bookholic.ui.BookRecyclerUi;
 
 import static pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.DONE;
@@ -51,7 +51,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
         this.baseUrl = baseUrl;
     }
 
-    @Getter @Setter protected int resultCount = -1;
+    @Getter @Setter public int resultCount = -1;
     @Getter @Setter protected int resultPageCount = -1;
 
     @Getter Response response;
@@ -114,7 +114,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
 
         //Log.d("BookHolic", this.libraryName + ": hasNext - " + this.hasNext());
 
-        SearchService service = mActivity.getSearchService();
+        BookSearchService service = mActivity.getSearchService();
         boolean isFinished = service.isFinished();
 
         if (this.hasNext()) {

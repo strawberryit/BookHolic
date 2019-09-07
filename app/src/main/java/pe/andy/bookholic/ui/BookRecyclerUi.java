@@ -13,7 +13,7 @@ import pe.andy.bookholic.adapter.BookAdapter;
 import pe.andy.bookholic.databinding.MainActivityBinding;
 import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchQuery;
-import pe.andy.bookholic.service.SearchService;
+import pe.andy.bookholic.service.BookSearchService;
 
 public class BookRecyclerUi {
 
@@ -40,7 +40,7 @@ public class BookRecyclerUi {
             hideLoadMore();
             showLoadProgress();
 
-            SearchService service = mActivity.getSearchService();
+            BookSearchService service = mActivity.getSearchService();
             SearchQuery sQuery = service.getQuery();
             service.search(sQuery, false);
         });
