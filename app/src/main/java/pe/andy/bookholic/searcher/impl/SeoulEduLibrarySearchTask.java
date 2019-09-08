@@ -28,7 +28,7 @@ import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchField;
 import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.searcher.LibrarySearchTask;
-import pe.andy.bookholic.util.SSLConnect;
+import pe.andy.bookholic.util.SslTrust;
 import pe.andy.bookholic.util.Str;
 
 public class SeoulEduLibrarySearchTask extends LibrarySearchTask {
@@ -109,7 +109,7 @@ public class SeoulEduLibrarySearchTask extends LibrarySearchTask {
                 .build();
         */
 
-        OkHttpClient client = SSLConnect.trustAllSslClient(new OkHttpClient());
+        OkHttpClient client = SslTrust.trustAllSslClient(new OkHttpClient());
         Response resp = client
                 .newCall(req)
                 .execute();
