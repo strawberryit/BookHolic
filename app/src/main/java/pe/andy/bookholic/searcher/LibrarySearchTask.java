@@ -18,12 +18,9 @@ import pe.andy.bookholic.MainActivity;
 import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.service.BookSearchService;
-import pe.andy.bookholic.ui.BookRecyclerUi;
+import pe.andy.bookholic.ui.BookRecyclerList;
 
-import static pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.DONE;
-import static pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.FAIL;
-import static pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.INITIAL;
-import static pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.PROGRESS;
+import static pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.*;
 
 @Accessors(chain = true)
 public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook>> {
@@ -109,8 +106,8 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
         mActivity.getLibraryRecyclerUi().refresh();
 
         // Update Book list
-        BookRecyclerUi bookRecyclerUi = mActivity.getBookRecyclerUi();
-        bookRecyclerUi.add(books);
+        BookRecyclerList bookRecyclerList = mActivity.bookRecyclerList;
+        bookRecyclerList.add(books);
 
         //Log.d("BookHolic", this.libraryName + ": hasNext - " + this.hasNext());
 
@@ -118,16 +115,16 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
         boolean isFinished = service.isFinished();
 
         if (this.hasNext()) {
-            bookRecyclerUi.hideLoadProgress();
-            bookRecyclerUi.showLoadMore();
+            bookRecyclerList.hideLoadProgress();
+            bookRecyclerList.showLoadMore();
         }
         else {
             boolean isAllLastPage = service.isAllLastPage();
 
             //Log.d("BookHolic", this.libraryName + ": isFinished - " + isFinished + ", isAllLastPage - " + isAllLastPage);
             if (isFinished && isAllLastPage) {
-                bookRecyclerUi.hideLoadProgress();
-                bookRecyclerUi.hideLoadMore();
+                bookRecyclerList.hideLoadProgress();
+                bookRecyclerList.hideLoadMore();
             }
         }
 

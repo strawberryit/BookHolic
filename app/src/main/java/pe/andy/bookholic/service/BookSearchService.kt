@@ -72,7 +72,7 @@ class BookSearchService(
     }
 
     private fun searchInFirstTime() {
-        mActivity.bookRecyclerUi.clear()
+        mActivity.bookRecyclerList.clear()
 
         tasks = makeTasks()
         query?.page = 1

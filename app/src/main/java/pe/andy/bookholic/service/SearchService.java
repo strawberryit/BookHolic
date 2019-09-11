@@ -109,7 +109,7 @@ public class SearchService {
         this.query = query;
 
         if (isFresh) {
-            mActivity.getBookRecyclerUi().clear();
+            mActivity.bookRecyclerList.clear();
             query.setPage(1);
 
             this.createNewTaskGroup();
