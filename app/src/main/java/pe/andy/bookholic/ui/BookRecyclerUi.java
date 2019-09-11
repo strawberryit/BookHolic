@@ -2,10 +2,6 @@ package pe.andy.bookholic.ui;
 
 import android.view.View;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import pe.andy.bookholic.MainActivity;
@@ -14,6 +10,8 @@ import pe.andy.bookholic.databinding.MainActivityBinding;
 import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.service.BookSearchService;
+
+import static pe.andy.bookholic.util.CollectionUtil.mutableListOf;
 
 public class BookRecyclerUi {
 
@@ -31,7 +29,7 @@ public class BookRecyclerUi {
         mBinding.bookRecyclerview.setNestedScrollingEnabled(false);
         mBinding.bookRecyclerview.setHasFixedSize(true);
 
-        bookList = new ArrayList<>();
+        bookList = mutableListOf();
         bookAdapter = new BookAdapter(mActivity, bookList);
         mBinding.bookRecyclerview.setAdapter(bookAdapter);
 

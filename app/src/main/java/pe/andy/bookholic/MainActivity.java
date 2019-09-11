@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 
-import java.util.Arrays;
 import java.util.List;
 
 import lombok.Getter;
@@ -23,6 +22,8 @@ import pe.andy.bookholic.ui.BookRecyclerUi;
 import pe.andy.bookholic.ui.ScrollToTopButton;
 import pe.andy.bookholic.ui.LibraryRecyclerUi;
 import pe.andy.bookholic.ui.SearchDoneSnackBar;
+
+import static pe.andy.bookholic.util.CollectionUtil.listOf;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -144,8 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 .setCountRent(5)
                 .setDate("2018-01-01");
 
-
-        return Arrays.asList(b1, b2, b3, b1, b2, b3);
+        return listOf(b1, b2, b3, b1, b2, b3);
     }
 
 }
