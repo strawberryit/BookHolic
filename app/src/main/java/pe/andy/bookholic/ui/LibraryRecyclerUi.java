@@ -1,8 +1,5 @@
 package pe.andy.bookholic.ui;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
 
 import pe.andy.bookholic.MainActivity;

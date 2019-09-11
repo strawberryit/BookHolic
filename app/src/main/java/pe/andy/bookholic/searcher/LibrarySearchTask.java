@@ -33,7 +33,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
     public static final String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36";
 
     @Getter
-    protected String libraryName;
+    public String libraryName;
     protected String baseUrl;
     protected SearchQuery mQuery;
     public SearchQuery getQuery() { return this.mQuery; }
@@ -153,7 +153,8 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
     public abstract String getLibraryCode();
     public abstract LibrarySearchTask create();
 
-    @Getter @Setter LibrarySearchStatus searchStatus = INITIAL;
+    @Getter @Setter
+    public LibrarySearchStatus searchStatus = INITIAL;
     public enum LibrarySearchStatus {
         INITIAL, PROGRESS, DONE, FAIL
     }
