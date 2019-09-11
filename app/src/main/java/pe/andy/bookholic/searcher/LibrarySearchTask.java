@@ -57,7 +57,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
     @Override
     protected void onPreExecute() {
         this.setSearchStatus(PROGRESS);
-        mActivity.getLibraryRecyclerUi().refresh();
+        mActivity.libraryRecyclerList.refresh();
     }
 
     @Override
@@ -103,7 +103,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
 
         // Update Library list
         this.setSearchStatus(DONE);
-        mActivity.getLibraryRecyclerUi().refresh();
+        mActivity.libraryRecyclerList.refresh();
 
         // Update Book list
         BookRecyclerList bookRecyclerList = mActivity.bookRecyclerList;
@@ -136,7 +136,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
     @Override
     protected void onCancelled() {
         this.setSearchStatus(FAIL);
-        mActivity.getLibraryRecyclerUi().refresh();
+        mActivity.libraryRecyclerList.refresh();
     }
 
     public boolean hasNext() {

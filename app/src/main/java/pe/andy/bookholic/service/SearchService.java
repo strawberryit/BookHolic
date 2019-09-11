@@ -113,7 +113,7 @@ public class SearchService {
             query.setPage(1);
 
             this.createNewTaskGroup();
-            mActivity.getLibraryRecyclerUi().set(tasks);
+            mActivity.libraryRecyclerList.set(tasks);
 
             setQueryOnAllTask(query);
             tasks.stream()
@@ -132,7 +132,7 @@ public class SearchService {
                             t = t.create();
                             t.setQuery(query.nextPage());
 
-                            mActivity.getLibraryRecyclerUi().refresh();
+                            mActivity.libraryRecyclerList.refresh();
                             return t;
                         } catch (Exception e) {
                             e.printStackTrace();

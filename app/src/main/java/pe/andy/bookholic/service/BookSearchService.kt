@@ -78,7 +78,7 @@ class BookSearchService(
         query?.page = 1
         setQueryOnAllTask(query!!)
 
-        mActivity.libraryRecyclerUi.set(tasks)
+        mActivity.libraryRecyclerList.set(tasks)
     }
 
     private fun searchProceeding() {
@@ -95,7 +95,7 @@ class BookSearchService(
                         var nextTask = t.create()
                         nextTask.query = query?.nextPage()
 
-                        mActivity.libraryRecyclerUi.refresh()
+                        mActivity.libraryRecyclerList.refresh()
                         nextTask
                     }
                     catch (e: Exception) {

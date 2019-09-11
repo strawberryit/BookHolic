@@ -19,7 +19,7 @@ import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.model.SortBy;
 import pe.andy.bookholic.service.BookSearchService;
 import pe.andy.bookholic.ui.BookRecyclerList;
-import pe.andy.bookholic.ui.LibraryRecyclerUi;
+import pe.andy.bookholic.ui.LibraryRecyclerList;
 import pe.andy.bookholic.ui.ScrollToTopButton;
 import pe.andy.bookholic.ui.SearchDoneSnackBar;
 
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     @Getter
     MainActivityBinding mBinding;
 
-    @Getter public LibraryRecyclerUi libraryRecyclerUi;
+    public LibraryRecyclerList libraryRecyclerList;
     public BookRecyclerList bookRecyclerList;
     @Getter public ScrollToTopButton scrollToTopButton;
     @Getter public SearchDoneSnackBar searchDoneSnackBar;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         searchService = new BookSearchService(this);
 
-        libraryRecyclerUi = new LibraryRecyclerUi(this);
+        libraryRecyclerList = new LibraryRecyclerList(this, this.mBinding);
         bookRecyclerList = new BookRecyclerList(this, mBinding);
         scrollToTopButton = new ScrollToTopButton(this.mBinding);
         searchDoneSnackBar = new SearchDoneSnackBar(this.mBinding);
