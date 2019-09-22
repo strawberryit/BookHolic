@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 
-import java.util.Arrays;
 import java.util.List;
 
 import lombok.Getter;
@@ -18,25 +17,27 @@ import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchField;
 import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.model.SortBy;
-import pe.andy.bookholic.service.SearchService;
-import pe.andy.bookholic.ui.BookRecyclerUi;
+import pe.andy.bookholic.service.BookSearchService;
+import pe.andy.bookholic.ui.BookRecyclerList;
+import pe.andy.bookholic.ui.LibraryRecyclerList;
 import pe.andy.bookholic.ui.ScrollToTopButton;
-import pe.andy.bookholic.ui.LibraryRecyclerUi;
 import pe.andy.bookholic.ui.SearchDoneSnackBar;
+
+import static pe.andy.bookholic.util.CollectionUtil.listOf;
 
 public class MainActivity extends AppCompatActivity {
 
     @Getter
     MainActivityBinding mBinding;
 
-    @Getter LibraryRecyclerUi libraryRecyclerUi;
-    @Getter BookRecyclerUi bookRecyclerUi;
-    @Getter ScrollToTopButton scrollToTopButton;
-    @Getter SearchDoneSnackBar searchDoneSnackBar;
+    public LibraryRecyclerList libraryRecyclerList;
+    public BookRecyclerList bookRecyclerList;
+    @Getter public ScrollToTopButton scrollToTopButton;
+    @Getter public SearchDoneSnackBar searchDoneSnackBar;
 
     SearchView searchView;
 
-    @Getter SearchService searchService;
+    @Getter public BookSearchService searchService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        searchService = new SearchService(this);
+        searchService = new BookSearchService(this);
 
-        libraryRecyclerUi = new LibraryRecyclerUi(this);
-        bookRecyclerUi = new BookRecyclerUi(this);
+        libraryRecyclerList = new LibraryRecyclerList(this, this.mBinding);
+        bookRecyclerList = new BookRecyclerList(this, mBinding);
         scrollToTopButton = new ScrollToTopButton(this.mBinding);
         searchDoneSnackBar = new SearchDoneSnackBar(this.mBinding);
 
@@ -144,8 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 .setCountRent(5)
                 .setDate("2018-01-01");
 
-
-        return Arrays.asList(b1, b2, b3, b1, b2, b3);
+        return listOf(b1, b2, b3, b1, b2, b3);
     }
 
 }

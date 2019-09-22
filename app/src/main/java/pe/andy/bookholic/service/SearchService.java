@@ -42,6 +42,7 @@ import pe.andy.bookholic.searcher.impl.yes24.UljuLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.yes24.YeongcheonLibrarySearchTask;
 import pe.andy.bookholic.searcher.impl.yes24.YeouiDigitalLibrarySearchTask;
 
+@Deprecated
 public class SearchService {
 
     private MainActivity mActivity;
@@ -108,11 +109,11 @@ public class SearchService {
         this.query = query;
 
         if (isFresh) {
-            mActivity.getBookRecyclerUi().clear();
+            mActivity.bookRecyclerList.clear();
             query.setPage(1);
 
             this.createNewTaskGroup();
-            mActivity.getLibraryRecyclerUi().set(tasks);
+            mActivity.libraryRecyclerList.set(tasks);
 
             setQueryOnAllTask(query);
             tasks.stream()
@@ -131,7 +132,7 @@ public class SearchService {
                             t = t.create();
                             t.setQuery(query.nextPage());
 
-                            mActivity.getLibraryRecyclerUi().refresh();
+                            mActivity.libraryRecyclerList.refresh();
                             return t;
                         } catch (Exception e) {
                             e.printStackTrace();

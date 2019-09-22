@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.SoftReference;
 import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +28,10 @@ import pe.andy.bookholic.model.SearchField;
 import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.searcher.LibrarySearchTask;
 import pe.andy.bookholic.util.JsonParser;
-import pe.andy.bookholic.util.SSLConnect;
+import pe.andy.bookholic.util.SslTrust;
 import pe.andy.bookholic.util.Str;
+
+import static pe.andy.bookholic.util.CollectionUtil.mapOf;
 
 public class GangnamLibrarySearchTask extends LibrarySearchTask {
 
@@ -50,16 +51,16 @@ public class GangnamLibrarySearchTask extends LibrarySearchTask {
         return ref.get();
     }
 
+    static final Map<SearchField, String> searchFields = mapOf(
+            SearchField.ALL, "도서명",
+            SearchField.TITLE, "도서명",
+            SearchField.AUTHOR, "저자명",
+            SearchField.PUBLISHER, "출판사명"
+    );
+
     @Override
     protected String getField(SearchQuery query) {
-        Map<SearchField, String> fieldMap = new HashMap<>();
-        fieldMap.put(SearchField.ALL, "도서명");
-        fieldMap.put(SearchField.TITLE, "도서명");
-        fieldMap.put(SearchField.AUTHOR, "저자명");
-        fieldMap.put(SearchField.PUBLISHER, "출판사명");
-
-        String field = fieldMap.get(query.getField());
-        return field;
+        return searchFields.getOrDefault(query.getField(), "도서명");
     }
 
     @Override
@@ -82,7 +83,7 @@ public class GangnamLibrarySearchTask extends LibrarySearchTask {
                 .addHeader("User-Agent", userAgent)
                 .build();
 
-        OkHttpClient client = SSLConnect.trustAllSslClient(new OkHttpClient());
+        OkHttpClient client = SslTrust.trustAllSslClient(new OkHttpClient());
         Response resp = client
                 .newCall(req)
                 .execute();

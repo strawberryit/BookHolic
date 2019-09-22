@@ -19,21 +19,21 @@ public class Ebook {
 		this.libraryName = libraryName;
 	}
 	
-	String seq;
-	String title;
-	String author;
-	String publisher;
-	String libraryName;
-	String platform;
-	String thumbnailUrl;
-	String url;
-	String isbn;
+	public String seq;
+	public String title;
+	public String author;
+	public String publisher;
+	public String libraryName;
+	public String platform;
+	public String thumbnailUrl;
+	public String url;
+	public String isbn;
 	public int countTotal = -1;
 	public int countRent = -1;
-	String date;
+	public String date;
 
-	String platformClass;
-	boolean rentLibrary = false;
+	public String platformClass;
+	public boolean rentLibrary = false;
 
 	public static final Comparator<Ebook> comparator = (book1, book2) -> {
 

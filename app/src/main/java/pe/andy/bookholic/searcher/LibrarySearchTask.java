@@ -17,13 +17,10 @@ import okhttp3.Response;
 import pe.andy.bookholic.MainActivity;
 import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchQuery;
-import pe.andy.bookholic.service.SearchService;
-import pe.andy.bookholic.ui.BookRecyclerUi;
+import pe.andy.bookholic.service.BookSearchService;
+import pe.andy.bookholic.ui.BookRecyclerList;
 
-import static pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.DONE;
-import static pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.FAIL;
-import static pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.INITIAL;
-import static pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.PROGRESS;
+import static pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.*;
 
 @Accessors(chain = true)
 public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook>> {
@@ -33,7 +30,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
     public static final String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36";
 
     @Getter
-    protected String libraryName;
+    public String libraryName;
     protected String baseUrl;
     protected SearchQuery mQuery;
     public SearchQuery getQuery() { return this.mQuery; }
@@ -51,7 +48,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
         this.baseUrl = baseUrl;
     }
 
-    @Getter @Setter protected int resultCount = -1;
+    @Getter @Setter public int resultCount = -1;
     @Getter @Setter protected int resultPageCount = -1;
 
     @Getter Response response;
@@ -60,7 +57,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
     @Override
     protected void onPreExecute() {
         this.setSearchStatus(PROGRESS);
-        mActivity.getLibraryRecyclerUi().refresh();
+        mActivity.libraryRecyclerList.refresh();
     }
 
     @Override
@@ -106,28 +103,28 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
 
         // Update Library list
         this.setSearchStatus(DONE);
-        mActivity.getLibraryRecyclerUi().refresh();
+        mActivity.libraryRecyclerList.refresh();
 
         // Update Book list
-        BookRecyclerUi bookRecyclerUi = mActivity.getBookRecyclerUi();
-        bookRecyclerUi.add(books);
+        BookRecyclerList bookRecyclerList = mActivity.bookRecyclerList;
+        bookRecyclerList.add(books);
 
         //Log.d("BookHolic", this.libraryName + ": hasNext - " + this.hasNext());
 
-        SearchService service = mActivity.getSearchService();
+        BookSearchService service = mActivity.getSearchService();
         boolean isFinished = service.isFinished();
 
         if (this.hasNext()) {
-            bookRecyclerUi.hideLoadProgress();
-            bookRecyclerUi.showLoadMore();
+            bookRecyclerList.hideLoadProgress();
+            bookRecyclerList.showLoadMore();
         }
         else {
             boolean isAllLastPage = service.isAllLastPage();
 
             //Log.d("BookHolic", this.libraryName + ": isFinished - " + isFinished + ", isAllLastPage - " + isAllLastPage);
             if (isFinished && isAllLastPage) {
-                bookRecyclerUi.hideLoadProgress();
-                bookRecyclerUi.hideLoadMore();
+                bookRecyclerList.hideLoadProgress();
+                bookRecyclerList.hideLoadMore();
             }
         }
 
@@ -139,7 +136,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
     @Override
     protected void onCancelled() {
         this.setSearchStatus(FAIL);
-        mActivity.getLibraryRecyclerUi().refresh();
+        mActivity.libraryRecyclerList.refresh();
     }
 
     public boolean hasNext() {
@@ -153,7 +150,8 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
     public abstract String getLibraryCode();
     public abstract LibrarySearchTask create();
 
-    @Getter @Setter LibrarySearchStatus searchStatus = INITIAL;
+    @Getter @Setter
+    public LibrarySearchStatus searchStatus = INITIAL;
     public enum LibrarySearchStatus {
         INITIAL, PROGRESS, DONE, FAIL
     }
