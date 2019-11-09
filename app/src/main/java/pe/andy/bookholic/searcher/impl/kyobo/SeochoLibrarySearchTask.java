@@ -15,10 +15,11 @@ public class SeochoLibrarySearchTask extends KyoboLibrarySearchTask {
     @Getter
     final String libraryCode = "SeochoLibrary";
     static final String libraryName = "서초구 전자도서관";
-    static final String baseUrl = "http://e-bookcafe.seocho.go.kr";
+    static final String baseUrl = "http://ebook.seocholib.or.kr";
 
     public SeochoLibrarySearchTask(MainActivity activity) {
         super(activity, libraryName, baseUrl);
+        this.setEncoding(Encoding_UTF8);
     }
 
     @Override
