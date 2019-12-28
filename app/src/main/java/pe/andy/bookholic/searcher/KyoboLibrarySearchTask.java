@@ -19,7 +19,7 @@ import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchField;
 import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.model.SortBy;
-import pe.andy.bookholic.util.EncodeUtil;
+import pe.andy.bookholic.util.EncodingUtil;
 import pe.andy.bookholic.util.JsonParser;
 import pe.andy.bookholic.util.TextSlicer;
 
@@ -46,7 +46,8 @@ public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 		String url = baseUrl + "/Kyobo_T3/Content/Content_Search.asp";
 		String keyword = query.getKeyword();
 		if (this.encoding == Encoding_EUCKR) {
-			keyword = EncodeUtil.toEuckr(query.getKeyword());
+			//keyword = EncodeUtil.toEuckr(query.getKeyword());
+			keyword = EncodingUtil.toEuckr(query.getKeyword());
 		}
 		int page = query.getPage() != null ? query.getPage().intValue() : 1;
 

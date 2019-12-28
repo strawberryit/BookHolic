@@ -20,7 +20,7 @@ import pe.andy.bookholic.MainActivity;
 import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchField;
 import pe.andy.bookholic.model.SearchQuery;
-import pe.andy.bookholic.util.EncodeUtil;
+import pe.andy.bookholic.util.EncodingUtil;
 import pe.andy.bookholic.util.JsonParser;
 
 public abstract class EpyrusLibrarySearchTask extends LibrarySearchTask {
@@ -48,7 +48,8 @@ public abstract class EpyrusLibrarySearchTask extends LibrarySearchTask {
     protected Response request(SearchQuery query) throws IOException {
 
         String url = this.baseUrl + "/book/searchlist.asp";
-        String keyword = EncodeUtil.toEuckr(query.getKeyword());
+        //String keyword = EncodeUtil.toEuckr(query.getKeyword());
+        String keyword = EncodingUtil.toEuckr(query.getKeyword());
         String page = query.getPage() != null ? query.getPage().toString() : "1";
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder()

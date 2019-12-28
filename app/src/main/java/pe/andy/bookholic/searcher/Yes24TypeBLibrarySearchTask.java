@@ -21,7 +21,7 @@ import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchField;
 import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.model.SortBy;
-import pe.andy.bookholic.util.EncodeUtil;
+import pe.andy.bookholic.util.EncodingUtil;
 import pe.andy.bookholic.util.JsonParser;
 import pe.andy.bookholic.util.TextSlicer;
 
@@ -56,7 +56,7 @@ public abstract class Yes24TypeBLibrarySearchTask extends LibrarySearchTask {
         HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder()
                 .addQueryParameter("page_num", query.getPageString())
                 .addQueryParameter("srch_order", "total")
-                .addEncodedQueryParameter("src_key", EncodeUtil.toEuckr(query.getKeyword()));
+                .addEncodedQueryParameter("src_key", EncodingUtil.toEuckr(query.getKeyword()));
 
         OkHttpClient client = new OkHttpClient();
         Request req = new Request.Builder()

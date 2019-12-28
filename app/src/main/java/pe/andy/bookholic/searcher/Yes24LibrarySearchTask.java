@@ -20,7 +20,7 @@ import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchField;
 import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.model.SortBy;
-import pe.andy.bookholic.util.EncodeUtil;
+import pe.andy.bookholic.util.EncodingUtil;
 import pe.andy.bookholic.util.JsonParser;
 
 public abstract class Yes24LibrarySearchTask extends LibrarySearchTask {
@@ -57,7 +57,7 @@ public abstract class Yes24LibrarySearchTask extends LibrarySearchTask {
                 .addQueryParameter("page_num", query.getPageString())
                 .addQueryParameter("keyoption2", this.getField(query))
                 .addQueryParameter("sort", this.getSortBy(query))
-                .addEncodedQueryParameter("keyword", EncodeUtil.toEuckr(query.getKeyword()));
+                .addEncodedQueryParameter("keyword", EncodingUtil.toEuckr(query.getKeyword()));
 
         OkHttpClient client = new OkHttpClient();
         Request req = new Request.Builder()
