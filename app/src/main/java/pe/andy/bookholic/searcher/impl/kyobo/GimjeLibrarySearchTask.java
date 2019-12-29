@@ -12,7 +12,7 @@ public class GimjeLibrarySearchTask extends KyoboLibrarySearchTask {
     @Getter
     final String libraryCode = "GimjeLibrary";
     static final String libraryName = "김제시립도서관";
-    static final String baseUrl = "http://ebook.gjl.or.kr:8000";
+    static final String baseUrl = "http://ebook-gjl.gimje.go.kr:8000";
 
     public GimjeLibrarySearchTask(MainActivity activity) {
         super(activity, libraryName, baseUrl);
