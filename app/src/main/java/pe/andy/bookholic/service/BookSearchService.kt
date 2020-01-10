@@ -4,7 +4,7 @@ import pe.andy.bookholic.MainActivity
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.searcher.LibrarySearchTask
 import pe.andy.bookholic.searcher.impl.*
-import pe.andy.bookholic.searcher.impl.bookcube.JinjuLibrarySearchTask
+import pe.andy.bookholic.searcher.impl.bookcube.JinjuLibrarySearcher
 import pe.andy.bookholic.searcher.impl.epyrus.YangCheonLibrarySearchTask
 import pe.andy.bookholic.searcher.impl.kyobo.*
 import pe.andy.bookholic.searcher.impl.yes24.*
@@ -49,8 +49,8 @@ class BookSearchService(
                 SuncheonLibrarySearchTask(mActivity),
                 UljuLibrarySearchTask(mActivity),
                 YeongcheonLibrarySearchTask(mActivity),
-                JinjuLibrarySearchTask(mActivity),
-                GwangYangLibrarySearchTask(mActivity)
+                GwangYangLibrarySearchTask(mActivity),
+                JinjuLibrarySearcher(mActivity)
         )
     }
 

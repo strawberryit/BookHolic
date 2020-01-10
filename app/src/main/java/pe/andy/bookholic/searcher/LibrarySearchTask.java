@@ -31,6 +31,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
 
     @Getter
     public String libraryName;
+    @Getter
     protected String baseUrl;
     protected SearchQuery mQuery;
     public SearchQuery getQuery() { return this.mQuery; }
