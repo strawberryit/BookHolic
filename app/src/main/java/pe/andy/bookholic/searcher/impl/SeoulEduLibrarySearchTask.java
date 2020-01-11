@@ -1,6 +1,7 @@
 package pe.andy.bookholic.searcher.impl;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -8,9 +9,8 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.lang.ref.SoftReference;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -58,6 +58,8 @@ public class SeoulEduLibrarySearchTask extends LibrarySearchTask {
             return query.getField().toString();
     }
 
+    private FastDateFormat formatter = FastDateFormat.getInstance("yyyyMMdd");
+
     @Override
     protected Response request(SearchQuery query) throws IOException {
 
@@ -65,7 +67,9 @@ public class SeoulEduLibrarySearchTask extends LibrarySearchTask {
         String url = baseUrl + "/wsearch/search_result.php";
         String keyword = query.getEncodedKeyword("EUC-KR");
 
-        String endDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        Calendar cal = Calendar.getInstance();
+        String endDate = formatter.format(cal.getTime());
+
         int startCount = (query.getPage() - 1) * 5;
         RequestBody formBody = new FormBody.Builder()
                 .add("sort", "RANK")
