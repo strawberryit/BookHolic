@@ -41,7 +41,7 @@ public class SeoulLibrarySearchTask extends LibrarySearchTask {
 
     @Override
     protected Integer getField(SearchQuery query) {
-        return SearchField.ZeroIndexSearchField.getValue(query.getField());
+        return SearchField.ZeroIndexSearchField.Companion.getValue(query.getField());
     }
 
     @Override

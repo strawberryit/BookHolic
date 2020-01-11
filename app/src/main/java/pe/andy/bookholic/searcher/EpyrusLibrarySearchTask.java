@@ -41,7 +41,7 @@ public abstract class EpyrusLibrarySearchTask extends LibrarySearchTask {
 
     @Override
     protected String getField(SearchQuery query) {
-        return SearchField.EpyrusLibrarySearchField.getValue(query.getField());
+        return SearchField.EpyrusLibrarySearchField.Companion.getValue(query.getField());
     }
 
     @Override

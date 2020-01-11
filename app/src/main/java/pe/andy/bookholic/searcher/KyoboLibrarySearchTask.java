@@ -33,11 +33,11 @@ public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 	@SuppressWarnings("unchecked")
 	@Override
 	protected Integer getField(SearchQuery query) {
-		return SearchField.ZeroIndexSearchField.getValue(query.getField());
+		return SearchField.ZeroIndexSearchField.Companion.getValue(query.getField());
 	}
 	
 	String getSortBy(SearchQuery query) {
-		return SortBy.KyoboLibrarySortBy.getValue(query.getSortBy());
+		return SortBy.KyoboLibrarySortBy.Companion.getValue(query.getSortBy());
 	}
 
 	@Override
