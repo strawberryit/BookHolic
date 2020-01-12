@@ -1,19 +1,21 @@
 package pe.andy.bookholic.ui
 
+import android.content.Context
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import pe.andy.bookholic.MainActivity
 import pe.andy.bookholic.adapter.BookAdapter
 import pe.andy.bookholic.databinding.MainActivityBinding
 import pe.andy.bookholic.model.Ebook
+import pe.andy.bookholic.service.BookSearchService
 
 class BookRecyclerList(
-        private val mActivity: MainActivity,
-        private val binding: MainActivityBinding
+        mContext: Context,
+        private val binding: MainActivityBinding,
+        searchService: BookSearchService
         ) {
 
     var books = mutableListOf<Ebook>()
-    var bookAdapter: BookAdapter = BookAdapter(mActivity, books)
+    var bookAdapter: BookAdapter = BookAdapter(mContext, books)
 
     init {
         with(binding.bookRecyclerview) {
@@ -26,7 +28,7 @@ class BookRecyclerList(
             hideLoadMore()
             showLoadProgress()
 
-            mActivity.searchService.apply {
+            searchService.apply {
                 search(this.query!!, false)
             }
         }

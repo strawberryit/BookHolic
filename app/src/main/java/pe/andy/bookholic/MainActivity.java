@@ -9,11 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 
-import java.util.List;
-
 import lombok.Getter;
 import pe.andy.bookholic.databinding.MainActivityBinding;
-import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.model.SearchField;
 import pe.andy.bookholic.model.SearchQuery;
 import pe.andy.bookholic.model.SortBy;
@@ -22,8 +19,6 @@ import pe.andy.bookholic.ui.BookRecyclerList;
 import pe.andy.bookholic.ui.LibraryRecyclerList;
 import pe.andy.bookholic.ui.ScrollToTopButton;
 import pe.andy.bookholic.ui.SearchDoneSnackBar;
-
-import static pe.andy.bookholic.util.CollectionUtil.listOf;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
         searchService = new BookSearchService(this);
 
-        libraryRecyclerList = new LibraryRecyclerList(this, this.mBinding);
-        bookRecyclerList = new BookRecyclerList(this, mBinding);
+        libraryRecyclerList = new LibraryRecyclerList(this, this.mBinding, searchService);
+        bookRecyclerList = new BookRecyclerList(this, mBinding, searchService);
         scrollToTopButton = new ScrollToTopButton(this.mBinding);
         searchDoneSnackBar = new SearchDoneSnackBar(this.mBinding);
 
@@ -101,49 +96,6 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
 
         searchService.cancelAll();
-    }
-
-    List<Ebook> generateTestBooks() {
-        Ebook b1 = new Ebook("테스트 도서관")
-                .setSeq("1234")
-                .setTitle("인프라 엔지니어의 교과서-시스템 구축과 관리편 테스트")
-                .setAuthor("기술평론사 편집부")
-                .setPublisher("길벗")
-                .setLibraryName("테스트 도서관")
-                .setPlatform("교보문고")
-                .setThumbnailUrl("http://seoullib.barob.co.kr/resources/images/Lsize/PRD000115946.jpg")
-                .setUrl("http://elib.seoul.go.kr/ebooks/detail.do?no=PRD000115946")
-                .setCountTotal(5)
-                .setCountRent(2)
-                .setDate("2018-01-01");
-
-        Ebook b2 = new Ebook("테스트 도서관")
-                .setSeq("1234")
-                .setTitle("인프라 엔지니어의 교과서-시스템 구축과 관리편")
-                .setAuthor("기술평론사 편집부")
-                .setPublisher("길벗")
-                .setLibraryName("테스트 도서관")
-                .setPlatform("교보문고")
-                .setThumbnailUrl("http://elib.seoul.go.kr/resources/images/YES24/Lsize/8638926.jpg")
-                .setUrl("http://elib.seoul.go.kr/ebooks/detail.do?no=PRD000115946")
-                .setCountTotal(5)
-                .setCountRent(5)
-                .setDate("2018-01-01");
-
-        Ebook b3 = new Ebook("테스트 도서관")
-                .setSeq("1234")
-                .setTitle("인프라 엔지니어의 교과서-시스템 구축과 관리편")
-                .setAuthor("기술평론사 편집부")
-                .setPublisher("길벗")
-                .setLibraryName("테스트 도서관")
-                .setPlatform("교보문고")
-                .setThumbnailUrl("http://elib.seoul.go.kr/resources/images/YES24/Lsize/7042064.jpg")
-                .setUrl("http://elib.seoul.go.kr/ebooks/detail.do?no=PRD000115946")
-                .setCountTotal(5)
-                .setCountRent(5)
-                .setDate("2018-01-01");
-
-        return listOf(b1, b2, b3, b1, b2, b3);
     }
 
 }
