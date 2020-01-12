@@ -19,10 +19,10 @@ class BookColor(mContext: Context) {
         return with(platform) {
             when {
                 contains("교보") -> bgGreen
-                contains("북큐브") -> bgOrange
                 contains("예스24") || contains("YES24", false) -> bgLightBlue
                 contains("메키아") || contains("MEKIA", false) -> bgPurple
-                contains("ECO") -> bgMaroon
+                contains("ECO") || contains("YB") -> bgMaroon
+                contains("OPMS") -> bgOrange
                 else -> bgGray
             }
         }

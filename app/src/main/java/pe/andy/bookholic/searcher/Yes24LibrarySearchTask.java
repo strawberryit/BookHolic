@@ -41,11 +41,11 @@ public abstract class Yes24LibrarySearchTask extends LibrarySearchTask {
     @SuppressWarnings("unchecked")
     @Override
     protected String getField(SearchQuery query) {
-        return SearchField.Yes24LibrarySearchField.getValue(query.getField());
+        return SearchField.Yes24LibrarySearchField.Companion.getValue(query.getField());
     }
 
     String getSortBy(SearchQuery query) {
-        return SortBy.Yes24LibrarySortBy.getValue(query.getSortBy());
+        return SortBy.Yes24LibrarySortBy.Companion.getValue(query.getSortBy());
     }
 
     @Override

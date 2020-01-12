@@ -2,10 +2,14 @@ package pe.andy.bookholic.searcher.impl.kyobo;
 
 import org.jsoup.nodes.Document;
 
+import java.io.IOException;
 import java.lang.ref.SoftReference;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.Getter;
 import pe.andy.bookholic.MainActivity;
+import pe.andy.bookholic.model.Ebook;
 import pe.andy.bookholic.searcher.KyoboLibrarySearchTask;
 import pe.andy.bookholic.searcher.LibrarySearchTask;
 import pe.andy.bookholic.util.JsonParser;
@@ -36,5 +40,17 @@ public class SeochoLibrarySearchTask extends KyoboLibrarySearchTask {
 
         text = doc.select(".total_count").text();
         this.resultPageCount = JsonParser.parseOnlyInt(text);
+    }
+
+    @Override
+    protected List<Ebook> parse(String html) throws IOException {
+        List<Ebook> ebooks = super.parse(html);
+        ebooks = ebooks.stream()
+                .map(ebook -> {
+                    ebook.platform = "교보문고";
+                    return ebook;
+                })
+                .collect(Collectors.toList());
+        return ebooks;
     }
 }
