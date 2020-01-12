@@ -45,8 +45,18 @@ public class YeouiDigitalLibrarySearchTask extends Yes24LibrarySearchTask {
             ebook.setThumbnailUrl(	baseUrl + JsonParser.getAttrOfFirstElement(e, "li.list_thumb > a > img", "src"));
 
             Elements info = e.select("li.list_info > dl").select("dt, dd");
-            ebook.setPlatform(		RegExUtils.replacePattern(JsonParser.getAttrOfFirstElement(info.get(0), "img", "src"),
-                    "(.*_|\\.gif)", ""));
+
+            String platform = RegExUtils.replacePattern(JsonParser.getAttrOfFirstElement(info.get(0), "img", "src"),
+                    "(.*_|\\.gif)", "");
+
+            switch(platform) {
+                case "BC":
+                    platform = "북큐브"; break;
+                case "KYOBO":
+                    platform = "교보문고"; break;
+            }
+            ebook.setPlatform(platform);
+
             ebook.setTitle(			JsonParser.getTextOfFirstElement(info.get(1), "a"));
 
 
