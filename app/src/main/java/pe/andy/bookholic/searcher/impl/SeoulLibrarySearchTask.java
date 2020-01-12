@@ -49,12 +49,12 @@ public class SeoulLibrarySearchTask extends LibrarySearchTask {
 
         String url = baseUrl + "/ebooks/ContentsSearch.do";
         String keyword = query.getKeyword();
-        int page = query.getPage() != null ? query.getPage().intValue() : 0;
+        String page = query.getPageString();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
         urlBuilder.addQueryParameter("libCode", Integer.toString(111314));
         urlBuilder.addQueryParameter("searchKeyword", keyword);
-        urlBuilder.addQueryParameter("currentCount", Integer.toString(page));
+        urlBuilder.addQueryParameter("currentCount", page);
         urlBuilder.addQueryParameter("searchOption", Integer.toString(getField(query)));
         urlBuilder.addQueryParameter("pageCount", Integer.toString(20));
         urlBuilder.addQueryParameter("userId", "nologin");

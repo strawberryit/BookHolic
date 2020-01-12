@@ -53,7 +53,7 @@ public class GangdongLibrarySearchTask extends LibrarySearchTask {
     protected Response request(SearchQuery query) throws IOException {
 
         String url = baseUrl + "/search/";
-        String keyword = query.getEncodedKeyword("EUC-KR");
+        String keyword = query.getEucKRKeyword();
 
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder()
                 .addQueryParameter("srch_order", this.getField(query))

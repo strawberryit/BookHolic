@@ -65,7 +65,7 @@ public class SeoulEduLibrarySearchTask extends LibrarySearchTask {
 
         //String url = baseUrl + "/SeoulEduEbookLibraryMobileWeb/eduLib/ebook/result/ebookSearchListXmlResult.jsp";
         String url = baseUrl + "/wsearch/search_result.php";
-        String keyword = query.getEncodedKeyword("EUC-KR");
+        String keyword = query.getEucKRKeyword();
 
         Calendar cal = Calendar.getInstance();
         String endDate = formatter.format(cal.getTime());

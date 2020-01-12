@@ -49,14 +49,14 @@ public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 			//keyword = EncodeUtil.toEuckr(query.getKeyword());
 			keyword = EncodingUtil.toEuckr(query.getKeyword());
 		}
-		int page = query.getPage() != null ? query.getPage().intValue() : 1;
+		String page = query.getPageString();
 
 		HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
 		urlBuilder.addQueryParameter("search_product_cd", "001");
 		urlBuilder.addQueryParameter("content_all", "Y");
 		urlBuilder.addQueryParameter("search_type", Integer.toString(this.getField(query)));
 		urlBuilder.addQueryParameter("order_key", this.getSortBy(query));
-		urlBuilder.addQueryParameter("now_page", Integer.toString(query.getPage()));
+		urlBuilder.addQueryParameter("now_page", page);
 		urlBuilder.addQueryParameter("layout", Integer.toString(2));
 		urlBuilder.addEncodedQueryParameter("search_keyword", keyword);
 

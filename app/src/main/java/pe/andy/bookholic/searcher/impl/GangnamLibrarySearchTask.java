@@ -67,7 +67,7 @@ public class GangnamLibrarySearchTask extends LibrarySearchTask {
     protected Response request(SearchQuery query) throws IOException {
 
         String url = this.baseUrl + "/books/book_info.asp";
-        String keyword = query.getEncodedKeyword("EUC-KR");
+        String keyword = query.getEucKRKeyword();
 
         HttpUrl.Builder builder = HttpUrl.parse(url).newBuilder()
                 .addQueryParameter("page_num", query.getPageString())

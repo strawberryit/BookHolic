@@ -50,7 +50,7 @@ public abstract class EpyrusLibrarySearchTask extends LibrarySearchTask {
         String url = this.baseUrl + "/book/searchlist.asp";
         //String keyword = EncodeUtil.toEuckr(query.getKeyword());
         String keyword = EncodingUtil.toEuckr(query.getKeyword());
-        String page = query.getPage() != null ? query.getPage().toString() : "1";
+        String page = query.getPageString();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder()
                 .addQueryParameter("SearchOption", this.getField(query))

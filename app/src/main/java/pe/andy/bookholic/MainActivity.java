@@ -79,12 +79,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("BookHolic", "onQueryTextSubmit");
                 searchView.clearFocus();
 
-                SearchQuery sQuery = SearchQuery.builder()
-                        .field(SearchField.TITLE)
-                        .keyword(query.trim())
-                        .page(1)
-                        .sortBy(SortBy.TITLE)
-                        .build();
+                SearchQuery sQuery = new SearchQuery(
+                        query.trim(),
+                        SearchField.TITLE,
+                        SortBy.TITLE);
 
                 searchService.search(sQuery);
                 return true;
