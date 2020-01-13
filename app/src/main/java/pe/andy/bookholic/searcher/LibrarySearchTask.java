@@ -112,7 +112,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
 
         //Log.d("BookHolic", this.libraryName + ": hasNext - " + this.hasNext());
 
-        BookSearchService service = mActivity.getSearchService();
+        BookSearchService service = mActivity.searchService;
         boolean isFinished = service.isFinished();
 
         if (this.hasNext()) {
@@ -130,7 +130,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
         }
 
         if (isFinished) {
-            mActivity.getSearchDoneSnackBar().show();
+            mActivity.searchDoneSnackBar.show();
         }
     }
 
