@@ -35,50 +35,53 @@ class LibraryAdapter(
 
     override fun onBindViewHolder(holder: LibraryViewHolder, position: Int) {
         val library = libraries[position]
+        holder.bind(library)
+    }
 
-        with(holder.binding) {
-            libraryName.text = library.libraryName
-            libraryIcon.visibility = GONE
-            searchProgress.visibility = GONE
-            searchDone.visibility = GONE
-            searchFail.visibility = GONE
+    inner class LibraryViewHolder(itemView: View, val binding: LibraryItemBinding)
+        : RecyclerView.ViewHolder(itemView) {
 
-            when (library.searchStatus) {
-                PROGRESS -> searchProgress
-                DONE ->
-                    if (library.resultCount > 0) {
-                        searchDone
-                    } else {
-                        libraryIcon
-                    }
-                FAIL -> searchFail
-                else -> libraryIcon
-            }.apply {
-                visibility = VISIBLE
-            }
+        fun bind(library: LibrarySearchTask) {
 
-            // UI를 초기화
-            libraryName.setTextColor(textDefault)
-            searchCount.visibility = GONE
+            with(binding) {
+                libraryName.text = library.libraryName
+                libraryIcon.visibility = GONE
+                searchProgress.visibility = GONE
+                searchDone.visibility = GONE
+                searchFail.visibility = GONE
 
-            // 검색이 끝나면 검색결과에 따른 처리
-            if (library.searchStatus == DONE) {
-                when(library.resultCount) {
-                    0 -> libraryName.setTextColor(textMuted)
-                    else -> {
-                        with(searchCount) {
-                            text = library.resultCount.toString()
-                            setTextColor(Color.WHITE)
-                            visibility = VISIBLE
+                when (library.searchStatus) {
+                    PROGRESS -> searchProgress
+                    DONE ->
+                        if (library.resultCount > 0) {
+                            searchDone
+                        } else {
+                            libraryIcon
+                        }
+                    FAIL -> searchFail
+                    else -> libraryIcon
+                }.run {
+                    visibility = VISIBLE
+                }
+
+                // UI를 초기화
+                libraryName.setTextColor(textDefault)
+                searchCount.visibility = GONE
+
+                // 검색이 끝나면 검색결과에 따른 처리
+                if (library.searchStatus == DONE) {
+                    when(library.resultCount) {
+                        0 -> libraryName.setTextColor(textMuted)
+                        else -> {
+                            with(searchCount) {
+                                text = library.resultCount.toString()
+                                setTextColor(Color.WHITE)
+                                visibility = VISIBLE
+                            }
                         }
                     }
                 }
             }
         }
     }
-
-    inner class LibraryViewHolder(
-            itemView: View,
-            val binding: LibraryItemBinding
-    ) : RecyclerView.ViewHolder(itemView)
 }

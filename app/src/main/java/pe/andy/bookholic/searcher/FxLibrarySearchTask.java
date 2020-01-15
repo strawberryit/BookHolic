@@ -96,8 +96,8 @@ public abstract class FxLibrarySearchTask extends LibrarySearchTask {
 
         // Title, Url
         Element elem = li.select(".subject a").first();
-        ebook.setTitle(elem.text())
-                .setUrl(this.baseUrl + elem.attr("href"));
+        ebook.setTitle(elem.text());
+        ebook.setUrl(this.baseUrl + elem.attr("href"));
 
         Elements items = li.select(".info .i1 li");
 
@@ -111,10 +111,10 @@ public abstract class FxLibrarySearchTask extends LibrarySearchTask {
                 RegExUtils.replaceAll(platform, "(공급 : | \\(.+?\\)|네트웍스| 전자책)", "")
         );
 
-        ebook.setAuthor(author)
-                .setPublisher(publisher)
-                .setDate(date)
-                .setPlatform(platform);
+        ebook.setAuthor(author);
+        ebook.setPublisher(publisher);
+        ebook.setDate(date);
+        ebook.setPlatform(platform);
 
 
         items = li.select(".info .i2 li");
