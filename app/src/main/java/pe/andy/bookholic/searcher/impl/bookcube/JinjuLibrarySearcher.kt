@@ -6,14 +6,14 @@ import pe.andy.bookholic.searcher.LibrarySearchTask
 import java.lang.ref.SoftReference
 
 class JinjuLibrarySearcher(
-        activity: MainActivity,
-        libraryName: String = "진주시립도서관",
-        baseUrl: String = "http://125.135.250.131:8080"
+        activity: MainActivity
 ) : FxLibrarySearchTask(
-        activity,
-        libraryName,
-        baseUrl)
-{
+        activity, libraryName, baseUrl) {
+
+    companion object {
+        const val libraryName = "진주시립도서관"
+        const val baseUrl = "http://125.135.250.131:8080"
+    }
 
     override fun getLibraryCode() = "JinjuLibrary"
 

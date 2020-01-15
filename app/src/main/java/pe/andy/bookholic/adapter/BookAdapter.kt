@@ -29,44 +29,12 @@ class BookAdapter(
         return BookViewHolder(binding.root, binding)
     }
 
-    override fun getItemCount(): Int {
-        return this.books.size
-    }
+    override fun getItemCount(): Int
+            = this.books.size
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         val book = this.books[position]
-
-        val binding = holder.binding
-
-        with(book) {
-            binding.title.text = title
-            binding.author.text = author
-            binding.publisher.text = publisher
-            binding.date.text = date
-            binding.platform.text = platform
-            binding.platform.setBackgroundColor(bookColor.getPlatformBGColor(platform))
-            binding.libraryName.text = libraryName
-        }
-
-        // Visibility
-        val visibility = if (book.countTotal < 0) View.INVISIBLE else View.VISIBLE
-        binding.rentCount.visibility = visibility
-
-        // Color
-        val color = bookColor.getRentStatusColor(book)
-        binding.rentCount.setBackgroundColor(color)
-
-        // Text
-        val count = book.countRent.toString() + " / " + book.countTotal
-        binding.rentCount.text = count
-
-        // Bind onclick url
-        binding.bookView.setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(book.url))
-            mContext.startActivity(browserIntent)
-        }
-
-        loadThumbnail(binding.thumbnail, book.thumbnailUrl)
+        holder.bind(book)
     }
 
     private fun loadThumbnail(view: ImageView, url: String) {
@@ -79,5 +47,41 @@ class BookAdapter(
         }
     }
 
-    inner class BookViewHolder(itemView: View, val binding: BookItemBinding) : RecyclerView.ViewHolder(itemView)
+    inner class BookViewHolder(itemView: View, val binding: BookItemBinding) : RecyclerView.ViewHolder(itemView) {
+
+        fun bind(book: Ebook) {
+
+            with(binding) {
+                title.text = book.title
+                author.text = book.author
+                publisher.text = book.publisher
+                date.text = book.date
+                platform.text = book.platform
+                platform.setBackgroundColor(bookColor.getPlatformBGColor(book.platform))
+                libraryName.text = book.libraryName
+
+                rentCount.apply {
+                    // Visibility
+                    visibility = when {
+                        book.countTotal < 0 -> View.INVISIBLE
+                        else -> View.VISIBLE
+                    }
+
+                    // Color
+                    setBackgroundColor(bookColor.getRentStatusColor(book))
+
+                    // Text
+                    text = "${book.countRent} / ${book.countTotal}"
+                }
+
+                // Bind onclick url
+                bookView.setOnClickListener {
+                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(book.url))
+                    mContext.startActivity(browserIntent)
+                }
+
+                loadThumbnail(thumbnail, book.thumbnailUrl)
+            }
+        }
+    }
 }
