@@ -81,6 +81,7 @@ public abstract class EpyrusLibrarySearchTask extends LibrarySearchTask {
         this.resultCount = JsonParser.parseOnlyInt(
                 elems.get(1).select("tr > td").get(1).select("div").get(1).select("div").first().text()
         );
+        this.resultPageCount = ((int) (this.resultCount - 1) / 8) + 1;
 
         List<Ebook> ebooks = elems.stream()
                 .skip(2)
