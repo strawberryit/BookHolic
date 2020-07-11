@@ -40,8 +40,12 @@ public class SeoulLibrarySearchTask extends LibrarySearchTask {
     }
 
     @Override
-    protected Integer getField(SearchQuery query) {
-        return SearchField.ZeroIndexSearchField.Companion.getValue(query.getField());
+    protected String getField(SearchQuery query) {
+        return Integer.toString(
+                SearchField.ZeroIndexSearchField
+                        .Companion
+                        .getValue(query.getField())
+        );
     }
 
     @Override
@@ -55,7 +59,7 @@ public class SeoulLibrarySearchTask extends LibrarySearchTask {
         urlBuilder.addQueryParameter("libCode", Integer.toString(111314));
         urlBuilder.addQueryParameter("searchKeyword", keyword);
         urlBuilder.addQueryParameter("currentCount", page);
-        urlBuilder.addQueryParameter("searchOption", Integer.toString(getField(query)));
+        urlBuilder.addQueryParameter("searchOption", getField(query));
         urlBuilder.addQueryParameter("pageCount", Integer.toString(20));
         urlBuilder.addQueryParameter("userId", "nologin");
         urlBuilder.addQueryParameter("sType", "TT");

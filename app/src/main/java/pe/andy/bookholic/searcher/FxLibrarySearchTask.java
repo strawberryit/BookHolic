@@ -31,8 +31,12 @@ public abstract class FxLibrarySearchTask extends LibrarySearchTask {
     }
 
     @Override
-    protected Integer getField(SearchQuery query) {
-        return SearchField.ZeroIndexSearchField.Companion.getValue(query.getField());
+    protected String getField(SearchQuery query) {
+        return Integer.toString(
+                SearchField.ZeroIndexSearchField
+                        .Companion
+                        .getValue(query.getField())
+        );
     }
 
     @Override

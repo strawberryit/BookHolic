@@ -144,7 +144,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
         return this.resultCount > 0 && this.mQuery.getPage() < this.resultPageCount;
     }
 
-    protected abstract <T> T getField(SearchQuery query);
+    protected abstract String getField(SearchQuery query);
     protected abstract Response request(SearchQuery query) throws IOException;
     protected abstract List<Ebook> parse(final String resp) throws IOException;
 

@@ -3,8 +3,8 @@ package pe.andy.bookholic.library
 import pe.andy.bookholic.MainActivity
 import pe.andy.bookholic.model.Library
 import pe.andy.bookholic.model.Library.Companion.Encoding_EUCKR
+import pe.andy.bookholic.searcher.KyoboLibrarySearchTask
 import pe.andy.bookholic.searcher.LibrarySearchTask
-import pe.andy.bookholic.searcher.impl.kyobo.KyoboLibrarySearchTaskImpl
 import java.lang.ref.SoftReference
 
 object KyoboLibraryGroup {
@@ -27,7 +27,7 @@ object KyoboLibraryGroup {
 
     fun getLibraryList(mainActivity: MainActivity): List<LibrarySearchTask> {
         return libraries.map {
-            SoftReference(KyoboLibrarySearchTaskImpl(mainActivity = mainActivity, library = it))
+            SoftReference(KyoboLibrarySearchTask(mainActivity = mainActivity, library = it))
                     .get()!!
         }
     }
