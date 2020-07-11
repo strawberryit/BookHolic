@@ -196,11 +196,11 @@ public class SeoulEduLibrarySearchTask extends LibrarySearchTask {
 
         List<String> infos = li.select(".list-body .info-elib span").eachText();
         Queue<String> queue = new LinkedList<>(infos);
-        ebook.setAuthor(queue.poll());
+        ebook.setAuthor(Str.def(queue.poll()));
         queue.poll();
-        ebook.setPublisher(queue.poll());
+        ebook.setPublisher(Str.def(queue.poll()));
         queue.poll();
-        ebook.setDate(queue.poll());
+        ebook.setDate(Str.def(queue.poll()));
 
         String platform = "";
         infos = li.select(".list-body .meta span").eachText();
