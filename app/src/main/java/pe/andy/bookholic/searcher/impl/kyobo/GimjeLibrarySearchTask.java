@@ -16,8 +16,6 @@ public class GimjeLibrarySearchTask extends KyoboLibrarySearchTask {
 
     public GimjeLibrarySearchTask(MainActivity activity) {
         super(activity, libraryName, baseUrl);
-
-        this.setEncoding(Encoding_UTF8);
     }
 
     @Override

@@ -23,7 +23,6 @@ public class SeochoLibrarySearchTask extends KyoboLibrarySearchTask {
 
     public SeochoLibrarySearchTask(MainActivity activity) {
         super(activity, libraryName, baseUrl);
-        this.setEncoding(Encoding_UTF8);
     }
 
     @Override

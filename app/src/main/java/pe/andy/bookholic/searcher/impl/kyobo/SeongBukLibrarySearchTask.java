@@ -16,6 +16,8 @@ public class SeongBukLibrarySearchTask extends KyoboLibrarySearchTask {
 
     public SeongBukLibrarySearchTask(MainActivity activity) {
         super(activity, libraryName, baseUrl);
+
+        this.setEncoding(Encoding_EUCKR);
     }
 
     @Override

@@ -16,6 +16,8 @@ public class SuncheonLibrarySearchTask extends KyoboLibrarySearchTask {
 
     public SuncheonLibrarySearchTask(MainActivity activity) {
         super(activity, libraryName, baseUrl);
+
+        this.setEncoding(Encoding_EUCKR);
     }
 
     @Override

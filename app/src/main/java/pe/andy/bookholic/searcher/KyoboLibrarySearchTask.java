@@ -27,7 +27,7 @@ public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 
 	public KyoboLibrarySearchTask(MainActivity activity, String libraryName, String baseUrl) {
 		super(activity, libraryName, baseUrl);
-		this.setEncoding(Encoding_EUCKR);
+		this.setEncoding(Encoding_UTF8);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -45,10 +45,6 @@ public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 
 		String url = baseUrl + "/Kyobo_T3/Content/Content_Search.asp";
 		String keyword = query.getKeyword();
-		if (this.encoding == Encoding_EUCKR) {
-			//keyword = EncodeUtil.toEuckr(query.getKeyword());
-			keyword = EncodingUtil.toEuckr(query.getKeyword());
-		}
 		String page = query.getPageString();
 
 		HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
@@ -58,6 +54,10 @@ public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 		urlBuilder.addQueryParameter("order_key", this.getSortBy(query));
 		urlBuilder.addQueryParameter("now_page", page);
 		urlBuilder.addQueryParameter("layout", Integer.toString(2));
+
+		if (Encoding_EUCKR.equals(this.encoding)) {
+			keyword = EncodingUtil.toEuckr(query.getKeyword());
+		}
 		urlBuilder.addEncodedQueryParameter("search_keyword", keyword);
 
 		String accept = this.encoding == Encoding_UTF8 ? "text/html; charset=utf-8" : "text/html; charset=euc-kr";

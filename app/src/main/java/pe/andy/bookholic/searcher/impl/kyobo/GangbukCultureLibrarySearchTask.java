@@ -16,6 +16,8 @@ public class GangbukCultureLibrarySearchTask extends KyoboLibrarySearchTask {
 
     public GangbukCultureLibrarySearchTask(MainActivity activity) {
         super(activity, libraryName, baseUrl);
+
+        this.setEncoding(Encoding_EUCKR);
     }
 
     @Override
