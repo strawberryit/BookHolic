@@ -1,5 +1,7 @@
 package pe.andy.bookholic.searcher;
 
+import android.text.TextUtils;
+
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -119,6 +121,11 @@ public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 				ebook.setCountRent(JsonParser.parseOnlyInt(slicer.pop()));
 				ebook.setCountTotal(JsonParser.parseOnlyInt(slicer.pop()));
 
+				// 서초구 전자도서관 예외처리
+				if (TextUtils.equals(this.getLibraryCode(), "SeochoLibrary")) {
+					ebook.platform = "교보문고";
+				}
+
 				return ebook;
 			})
 			.collect(Collectors.toList());
@@ -127,7 +134,18 @@ public abstract class KyoboLibrarySearchTask extends LibrarySearchTask {
 	}
 
 	protected void parseMetaCount (Document doc) {
-		this.resultCount = JsonParser.parseOnlyInt(doc.select(".list_sorting span.list_result strong").text());
-		this.resultPageCount = JsonParser.parseOnlyInt(doc.select(".list_sorting span.total_count").text());
+		if (TextUtils.equals(this.getLibraryCode(), "SeochoLibrary")) {
+			// 서초구 전자도서관 예외처리
+			String text = JsonParser.getTextOfFirstElement(doc, "p.result")
+					.replaceAll(".*\\(", "");
+			this.resultCount = JsonParser.parseOnlyInt(text);
+
+			text = doc.select(".total_count").text();
+			this.resultPageCount = JsonParser.parseOnlyInt(text);
+		}
+		else {
+			this.resultCount = JsonParser.parseOnlyInt(doc.select(".list_sorting span.list_result strong").text());
+			this.resultPageCount = JsonParser.parseOnlyInt(doc.select(".list_sorting span.total_count").text());
+		}
 	}
 }

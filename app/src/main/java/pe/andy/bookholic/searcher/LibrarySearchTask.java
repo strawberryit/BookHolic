@@ -41,7 +41,7 @@ public abstract class LibrarySearchTask extends AsyncTask<Void, Void, List<Ebook
     protected static final Charset Encoding_EUCKR = Charset.forName("EUC-KR");
 
     @Getter @Setter
-    Charset encoding = Encoding_UTF8;
+    public Charset encoding = Encoding_UTF8;
 
     public LibrarySearchTask(MainActivity activity, String libraryName, String baseUrl) {
         this.mActivity = activity;
