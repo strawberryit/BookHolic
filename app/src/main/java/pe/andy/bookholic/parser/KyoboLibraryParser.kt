@@ -9,7 +9,7 @@ import pe.andy.bookholic.util.TextSlicer
 
 object KyoboLibraryParser: LibraryParser, StringExtension {
 
-    fun parse(element: Element, library: Library): Ebook {
+    override fun parse(element: Element, library: Library): Ebook {
         return Ebook(library.name).apply {
             // URL
             element.selectFirst("p.pic a")?.also {
@@ -61,7 +61,7 @@ object KyoboLibraryParser: LibraryParser, StringExtension {
         }
     }
 
-    fun parseMetaCount(doc: Document, library: Library): Pair<Int, Int> {
+    override fun parseMetaCount(doc: Document, library: Library): Pair<Int, Int> {
         when(library.code) {
             // 서초구 전자도서관 예외처리
             "SeochoLibrary" -> {

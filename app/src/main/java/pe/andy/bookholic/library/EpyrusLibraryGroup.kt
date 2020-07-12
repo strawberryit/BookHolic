@@ -3,8 +3,8 @@ package pe.andy.bookholic.library
 import pe.andy.bookholic.MainActivity
 import pe.andy.bookholic.model.Library
 import pe.andy.bookholic.model.Library.Companion.Encoding_EUCKR
+import pe.andy.bookholic.searcher.EpyrusLibrarySearchTask
 import pe.andy.bookholic.searcher.LibrarySearchTask
-import pe.andy.bookholic.searcher.impl.epyrus.EpyrusLibrarySearchTaskImpl
 import java.lang.ref.SoftReference
 
 object EpyrusLibraryGroup {
@@ -14,7 +14,7 @@ object EpyrusLibraryGroup {
 
     fun getLibraryList(mainActivity: MainActivity): List<LibrarySearchTask> {
         return libraries.map {
-            SoftReference(EpyrusLibrarySearchTaskImpl(mainActivity = mainActivity, library = it))
+            SoftReference(EpyrusLibrarySearchTask(mainActivity = mainActivity, library = it))
                     .get()!!
         }
     }
