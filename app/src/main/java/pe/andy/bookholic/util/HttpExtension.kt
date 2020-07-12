@@ -13,6 +13,13 @@ interface HttpExtension {
         return this
     }
 
+    fun HttpUrl.Builder.addEncodedQueryParameters(map: Map<String, Any>): HttpUrl.Builder {
+        map.forEach { (key, value) ->
+            addEncodedQueryParameter(key, value.toString())
+        }
+        return this
+    }
+
     val Encoding_EUCKR: Charset
         get() = Charset.forName("EUC-KR")
 
