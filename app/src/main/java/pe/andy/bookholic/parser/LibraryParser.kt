@@ -55,6 +55,12 @@ interface LibraryParser {
                 ?: ""
     }
 
+    fun Elements.htmlAt(index: Int): String {
+        return elementAtOrNull(index)
+                ?.html()
+                ?: ""
+    }
+
     fun parse(element: Element, library: Library): Ebook
 
     fun parseMetaCount(doc: Document, library: Library): Pair<Int, Int>

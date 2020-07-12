@@ -2,7 +2,7 @@ package pe.andy.bookholic.model
 
 import java.nio.charset.Charset
 
-class Library(
+open class Library(
         val name: String,
         val url: String,
         val code: String = "",
