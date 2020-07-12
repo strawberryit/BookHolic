@@ -2,12 +2,12 @@ package pe.andy.bookholic.service
 
 import pe.andy.bookholic.MainActivity
 import pe.andy.bookholic.library.EpyrusLibraryGroup
+import pe.andy.bookholic.library.FxLibraryGroup
 import pe.andy.bookholic.library.KyoboLibraryGroup
 import pe.andy.bookholic.library.Yes24LibraryGroup
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.searcher.LibrarySearchTask
 import pe.andy.bookholic.searcher.impl.*
-import pe.andy.bookholic.searcher.impl.bookcube.JinjuLibrarySearcher
 import java.util.*
 import java.util.stream.Collectors
 
@@ -26,14 +26,14 @@ class BookSearchService(
                 KyoboLibraryGroup.getLibraryList(mActivity),
                 Yes24LibraryGroup.getLibraryList(mActivity),
                 EpyrusLibraryGroup.getLibraryList(mActivity),
+                FxLibraryGroup.getLibraryList(mActivity),
                 listOf(
                         SeoulLibrarySearchTask(mActivity),
                         GangdongLibrarySearchTask(mActivity),
                         GangnamLibrarySearchTask(mActivity),
                         SeoulEduLibrarySearchTask(mActivity),
                         GyunggidoCyberLibrarySearchTask(mActivity),
-                        UijeongbuLibrarySearchTask(mActivity),
-                        JinjuLibrarySearcher(mActivity)
+                        UijeongbuLibrarySearchTask(mActivity)
                 )
         ).flatMap { it.toMutableList() }
     }
