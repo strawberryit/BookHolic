@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" >
+
     <data class="BookItemBinding">
     </data>
 
@@ -9,17 +12,25 @@
         android:id="@+id/book_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginVertical="7dp"
+
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="7dp"
+
         android:foreground="?android:attr/selectableItemBackground"
+
         android:clickable="true"
-        card_view:cardCornerRadius="5dp">
+        android:focusable="true"
+
+        card_view:cardCornerRadius="5dp"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="10dp"
-            android:paddingHorizontal="10dp"
+
+            android:padding="10dp"
             >
 
             <!-- 제목 -->
@@ -29,13 +40,14 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
 
-                android:text="인프라 엔지니어 인프라 엔지니어 인프라 엔지니어 인프라 엔지니어"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="bold"
                 android:maxLines="1"
                 android:ellipsize="end"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+
+                tools:text="인프라 엔지니어 인프라 엔지니어 인프라 엔지니어 인프라 엔지니어"
                 />
 
             <ImageView
@@ -49,13 +61,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title"
                 />
-                <!--
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                -->
-
-
-
 
             <!-- 저자 -->
             <TextView
@@ -114,7 +119,6 @@
                 app:layout_constraintLeft_toRightOf="@id/labelPublisher"
                 app:layout_constraintTop_toBottomOf="@id/author"
                 app:layout_constraintBaseline_toBaselineOf="@id/labelPublisher"
-
                 />
 
             <!-- 출판일 -->
@@ -194,7 +198,6 @@
 
                 app:layout_constraintLeft_toRightOf="@id/thumbnail"
                 app:layout_constraintTop_toBottomOf="@id/platform"
-
                 />
 
             <TextView
@@ -202,9 +205,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:paddingHorizontal="5dp"
-                android:paddingVertical="3dp"
-                android:text="(1/2)"
+
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
 
                 android:background="@color/colorPrimary"
                 android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
@@ -214,6 +219,8 @@
                 app:layout_constraintLeft_toRightOf="@id/labelCount"
                 app:layout_constraintTop_toBottomOf="@id/platform"
                 app:layout_constraintBaseline_toBaselineOf="@id/labelCount"
+
+                tools:text="(1/2)"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

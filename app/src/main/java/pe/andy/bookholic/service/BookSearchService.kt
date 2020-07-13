@@ -1,20 +1,20 @@
 package pe.andy.bookholic.service
 
 import pe.andy.bookholic.MainActivity
+import pe.andy.bookholic.library.EpyrusLibraryGroup
+import pe.andy.bookholic.library.FxLibraryGroup
+import pe.andy.bookholic.library.KyoboLibraryGroup
+import pe.andy.bookholic.library.Yes24LibraryGroup
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.searcher.LibrarySearchTask
 import pe.andy.bookholic.searcher.impl.*
-import pe.andy.bookholic.searcher.impl.bookcube.JinjuLibrarySearcher
-import pe.andy.bookholic.searcher.impl.epyrus.YangCheonLibrarySearchTask
-import pe.andy.bookholic.searcher.impl.kyobo.*
-import pe.andy.bookholic.searcher.impl.yes24.*
 import java.util.*
 import java.util.stream.Collectors
 
 class BookSearchService(
         val mActivity: MainActivity
 ) {
-    var query: SearchQuery? = null
+    lateinit var query: SearchQuery
     var tasks: List<LibrarySearchTask>
 
     init {
@@ -22,36 +22,20 @@ class BookSearchService(
     }
 
     private fun makeTasks(): List<LibrarySearchTask> {
-        return mutableListOf(
-                SeoulLibrarySearchTask(mActivity),
-                YeouiDigitalLibrarySearchTask(mActivity),
-                GangdongLibrarySearchTask(mActivity),
-                GangnamLibrarySearchTask(mActivity),
-                SeochoLibrarySearchTask(mActivity),
-                SeodaemonLibrarySearchTask(mActivity),
-                YeosuLibrarySearcher(mActivity),
-                GyeongjuLibrarySearchTask(mActivity),
-                YangCheonLibrarySearchTask(mActivity),
-                SeoulEduLibrarySearchTask(mActivity),
-                GyunggidoCyberLibrarySearchTask(mActivity),
-                GyeongsanLibrarySearchTask(mActivity),
-                AnsanLibrarySearchTask(mActivity),
-                GangJinLibrarySearchTask(mActivity),
-                UijeongbuLibrarySearchTask(mActivity),
-                JeollanamdoLibrarySearchTask(mActivity),
-                GimpoLibrarySearchTask(mActivity),
-                SeongBukLibrarySearchTask(mActivity),
-                AsanCityLibrarySearchTask(mActivity),
-                IncheonSeoguLibrarySearchTask(mActivity),
-                SongLimLibrarySearchTask(mActivity),
-                GangbukCultureLibrarySearchTask(mActivity),
-                GimjeLibrarySearchTask(mActivity),
-                SuncheonLibrarySearchTask(mActivity),
-                UljuLibrarySearchTask(mActivity),
-                YeongcheonLibrarySearchTask(mActivity),
-                GwangYangLibrarySearchTask(mActivity),
-                JinjuLibrarySearcher(mActivity)
-        )
+        return listOf(
+                KyoboLibraryGroup.getLibraryList(mActivity),
+                Yes24LibraryGroup.getLibraryList(mActivity),
+                EpyrusLibraryGroup.getLibraryList(mActivity),
+                FxLibraryGroup.getLibraryList(mActivity),
+                listOf<LibrarySearchTask>(
+                        SeoulLibrarySearchTask(mActivity),
+                        GangdongLibrarySearchTask(mActivity),
+                        GangnamLibrarySearchTask(mActivity),
+                        SeoulEduLibrarySearchTask(mActivity),
+                        GyunggidoCyberLibrarySearchTask(mActivity),
+                        UijeongbuLibrarySearchTask(mActivity)
+                )
+        ).flatMap { it.toMutableList() }
     }
 
     fun search(query: SearchQuery) {
@@ -75,14 +59,14 @@ class BookSearchService(
         mActivity.bookRecyclerList.clear()
 
         tasks = makeTasks()
-        query?.page = 1
-        setQueryOnAllTask(query!!)
+        query.page = 1
+        setQueryOnAllTask(query)
 
         mActivity.libraryRecyclerList.set(tasks)
     }
 
     private fun searchProceeding() {
-        setQueryOnAllTask(query!!)
+        setQueryOnAllTask(query)
 
         tasks = tasks.stream()
                 .parallel()
@@ -92,8 +76,9 @@ class BookSearchService(
                     try {
                         t.cancel(true)
 
-                        var nextTask = t.create()
-                        nextTask.query = query?.nextPage()
+                        val nextTask = t.create().apply {
+                            query = query.nextPage()
+                        }
 
                         mActivity.libraryRecyclerList.refresh()
                         nextTask

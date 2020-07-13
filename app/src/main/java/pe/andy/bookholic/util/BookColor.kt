@@ -23,6 +23,9 @@ class BookColor(mContext: Context) {
                 contains("메키아") || contains("MEKIA", false) -> bgPurple
                 contains("ECO") || contains("YB") -> bgMaroon
                 contains("OPMS") -> bgOrange
+                contains("BC")
+                        || contains("북큐브")
+                        || contains("Bookcube", false) -> bgOrange
                 else -> bgGray
             }
         }
