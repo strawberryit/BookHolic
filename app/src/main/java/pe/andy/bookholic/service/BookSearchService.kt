@@ -76,8 +76,10 @@ class BookSearchService(
                     try {
                         t.cancel(true)
 
-                        val nextTask = t.create().apply {
-                            query = query.nextPage()
+                        val nextTask = t.create().let {
+                            it.query = query
+                            it.query.page += 1
+                            it
                         }
 
                         mActivity.libraryRecyclerList.refresh()
