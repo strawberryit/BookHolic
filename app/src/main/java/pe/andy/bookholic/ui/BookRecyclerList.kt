@@ -29,7 +29,7 @@ class BookRecyclerList(
             showLoadProgress()
 
             searchService.apply {
-                search(this.query!!, false)
+                search(this.query, false)
             }
         }
     }

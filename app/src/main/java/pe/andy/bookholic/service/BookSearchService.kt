@@ -14,7 +14,7 @@ import java.util.stream.Collectors
 class BookSearchService(
         val mActivity: MainActivity
 ) {
-    var query: SearchQuery? = null
+    lateinit var query: SearchQuery
     var tasks: List<LibrarySearchTask>
 
     init {
@@ -27,7 +27,7 @@ class BookSearchService(
                 Yes24LibraryGroup.getLibraryList(mActivity),
                 EpyrusLibraryGroup.getLibraryList(mActivity),
                 FxLibraryGroup.getLibraryList(mActivity),
-                listOf(
+                listOf<LibrarySearchTask>(
                         SeoulLibrarySearchTask(mActivity),
                         GangdongLibrarySearchTask(mActivity),
                         GangnamLibrarySearchTask(mActivity),
@@ -59,14 +59,14 @@ class BookSearchService(
         mActivity.bookRecyclerList.clear()
 
         tasks = makeTasks()
-        query?.page = 1
-        setQueryOnAllTask(query!!)
+        query.page = 1
+        setQueryOnAllTask(query)
 
         mActivity.libraryRecyclerList.set(tasks)
     }
 
     private fun searchProceeding() {
-        setQueryOnAllTask(query!!)
+        setQueryOnAllTask(query)
 
         tasks = tasks.stream()
                 .parallel()
@@ -76,8 +76,9 @@ class BookSearchService(
                     try {
                         t.cancel(true)
 
-                        var nextTask = t.create()
-                        nextTask.query = query?.nextPage()
+                        val nextTask = t.create().apply {
+                            query = query.nextPage()
+                        }
 
                         mActivity.libraryRecyclerList.refresh()
                         nextTask
