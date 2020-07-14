@@ -54,7 +54,7 @@ object GyunggidoCyberLibraryParser: LibraryParser, StringExtension {
 
         val count = doc.select("p.resultCount b")
                 .text()
-                .toIntOnly(-1)
+                .toIntOnly(0)
 
         val page = doc.select(".btn-paging.last")
                 .attr("onclick")
