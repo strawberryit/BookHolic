@@ -8,7 +8,6 @@ import pe.andy.bookholic.model.SearchQuery
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
-import java.net.SocketTimeoutException
 import java.nio.charset.Charset
 
 
@@ -33,14 +32,16 @@ abstract class LibrarySearchTask(
     }
 
     override fun doInBackground(vararg params: Void?): List<Ebook>? {
+
         try {
-            val responseText = request(query).readText(encoding)
-            if (responseText.isNotEmpty()) {
-                return parse(responseText)
+            request(query).use {
+                val responseText = it.readText(encoding)
+                if (responseText.isNotEmpty()) {
+                    return parse(responseText)
+                }
             }
-        } catch (e: SocketTimeoutException) {
-        } catch (e: IOException) {
         } catch (e: Exception) {
+            e.printStackTrace()
         }
 
         isError = true
