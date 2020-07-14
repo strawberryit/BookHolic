@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit.SECONDS
 
 class SeoulLibrarySearchTask(
         activity: MainActivity
-) : LibrarySearchTask(activity, library.name, library.url),
+) : LibrarySearchTask(activity, library),
         StringExtension, HttpExtension {
 
     init {
@@ -29,7 +29,8 @@ class SeoulLibrarySearchTask(
     companion object {
         val library = Library(
                 name = "서울시 전자도서관",
-                url = "http://elib.seoul.go.kr")
+                url = "http://elib.seoul.go.kr",
+                code = "SeoulLibrary")
     }
 
     override fun getLibraryCode() = library.code

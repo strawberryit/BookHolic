@@ -21,7 +21,7 @@ import java.lang.ref.SoftReference
 
 class GangnamLibrarySearchTask(
         activity: MainActivity
-) : LibrarySearchTask(activity, library.name, library.url),
+) : LibrarySearchTask(activity, library),
         StringExtension, HttpExtension {
 
     init {

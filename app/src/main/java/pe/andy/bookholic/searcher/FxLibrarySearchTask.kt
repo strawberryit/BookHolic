@@ -19,8 +19,8 @@ import java.lang.ref.SoftReference
 
 class FxLibrarySearchTask(
         val mainActivity: MainActivity,
-        val library: Library
-) : LibrarySearchTask(mainActivity, library.name, library.url),
+        library: Library
+) : LibrarySearchTask(mainActivity, library),
         StringExtension, HttpExtension {
 
     init {

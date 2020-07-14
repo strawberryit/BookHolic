@@ -21,7 +21,7 @@ import java.util.*
 
 class GangdongLibrarySearchTask(
         activity: MainActivity
-) : LibrarySearchTask(activity, library.name, library.url),
+) : LibrarySearchTask(activity, library),
         StringExtension, HttpExtension {
 
     init {

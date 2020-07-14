@@ -20,7 +20,7 @@ import java.lang.ref.SoftReference
 
 class GyunggidoCyberLibrarySearchTask(
         activity: MainActivity
-) : LibrarySearchTask(activity, library.name, library.url),
+) : LibrarySearchTask(activity, library),
         StringExtension, HttpExtension {
 
     init {

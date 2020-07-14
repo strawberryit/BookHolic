@@ -4,6 +4,7 @@ import android.os.AsyncTask
 import okhttp3.Response
 import pe.andy.bookholic.MainActivity
 import pe.andy.bookholic.model.Ebook
+import pe.andy.bookholic.model.Library
 import pe.andy.bookholic.model.SearchQuery
 import java.io.BufferedReader
 import java.io.IOException
@@ -13,9 +14,8 @@ import java.nio.charset.Charset
 
 abstract class LibrarySearchTask(
         protected var mActivity: MainActivity,
-        var libraryName: String,
-        protected var baseUrl: String
-) : AsyncTask<Void?, Void?, List<Ebook>?>() {
+        val library: Library
+) : AsyncTask<Void?, Void?, List<Ebook>?>(), Comparable<LibrarySearchTask> {
 
     lateinit var query: SearchQuery
 
@@ -98,6 +98,14 @@ abstract class LibrarySearchTask(
 
     operator fun hasNext(): Boolean {
         return resultCount > 0 && query.page < resultPageCount
+    }
+
+    override fun compareTo(other: LibrarySearchTask): Int {
+        return when {
+            this.library.code == "SeoulLibrary" -> -1
+            other.library.code == "SeoulLibrary" -> 1
+            else -> this.library.name.compareTo(other.library.name)
+        }
     }
 
     protected abstract fun getField(query: SearchQuery): String

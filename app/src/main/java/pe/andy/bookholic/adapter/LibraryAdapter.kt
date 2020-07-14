@@ -44,7 +44,7 @@ class LibraryAdapter(
         fun bind(library: LibrarySearchTask) {
 
             with(binding) {
-                libraryName.text = library.libraryName
+                libraryName.text = library.library.name
                 libraryIcon.visibility = GONE
                 searchProgress.visibility = GONE
                 searchDone.visibility = GONE

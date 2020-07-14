@@ -20,8 +20,8 @@ import java.lang.ref.SoftReference
 
 class EpyrusLibrarySearchTask(
         val mainActivity: MainActivity,
-        val library: Library
-): LibrarySearchTask(mainActivity, library.name, library.url),
+        library: Library
+): LibrarySearchTask(mainActivity, library),
         StringExtension, HttpExtension {
 
     init {

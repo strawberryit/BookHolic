@@ -34,8 +34,9 @@ class BookSearchService(
                         SeoulEduLibrarySearchTask(mActivity),
                         GyunggidoCyberLibrarySearchTask(mActivity),
                         UijeongbuLibrarySearchTask(mActivity)
-                )
-        ).flatMap { it.toMutableList() }
+                ))
+                .flatMap { it.toMutableList() }
+                .sorted()
     }
 
     fun search(query: SearchQuery) {

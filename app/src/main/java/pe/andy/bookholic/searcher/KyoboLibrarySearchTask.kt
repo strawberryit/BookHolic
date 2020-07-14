@@ -21,8 +21,8 @@ import java.lang.ref.SoftReference
 
 class KyoboLibrarySearchTask(
         val mainActivity: MainActivity,
-        val library: Library
-): LibrarySearchTask(mainActivity, library.name, library.url),
+        library: Library
+): LibrarySearchTask(mainActivity, library),
         StringExtension, HttpExtension {
 
     init {

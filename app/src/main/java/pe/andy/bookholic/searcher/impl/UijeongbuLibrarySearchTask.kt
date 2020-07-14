@@ -19,7 +19,7 @@ import java.util.*
 
 class UijeongbuLibrarySearchTask(
         activity: MainActivity
-) : LibrarySearchTask(activity, library.name, library.url),
+) : LibrarySearchTask(activity, library),
         StringExtension, HttpExtension {
 
     init {

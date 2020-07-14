@@ -25,7 +25,7 @@ import java.lang.ref.SoftReference
 class Yes24LibrarySearchTask(
         val mainActivity: MainActivity,
         val yes24Library: Yes24Library
-) : LibrarySearchTask(mainActivity, yes24Library.name, yes24Library.url),
+) : LibrarySearchTask(mainActivity, yes24Library),
         StringExtension, HttpExtension {
 
     init {
