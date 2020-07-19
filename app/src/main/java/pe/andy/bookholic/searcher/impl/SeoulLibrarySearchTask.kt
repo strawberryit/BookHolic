@@ -11,7 +11,7 @@ import pe.andy.bookholic.model.SearchField.ZeroIndexSearchField.Companion.getVal
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.searcher.LibrarySearchTask
 import pe.andy.bookholic.util.HttpExtension
-import pe.andy.bookholic.util.JsonParser
+import pe.andy.bookholic.util.JsonExtension
 import pe.andy.bookholic.util.StringExtension
 import java.io.IOException
 import java.lang.ref.SoftReference
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit.SECONDS
 class SeoulLibrarySearchTask(
         activity: MainActivity
 ) : LibrarySearchTask(activity, library),
-        StringExtension, HttpExtension {
+        StringExtension, HttpExtension, JsonExtension {
 
     init {
         this.encoding = library.encoding
@@ -87,12 +87,12 @@ class SeoulLibrarySearchTask(
     }
 
     private fun parseMetaCount(json: String) {
-        resultCount = JsonParser.parseIntValue(json, "Contents", "TotalCount")
-        resultPageCount = JsonParser.parseIntValue(json, "Contents", "TotalPage")
+        resultCount = json.parseInt("/Contents/TotalCount")
+        resultPageCount = json.parseInt("/Contents/TotalPage")
     }
 
     private fun parseBooks(json: String): List<Ebook> {
-        return JsonParser.parseJsonKVList(json, "Contents", "ContentDataList")
+        return json.parseToListMap("/Contents/ContentDataList")
                 .asSequence()
                 .map { bookParser(it, library = library) }
                 .toList()
