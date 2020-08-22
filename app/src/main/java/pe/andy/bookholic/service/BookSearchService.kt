@@ -1,10 +1,7 @@
 package pe.andy.bookholic.service
 
 import pe.andy.bookholic.MainActivity
-import pe.andy.bookholic.library.EpyrusLibraryGroup
-import pe.andy.bookholic.library.FxLibraryGroup
-import pe.andy.bookholic.library.KyoboLibraryGroup
-import pe.andy.bookholic.library.Yes24LibraryGroup
+import pe.andy.bookholic.library.*
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.searcher.LibrarySearchTask
 import pe.andy.bookholic.searcher.impl.*
@@ -24,6 +21,7 @@ class BookSearchService(
     private fun makeTasks(): List<LibrarySearchTask> {
         return listOf(
                 KyoboLibraryGroup.getLibraryList(mActivity),
+                KyoboSubscriptionGroup.getLibraryList(mActivity),
                 Yes24LibraryGroup.getLibraryList(mActivity),
                 EpyrusLibraryGroup.getLibraryList(mActivity),
                 FxLibraryGroup.getLibraryList(mActivity),

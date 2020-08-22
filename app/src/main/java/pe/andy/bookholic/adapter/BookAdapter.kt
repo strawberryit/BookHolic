@@ -76,8 +76,10 @@ class BookAdapter(
 
                 // Bind onclick url
                 bookView.setOnClickListener {
-                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(book.url))
-                    mContext.startActivity(browserIntent)
+                    if (book.url.isNotEmpty()) {
+                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(book.url))
+                        mContext.startActivity(browserIntent)
+                    }
                 }
 
                 loadThumbnail(thumbnail, book.thumbnailUrl)
