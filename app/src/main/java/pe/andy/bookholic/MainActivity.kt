@@ -11,10 +11,7 @@ import pe.andy.bookholic.model.SearchField
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.model.SortBy
 import pe.andy.bookholic.service.BookSearchService
-import pe.andy.bookholic.ui.BookRecyclerList
-import pe.andy.bookholic.ui.LibraryRecyclerList
-import pe.andy.bookholic.ui.ScrollToTopButton
-import pe.andy.bookholic.ui.SearchDoneSnackBar
+import pe.andy.bookholic.ui.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var mBinding: MainActivityBinding
@@ -31,9 +28,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        searchService = BookSearchService(this)
+        searchService = BookSearchService(this, mBinding)
+
         libraryRecyclerList = LibraryRecyclerList(this, mBinding, searchService)
         bookRecyclerList = BookRecyclerList(this, mBinding, searchService)
+
         scrollToTopButton = ScrollToTopButton(mBinding)
         searchDoneSnackBar = SearchDoneSnackBar(mBinding)
 

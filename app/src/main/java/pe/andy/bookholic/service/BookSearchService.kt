@@ -1,6 +1,7 @@
 package pe.andy.bookholic.service
 
 import pe.andy.bookholic.MainActivity
+import pe.andy.bookholic.databinding.MainActivityBinding
 import pe.andy.bookholic.library.*
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.searcher.LibrarySearchTask
@@ -9,7 +10,8 @@ import java.util.*
 import java.util.stream.Collectors
 
 class BookSearchService(
-        val mActivity: MainActivity
+        private val mActivity: MainActivity,
+        private val mBinding: MainActivityBinding
 ) {
     lateinit var query: SearchQuery
     var tasks: List<LibrarySearchTask>
@@ -18,8 +20,10 @@ class BookSearchService(
         tasks = makeTasks()
     }
 
-    private fun makeTasks(): List<LibrarySearchTask> {
+    fun makeTasks(): List<LibrarySearchTask> {
+        val includeKakaoLibrary = mBinding.libraryListSwitchKakao.isChecked
         return listOf(
+                if (includeKakaoLibrary) KakaoLibraryGroup.getLibraryList(mActivity) else emptyList(),
                 KyoboLibraryGroup.getLibraryList(mActivity),
                 KyoboSubscriptionGroup.getLibraryList(mActivity),
                 Yes24LibraryGroup.getLibraryList(mActivity),
@@ -33,6 +37,7 @@ class BookSearchService(
                         GyunggidoCyberLibrarySearchTask(mActivity),
                         UijeongbuLibrarySearchTask(mActivity)
                 ))
+                .filter { it.isNotEmpty() }
                 .flatMap { it.toMutableList() }
                 .sorted()
     }

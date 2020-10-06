@@ -70,6 +70,8 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlin_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+
 }
 repositories {
     mavenCentral()

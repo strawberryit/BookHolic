@@ -102,6 +102,8 @@ abstract class LibrarySearchTask(
 
     override fun compareTo(other: LibrarySearchTask): Int {
         return when {
+            this.library.code == "Kakao" -> -2
+            other.library.code == "Kakao" -> 2
             this.library.code == "SeoulLibrary" -> -1
             other.library.code == "SeoulLibrary" -> 1
             else -> this.library.name.compareTo(other.library.name)
