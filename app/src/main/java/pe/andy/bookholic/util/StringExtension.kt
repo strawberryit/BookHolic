@@ -23,4 +23,14 @@ interface StringExtension {
             ""
         }
     }
+
+    fun String.encodeToUTF8(): String {
+        return try {
+            URLEncoder.encode(this, Charsets.UTF_8.name())
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+            ""
+        }
+    }
 }
