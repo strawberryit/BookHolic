@@ -19,7 +19,7 @@
 
             android:padding="4dp"
 
-            android:tint="#9FA2A4"
+            app:tint="#9FA2A4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_lens_black_24dp" />
@@ -36,7 +36,7 @@
             android:id="@+id/search_done"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:tint="#009688"
+            app:tint="#009688"
             app:layout_constraintStart_toEndOf="@id/search_progress"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_check_circle_black_24dp" />
@@ -45,7 +45,7 @@
             android:id="@+id/search_fail"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:tint="#EF5350"
+            app:tint="#EF5350"
             app:layout_constraintStart_toEndOf="@id/search_done"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_error_black_24dp" />
