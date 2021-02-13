@@ -19,7 +19,7 @@ object KyoboLibraryGroup {
             Library(name = "인천서구 구립도서관", url = "http://ebook.issl.go.kr:8080"),
             Library(name = "서대문 이진아 기념도서관", url = "http://ebook.sdm.or.kr"),
             Library(name = "서초구 전자도서관", url = "http://ebook.seocholib.or.kr", code = "SeochoLibrary"),
-            Library(name = "성북정보도서관", url = "http://elibrary.sblib.seoul.kr", encoding = Encoding_EUCKR),
+            Library(name = "성북정보도서관", url = "http://elibrary.sblib.seoul.kr"),
             Library(name = "인천동구 송림도서관", url = "http://songlimlib.icdonggu.go.kr:8091"),
             Library(name = "순천시립도서관", url = "http://libebook.sc.go.kr", encoding = Encoding_EUCKR),
             Library(name = "여수시립도서관", url = "http://yslibeb.yeosu.go.kr"),
