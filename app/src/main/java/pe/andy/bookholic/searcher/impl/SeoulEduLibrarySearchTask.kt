@@ -59,7 +59,15 @@ class SeoulEduLibrarySearchTask(
                 .post(getFormBody(query))
                 .build()
 
-        return trustAllSslClient(OkHttpClient())
+        // TLS 1.0 지원
+        val compatableClient = OkHttpClient().newBuilder()
+                .connectionSpecs(listOf(
+                        ConnectionSpec.MODERN_TLS,
+                        ConnectionSpec.COMPATIBLE_TLS
+                ))
+                .build()
+
+        return trustAllSslClient(compatableClient)
                 .newCall(req)
                 .execute()
     }
