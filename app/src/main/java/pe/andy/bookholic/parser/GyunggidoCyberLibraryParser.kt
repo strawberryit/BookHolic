@@ -42,7 +42,7 @@ object GyunggidoCyberLibraryParser: LibraryParser, StringExtension {
                     .replace(".*: ".toRegex(), "")
 
             // Count
-            val text: String = wrapper.select(".btnArea span").text()
+            val text: String = wrapper.select(".btnArea span:first-child").text()
             TextSlicer(text, "/").let {
                 countRent = it.pop().toIntOnly(-1)
                 countTotal = it.pop().toIntOnly(-1)
