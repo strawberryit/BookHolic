@@ -18,6 +18,7 @@ import pe.andy.bookholic.parser.Yes24TypeAParser
 import pe.andy.bookholic.parser.Yes24TypeBParser
 import pe.andy.bookholic.util.EncodingUtil.Companion.toEuckr
 import pe.andy.bookholic.util.HttpExtension
+import pe.andy.bookholic.util.SslTrust
 import pe.andy.bookholic.util.StringExtension
 import java.io.IOException
 import java.lang.ref.SoftReference
@@ -56,7 +57,7 @@ class Yes24LibrarySearchTask(
                 .userAgent(userAgent)
                 .build()
 
-        return OkHttpClient()
+        return SslTrust.trustAllSslClient(OkHttpClient())
                 .newCall(req)
                 .execute()
     }
@@ -86,6 +87,11 @@ class Yes24LibrarySearchTask(
     private fun getUrlTypeB(query: SearchQuery): String {
         val url = "${yes24Library.url}/search/"
 
+        val keyword = when(yes24Library.encoding) {
+            Encoding_EUCKR -> query.keyword.encodeToEucKR()
+            else -> query.keyword
+        }
+
         return HttpUrl.parse(url)!!.newBuilder()
                 .addQueryParameters(
                     mapOf(
@@ -93,7 +99,7 @@ class Yes24LibrarySearchTask(
                         "srch_order" to "total"
                     )
                 )
-                .addEncodedQueryParameter("src_key", query.keyword.encodeToEucKR())
+                .addEncodedQueryParameter("src_key", keyword)
                 .build()
                 .toString()
     }
