@@ -23,7 +23,10 @@ object KyoboLibraryGroup {
             Library(name = "인천동구 송림도서관", url = "http://songlimlib.icdonggu.go.kr:8091"),
             Library(name = "순천시립도서관", url = "http://libebook.sc.go.kr", encoding = Encoding_EUCKR),
             Library(name = "여수시립도서관", url = "http://yslibeb.yeosu.go.kr"),
-            Library(name = "의정부 전자도서관", url = "https://ebook.uilib.go.kr")
+            Library(name = "의정부 전자도서관", url = "https://ebook.uilib.go.kr"),
+            Library(name = "노원구 구립도서관", url = "http://eb.nowonlib.kr"),
+            Library(name = "중구 통합전자도서관", url = "http://ebook.e-junggulib.or.kr:8080"),
+            Library(name = "중랑구립정보도서관", url = "http://ebookjungnanglib.seoul.kr:8080/"),
     )
 
     fun getLibraryList(mainActivity: MainActivity): List<LibrarySearchTask> {
