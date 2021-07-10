@@ -14,7 +14,6 @@ object KyoboLibraryGroup {
             Library(name = "강북문화정보도서관", url = "http://ebook.gblib.or.kr", encoding = Encoding_EUCKR),
             Library(name = "강진군 전자도서관", url = "http://www.gjlib.go.kr:8080"),
             Library(name = "김제시립도서관", url = "http://ebook-gjl.gimje.go.kr:8000"),
-            Library(name = "김포시도서관", url = "http://ebook.gimpo.go.kr:8091"),
             Library(name = "광양시립도서관", url = "http://ebook.gwangyang.go.kr:81"),
             Library(name = "인천서구 구립도서관", url = "http://ebook.issl.go.kr:8080"),
             Library(name = "서대문 이진아 기념도서관", url = "http://ebook.sdm.or.kr"),
