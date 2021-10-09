@@ -1,6 +1,6 @@
 package pe.andy.bookholic.searcher
 
-import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -58,7 +58,7 @@ class EpyrusLibrarySearchTask(
         val url = "${library.url}/book/searchlist.asp"
 
         val keyword = query.keyword.encodeToEucKR()
-        return HttpUrl.parse(url)!!.newBuilder()
+        return url.toHttpUrlOrNull()!!.newBuilder()
                 .addQueryParameters(mapOf(
                         "SearchOption" to getField(query),
                         "pagenum" to query.page.toString()

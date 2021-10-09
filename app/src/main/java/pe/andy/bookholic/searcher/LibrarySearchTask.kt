@@ -52,9 +52,9 @@ abstract class LibrarySearchTask(
     @Suppress("unused")
     fun Response.readText(encoding: Charset): String {
         return if (encoding == Encoding_UTF8) {
-            return this.body()?.string() ?: ""
+            return this.body?.string() ?: ""
         } else {
-            BufferedReader(InputStreamReader(this.body()?.byteStream(), encoding))
+            BufferedReader(InputStreamReader(this.body?.byteStream(), encoding))
                     .lineSequence()
                     .joinToString("\n")
         }

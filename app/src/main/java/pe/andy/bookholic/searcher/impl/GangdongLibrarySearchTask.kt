@@ -1,6 +1,6 @@
 package pe.andy.bookholic.searcher.impl
 
-import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -9,7 +9,6 @@ import org.jsoup.nodes.Document
 import pe.andy.bookholic.MainActivity
 import pe.andy.bookholic.model.Ebook
 import pe.andy.bookholic.model.Library
-import pe.andy.bookholic.model.Library.Companion.Encoding_EUCKR
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.parser.GangdongLibraryParser
 import pe.andy.bookholic.searcher.LibrarySearchTask
@@ -62,12 +61,14 @@ class GangdongLibrarySearchTask(
     private fun getUrl(query: SearchQuery): String {
         val url = "${library.url}/search/"
 
-        return HttpUrl.parse(url)!!.newBuilder()
-                .addQueryParameters(mapOf(
-                        "srch_order" to getField(query),
-                        "page_num" to query.page.toString(),
-                        "view" to "10"
-                ))
+        return url.toHttpUrlOrNull()!!.newBuilder()
+            .addQueryParameters(
+                mapOf(
+                    "srch_order" to getField(query),
+                    "page_num" to query.page.toString(),
+                    "view" to "10"
+                )
+            )
                 .addEncodedQueryParameter("src_key", query.keyword.encodeToEucKR())
                 .build()
                 .toString()

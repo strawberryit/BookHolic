@@ -1,6 +1,6 @@
 package pe.andy.bookholic.searcher
 
-import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -71,14 +71,14 @@ class Yes24LibrarySearchTask(
 
     private fun getUrlTypeA(query: SearchQuery): String {
         val url = "${yes24Library.url}/ebook/search_list.asp"
-        return HttpUrl.parse(url)!!.newBuilder()
-                .addQueryParameters(
-                    mapOf(
-                        "page_num" to query.page.toString(),
-                        "keyoption2" to getField(query),
-                        "sort" to getSortBy(query)
-                    )
+        return url.toHttpUrlOrNull()!!.newBuilder()
+            .addQueryParameters(
+                mapOf(
+                    "page_num" to query.page.toString(),
+                    "keyoption2" to getField(query),
+                    "sort" to getSortBy(query)
                 )
+            )
                 .addEncodedQueryParameter("keyword", toEuckr(query.keyword))
                 .build()
                 .toString()
@@ -92,13 +92,13 @@ class Yes24LibrarySearchTask(
             else -> query.keyword
         }
 
-        return HttpUrl.parse(url)!!.newBuilder()
-                .addQueryParameters(
-                    mapOf(
-                        "page_num" to query.page.toString(),
-                        "srch_order" to "total"
-                    )
+        return url.toHttpUrlOrNull()!!.newBuilder()
+            .addQueryParameters(
+                mapOf(
+                    "page_num" to query.page.toString(),
+                    "srch_order" to "total"
                 )
+            )
                 .addEncodedQueryParameter("src_key", keyword)
                 .build()
                 .toString()

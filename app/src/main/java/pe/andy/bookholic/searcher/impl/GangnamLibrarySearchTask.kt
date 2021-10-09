@@ -1,6 +1,6 @@
 package pe.andy.bookholic.searcher.impl
 
-import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -66,12 +66,14 @@ class GangnamLibrarySearchTask(
     private fun getUrl(query: SearchQuery): String {
         val url = "${library.url}/books/book_info.asp"
 
-        return HttpUrl.parse(url)!!.newBuilder()
-                .addQueryParameters(mapOf(
-                        "page_num" to query.page.toString(),
-                        "list_num" to "20",
-                        "ldav" to "off"
-                ))
+        return url.toHttpUrlOrNull()!!.newBuilder()
+            .addQueryParameters(
+                mapOf(
+                    "page_num" to query.page.toString(),
+                    "list_num" to "20",
+                    "ldav" to "off"
+                )
+            )
                 .addEncodedQueryParameters(mapOf(
                         "bsc1" to "도서검색".encodeToEucKR(),
                         "bsc2" to getField(query).encodeToEucKR(),

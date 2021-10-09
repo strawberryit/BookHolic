@@ -1,6 +1,6 @@
 package pe.andy.bookholic.searcher.impl
 
-import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -64,17 +64,19 @@ class SeoulLibrarySearchTask(
 
     private fun getUrl(query: SearchQuery): String {
         val url = "${library.url}/ebooks/ContentsSearch.do"
-        return HttpUrl.parse(url)!!.newBuilder()
-                .addQueryParameters(mapOf(
-                        "libCode" to 111314.toString(),
-                        "searchKeyword" to query.keyword,
-                        "currentCount" to query.page.toString(),
-                        "searchOption" to getField(query),
-                        "pageCount" to 20.toString(),
-                        "userId" to "nologin",
-                        "sType" to "TT",
-                        "sortOption" to 1.toString()
-                ))
+        return url.toHttpUrlOrNull()!!.newBuilder()
+            .addQueryParameters(
+                mapOf(
+                    "libCode" to 111314.toString(),
+                    "searchKeyword" to query.keyword,
+                    "currentCount" to query.page.toString(),
+                    "searchOption" to getField(query),
+                    "pageCount" to 20.toString(),
+                    "userId" to "nologin",
+                    "sType" to "TT",
+                    "sortOption" to 1.toString()
+                )
+            )
                 .build()
                 .toString()
     }

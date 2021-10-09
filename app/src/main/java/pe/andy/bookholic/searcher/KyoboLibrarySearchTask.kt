@@ -1,6 +1,6 @@
 package pe.andy.bookholic.searcher
 
-import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -61,18 +61,18 @@ class KyoboLibrarySearchTask(
     private fun getUrl(query: SearchQuery): String {
         val baseUrl = "${library.url}/Kyobo_T3/Content/Content_Search.asp"
 
-        return HttpUrl.parse(baseUrl)!!
-                .newBuilder()
-                .addQueryParameters(
-                        mapOf(
-                                "search_product_cd" to "001",
-                                "content_all" to "Y",
-                                "search_type" to getField(query),
-                                "order_key" to getSortBy(query),
-                                "now_page" to query.pageString,
-                                "layout" to 2
-                        )
+        return baseUrl.toHttpUrlOrNull()!!
+            .newBuilder()
+            .addQueryParameters(
+                mapOf(
+                    "search_product_cd" to "001",
+                    "content_all" to "Y",
+                    "search_type" to getField(query),
+                    "order_key" to getSortBy(query),
+                    "now_page" to query.pageString,
+                    "layout" to 2
                 )
+            )
                 .run {
                     val keyword = when(encoding) {
                         Encoding_EUCKR -> query.keyword.encodeToEucKR()
