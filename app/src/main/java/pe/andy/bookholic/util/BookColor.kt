@@ -7,13 +7,13 @@ import pe.andy.bookholic.model.Ebook
 
 class BookColor(mContext: Context) {
 
-    private var bgRed: Int = ContextCompat.getColor(mContext, R.color.bgRed)
-    private var bgOrange: Int = ContextCompat.getColor(mContext, R.color.bgOrange)
-    private var bgGreen: Int = ContextCompat.getColor(mContext, R.color.bgGreen)
-    private var bgMaroon: Int = ContextCompat.getColor(mContext, R.color.bgMaroon)
-    private var bgLightBlue: Int = ContextCompat.getColor(mContext, R.color.bgLightBlue)
-    private var bgPurple: Int = ContextCompat.getColor(mContext, R.color.bgPurple)
-    private var bgGray: Int = ContextCompat.getColor(mContext, R.color.bgGray)
+    var bgRed: Int = ContextCompat.getColor(mContext, R.color.bgRed)
+    var bgOrange: Int = ContextCompat.getColor(mContext, R.color.bgOrange)
+    var bgGreen: Int = ContextCompat.getColor(mContext, R.color.bgGreen)
+    var bgMaroon: Int = ContextCompat.getColor(mContext, R.color.bgMaroon)
+    var bgLightBlue: Int = ContextCompat.getColor(mContext, R.color.bgLightBlue)
+    var bgPurple: Int = ContextCompat.getColor(mContext, R.color.bgPurple)
+    var bgGray: Int = ContextCompat.getColor(mContext, R.color.bgGray)
 
     fun getPlatformBGColor(platform: String): Int {
         return with(platform) {

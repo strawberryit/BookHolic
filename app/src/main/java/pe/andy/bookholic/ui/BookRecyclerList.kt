@@ -1,6 +1,5 @@
 package pe.andy.bookholic.ui
 
-import android.content.Context
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import pe.andy.bookholic.adapter.BookAdapter
@@ -9,13 +8,12 @@ import pe.andy.bookholic.model.Ebook
 import pe.andy.bookholic.service.BookSearchService
 
 class BookRecyclerList(
-        mContext: Context,
         private val binding: MainActivityBinding,
         searchService: BookSearchService
         ) {
 
     var books = mutableListOf<Ebook>()
-    var bookAdapter: BookAdapter = BookAdapter(mContext, books)
+    var bookAdapter: BookAdapter = BookAdapter(books)
 
     init {
         with(binding.bookRecyclerview) {

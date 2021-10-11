@@ -1,9 +1,7 @@
 package pe.andy.bookholic.adapter
 
-import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
@@ -15,31 +13,31 @@ import pe.andy.bookholic.searcher.LibrarySearchTask
 import pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.*
 
 class LibraryAdapter(
-        private val mContext: Context,
         private val libraries: List<LibrarySearchTask>
 ) : RecyclerView.Adapter<LibraryAdapter.LibraryViewHolder>() {
 
-    private val textMuted = ContextCompat.getColor(mContext, R.color.textMuted)
-    private val textDefault = ContextCompat.getColor(mContext, android.R.color.tab_indicator_text)
+    var textMuted: Int = 0
+    var textDefault: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LibraryViewHolder {
         val binding = LibraryItemBinding.inflate(
-                LayoutInflater.from(mContext), parent, false)
+                LayoutInflater.from(parent.context), parent, false)
 
-        return LibraryViewHolder(binding.root, binding)
+        textMuted = ContextCompat.getColor(parent.context, R.color.textMuted)
+        textDefault = ContextCompat.getColor(parent.context, android.R.color.tab_indicator_text)
+
+        return LibraryViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
-        return libraries.size
-    }
+    override fun getItemCount(): Int = libraries.size
 
     override fun onBindViewHolder(holder: LibraryViewHolder, position: Int) {
         val library = libraries[position]
         holder.bind(library)
     }
 
-    inner class LibraryViewHolder(itemView: View, val binding: LibraryItemBinding)
-        : RecyclerView.ViewHolder(itemView) {
+    inner class LibraryViewHolder(val binding: LibraryItemBinding)
+        : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(library: LibrarySearchTask) {
 
@@ -52,12 +50,10 @@ class LibraryAdapter(
 
                 when (library.searchStatus) {
                     PROGRESS -> searchProgress
-                    DONE ->
-                        if (library.resultCount > 0) {
-                            searchDone
-                        } else {
-                            libraryIcon
-                        }
+                    DONE -> when {
+                        library.resultCount > 0 -> searchDone
+                        else -> libraryIcon
+                    }
                     FAIL -> searchFail
                     else -> libraryIcon
                 }.run {

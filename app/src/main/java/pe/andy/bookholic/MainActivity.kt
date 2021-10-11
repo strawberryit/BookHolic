@@ -5,13 +5,15 @@ import android.util.Log
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.databinding.DataBindingUtil
 import pe.andy.bookholic.databinding.MainActivityBinding
 import pe.andy.bookholic.model.SearchField
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.model.SortBy
 import pe.andy.bookholic.service.BookSearchService
-import pe.andy.bookholic.ui.*
+import pe.andy.bookholic.ui.BookRecyclerList
+import pe.andy.bookholic.ui.LibraryRecyclerList
+import pe.andy.bookholic.ui.ScrollToTopButton
+import pe.andy.bookholic.ui.SearchDoneSnackBar
 
 class MainActivity : AppCompatActivity() {
     lateinit var mBinding: MainActivityBinding
@@ -26,12 +28,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        mBinding = MainActivityBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
 
         searchService = BookSearchService(this, mBinding)
 
-        libraryRecyclerList = LibraryRecyclerList(this, mBinding, searchService)
-        bookRecyclerList = BookRecyclerList(this, mBinding, searchService)
+        libraryRecyclerList = LibraryRecyclerList(mBinding, searchService)
+        bookRecyclerList = BookRecyclerList(mBinding, searchService)
 
         scrollToTopButton = ScrollToTopButton(mBinding)
         searchDoneSnackBar = SearchDoneSnackBar(mBinding)
@@ -47,8 +50,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
         // 테스트를 위한 리스트
-        //bookRecyclerUi.add(generateTestBooks());
+        //bookRecyclerList.add(TestData.generateTestBooks());
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

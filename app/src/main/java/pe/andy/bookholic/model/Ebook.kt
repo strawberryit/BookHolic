@@ -1,6 +1,8 @@
 package pe.andy.bookholic.model
 
-data class Ebook(var libraryName: String) : Comparable<Ebook> {
+import java.io.Serializable
+
+data class Ebook(var libraryName: String) : Comparable<Ebook>, Serializable {
     var seq: String = ""
     var title: String = ""
     var author: String = ""

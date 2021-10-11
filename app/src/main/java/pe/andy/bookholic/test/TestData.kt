@@ -45,8 +45,8 @@ object TestData {
             platform = "교보문고"
             thumbnailUrl = "http://seoullib.barob.co.kr/resources/images/Lsize/PRD000115946.jpg"
             url = "http://elib.seoul.go.kr/ebooks/detail.do?no=PRD000115946"
-            countTotal = 5
-            countRent = 5
+            countTotal = -1
+            countRent = -1
             date = "2018-01-01"
         }
 

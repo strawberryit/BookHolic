@@ -1,6 +1,6 @@
 package pe.andy.bookholic.adapter
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
@@ -15,18 +15,19 @@ import pe.andy.bookholic.model.Ebook
 import pe.andy.bookholic.util.BookColor
 
 class BookAdapter(
-        private val mContext: Context,
         private var books: List<Ebook> = emptyList()
 ) : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
-    private val bookColor: BookColor = BookColor(mContext)
+    lateinit var bookColor: BookColor
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
 
         val binding = BookItemBinding.inflate(
-                LayoutInflater.from(mContext), parent, false)
+                LayoutInflater.from(parent.context), parent, false)
 
-        return BookViewHolder(binding.root, binding)
+        bookColor = BookColor(parent.context)
+
+        return BookViewHolder(binding)
     }
 
     override fun getItemCount(): Int
@@ -39,7 +40,7 @@ class BookAdapter(
 
     private fun loadThumbnail(view: ImageView, url: String) {
         try {
-            Glide.with(this.mContext)
+            Glide.with(view.context)
                     .load(url)
                     .into(view)
         } catch (ex: Exception) {
@@ -47,7 +48,7 @@ class BookAdapter(
         }
     }
 
-    inner class BookViewHolder(itemView: View, val binding: BookItemBinding) : RecyclerView.ViewHolder(itemView) {
+    inner class BookViewHolder(val binding: BookItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(book: Ebook) {
 
@@ -71,14 +72,24 @@ class BookAdapter(
                     setBackgroundColor(bookColor.getRentStatusColor(book))
 
                     // Text
+                    @SuppressLint("SetTextI18n")
                     text = "${book.countRent} / ${book.countTotal}"
+                }
+
+                header.apply {
+                    val backgroundColor = when {
+                        book.isAvailable -> bookColor.bgGreen
+                        book.countTotal < 0 -> bookColor.bgLightBlue
+                        else -> bookColor.bgRed
+                    }
+                    setBackgroundColor(backgroundColor)
                 }
 
                 // Bind onclick url
                 bookView.setOnClickListener {
                     if (book.url.isNotEmpty()) {
                         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(book.url))
-                        mContext.startActivity(browserIntent)
+                        bookView.context.startActivity(browserIntent)
                     }
                 }
 
