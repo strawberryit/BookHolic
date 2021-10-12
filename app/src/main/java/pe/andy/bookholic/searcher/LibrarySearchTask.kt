@@ -1,6 +1,7 @@
 package pe.andy.bookholic.searcher
 
 import android.os.AsyncTask
+import android.view.View
 import okhttp3.Response
 import pe.andy.bookholic.MainActivity
 import pe.andy.bookholic.model.Ebook
@@ -88,6 +89,9 @@ abstract class LibrarySearchTask(
         }
         if (isFinished) {
             mActivity.searchDoneSnackBar.show()
+
+            mActivity.mBinding.fab.visibility = View.VISIBLE
+            mActivity.mBinding.fabCancel.visibility = View.GONE
         }
     }
 

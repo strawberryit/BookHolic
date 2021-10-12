@@ -3,6 +3,7 @@ package pe.andy.bookholic
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import pe.andy.bookholic.databinding.MainActivityBinding
@@ -51,6 +52,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        mBinding.fabCancel.setOnClickListener {
+            searchService.cancelAll()
+            mBinding.fab.visibility = View.VISIBLE
+            mBinding.fabCancel.visibility = View.GONE
+        }
+
         // 테스트를 위한 리스트
         //bookRecyclerList.add(TestData.generateTestBooks());
     }
@@ -75,6 +82,10 @@ class MainActivity : AppCompatActivity() {
                             field = SearchField.TITLE,
                             sortBy = SortBy.TITLE)
                     searchService.search(sQuery)
+
+                    mBinding.fab.visibility = View.GONE
+                    mBinding.fabCancel.visibility = View.VISIBLE
+
                     return true
                 }
 
