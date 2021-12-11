@@ -16,11 +16,12 @@
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingVertical="10dp"
+            android:paddingVertical="5dp"
             android:scrollbars="vertical"
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/scroll_view_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingBottom="15dp"
@@ -160,6 +161,18 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
+
+        <ImageView
+            android:id="@+id/go_to_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/go_to_bottom"
+            android:layout_marginBottom="5dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/go_to_top"
+            />
 
         <ImageView
             android:id="@+id/go_to_top"

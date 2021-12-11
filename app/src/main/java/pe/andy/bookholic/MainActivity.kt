@@ -13,7 +13,7 @@ import pe.andy.bookholic.model.SortBy
 import pe.andy.bookholic.service.BookSearchService
 import pe.andy.bookholic.ui.BookRecyclerList
 import pe.andy.bookholic.ui.LibraryRecyclerList
-import pe.andy.bookholic.ui.ScrollToTopButton
+import pe.andy.bookholic.ui.ScrollVerticalButton
 import pe.andy.bookholic.ui.SearchDoneSnackBar
 
 class MainActivity : AppCompatActivity() {
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var libraryRecyclerList: LibraryRecyclerList
     lateinit var bookRecyclerList: BookRecyclerList
-    lateinit var scrollToTopButton: ScrollToTopButton
+    lateinit var scrollVerticalButton: ScrollVerticalButton
     lateinit var searchDoneSnackBar: SearchDoneSnackBar
     lateinit var searchView: SearchView
 
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         libraryRecyclerList = LibraryRecyclerList(mBinding, searchService)
         bookRecyclerList = BookRecyclerList(mBinding, searchService)
 
-        scrollToTopButton = ScrollToTopButton(mBinding)
+        scrollVerticalButton = ScrollVerticalButton(mBinding)
         searchDoneSnackBar = SearchDoneSnackBar(mBinding)
 
         mBinding.fab.setOnClickListener {

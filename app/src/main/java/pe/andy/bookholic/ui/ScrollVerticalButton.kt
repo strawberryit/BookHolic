@@ -5,7 +5,7 @@ import android.view.animation.AlphaAnimation
 import androidx.core.widget.NestedScrollView
 import pe.andy.bookholic.databinding.MainActivityBinding
 
-class ScrollToTopButton(private var mBinding: MainActivityBinding) {
+class ScrollVerticalButton(private var mBinding: MainActivityBinding) {
 
     private val showAnimation = AlphaAnimation(0f, 1f)
     private val hideAnimation = AlphaAnimation(1f, 0f)
@@ -14,9 +14,16 @@ class ScrollToTopButton(private var mBinding: MainActivityBinding) {
         showAnimation.duration = 500
         hideAnimation.duration = 500
 
-        mBinding.goToTop.visibility = View.GONE
-        mBinding.goToTop.setOnClickListener {
-            mBinding.nestedScrollView.smoothScrollTo(0, 0)
+        with(mBinding) {
+            goToTop.visibility = View.GONE
+            goToTop.setOnClickListener {
+                mBinding.nestedScrollView.smoothScrollTo(0, 0)
+            }
+
+            goToBottom.visibility = View.GONE
+            goToBottom.setOnClickListener {
+                nestedScrollView.smoothScrollTo(0, scrollViewContent.height)
+            }
         }
 
         mBinding.nestedScrollView.setOnScrollChangeListener {
@@ -36,18 +43,29 @@ class ScrollToTopButton(private var mBinding: MainActivityBinding) {
             else if (mBinding.goToTop.visibility == View.GONE) {
                 show()
             }
-
         }
     }
 
     private fun show() {
-        mBinding.goToTop.visibility = View.VISIBLE
-        mBinding.goToTop.animation = showAnimation
+        listOf(
+            mBinding.goToTop,
+            mBinding.goToBottom
+        )
+        .forEach {
+            it.visibility = View.VISIBLE
+            it.animation = showAnimation
+            it.startAnimation(showAnimation)
+        }
     }
 
     private fun hide() {
-        mBinding.goToTop.visibility = View.GONE
-        mBinding.goToTop.animation = hideAnimation
+        listOf(
+            mBinding.goToTop,
+            mBinding.goToBottom
+        ).forEach {
+            it.visibility = View.GONE
+            it.animation = hideAnimation
+            it.startAnimation(hideAnimation)
+        }
     }
-
 }
