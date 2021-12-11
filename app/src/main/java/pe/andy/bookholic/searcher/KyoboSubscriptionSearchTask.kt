@@ -59,13 +59,19 @@ class KyoboSubscriptionSearchTask(
     }
 
     private fun getUrl(query: SearchQuery): String {
-        val baseUrl = "${library.url}/search/searchList.ink"
+        val baseUrl = listOf(
+                library.url,
+                library.path,
+                "/search/searchList.ink"
+            )
+            .filter { it.isNotEmpty() }
+            .joinToString("")
 
         return baseUrl.toHttpUrlOrNull()!!
             .newBuilder()
+            .addEncodedQueryParameter("schClst", "ctts%2Cautr%2Cpbcm")
             .addQueryParameters(
                 mapOf(
-                    "schClst" to "ctts,autr,pbcm",
                     "schDvsn" to "000",
                     "clstCheck" to "ctts",
                     "clstCheck" to "autr",

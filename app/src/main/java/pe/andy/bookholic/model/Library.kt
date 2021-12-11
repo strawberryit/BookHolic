@@ -5,6 +5,7 @@ import java.nio.charset.Charset
 open class Library(
         val name: String,
         val url: String,
+        val path: String = "",
         val code: String = "",
         val encoding: Charset = Encoding_UTF8
 ) {

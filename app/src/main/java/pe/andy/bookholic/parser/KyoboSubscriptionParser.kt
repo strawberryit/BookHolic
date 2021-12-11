@@ -14,6 +14,12 @@ object KyoboSubscriptionParser: LibraryParser, StringExtension {
             thumbnailUrl = element.selectFirst(".img img")
                     ?.attr("src") ?: ""
 
+            // add scheme
+            if (thumbnailUrl.startsWith("//")) {
+                val scheme = library.url.replace("""//.*""".toRegex(), "")
+                thumbnailUrl = "${scheme}${thumbnailUrl}"
+            }
+
             platform = element.selectFirst(".store")?.text() ?: ""
 
             title = element.selectFirst(".tit")?.text() ?: ""
@@ -28,6 +34,17 @@ object KyoboSubscriptionParser: LibraryParser, StringExtension {
                     date = pop()
                 }
             }
+
+            // 대출: 0/10
+            element.textOfFirst("p.use span strong")
+                .also {
+                    TextSlicer(it, "/").apply {
+                        countRent = pop().toIntOnly(-1)
+                        countTotal = pop().toIntOnly(-1)
+                    }
+                }
+
+            platform = "교보문고"
         }
     }
 

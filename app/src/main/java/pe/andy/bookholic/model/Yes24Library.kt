@@ -9,7 +9,7 @@ class Yes24Library(
         encoding: Charset = Encoding_UTF8,
         val yes24Type: Yes24Type = Yes24Type.TypeB
 
-): Library(name, url, code, encoding) {
+): Library(name, url = url, path = "", code = code, encoding = encoding) {
 
     companion object {
         enum class Yes24Type {

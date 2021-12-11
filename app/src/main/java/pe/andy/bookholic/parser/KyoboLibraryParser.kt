@@ -1,7 +1,7 @@
 package pe.andy.bookholic.parser
 
-import org.jsoup.nodes.Element
 import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
 import pe.andy.bookholic.model.Ebook
 import pe.andy.bookholic.model.Library
 import pe.andy.bookholic.util.StringExtension
@@ -53,36 +53,16 @@ object KyoboLibraryParser: LibraryParser, StringExtension {
                             countTotal = pop().toIntOnly(-1)
                         }
                     }
-
-            // 서초구 전자도서관 예외처리
-            if (library.code == "SeochoLibrary") {
-                platform = "교보문고"
-            }
         }
     }
 
     override fun parseMetaCount(doc: Document, library: Library): Pair<Int, Int> {
-        when(library.code) {
-            // 서초구 전자도서관 예외처리
-            "SeochoLibrary" -> {
-                val count = doc.textOfFirst("p.result")
-                        .replace(""".*\(""".toRegex(), "")
-                        .toIntOnly(-1)
+        val count = doc.textOfFirst(".list_sorting span.list_result strong")
+                .toIntOnly(-1)
 
-                val page = doc.textOfFirst(".total_count")
-                        .toIntOnly(-1)
+        val page = doc.textOfFirst(".list_sorting span.total_count")
+                .toIntOnly(-1)
 
-                return Pair(count, page)
-            }
-            else -> {
-                val count = doc.textOfFirst(".list_sorting span.list_result strong")
-                        .toIntOnly(-1)
-
-                val page = doc.textOfFirst(".list_sorting span.total_count")
-                        .toIntOnly(-1)
-
-                return Pair(count, page)
-            }
-        }
+        return Pair(count, page)
     }
 }
