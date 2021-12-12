@@ -74,20 +74,20 @@
                             android:textColor="@android:color/white"
                             />
 
-                        <Switch
+                        <com.google.android.material.switchmaterial.SwitchMaterial
                             android:id="@+id/library_list_switch_kakao"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-
-                            android:checked="false"
-                            android:switchMinWidth="56dp"
-                            android:text="Kakao Library"
-                            android:textColor="@android:color/white"
-
                             android:layout_marginHorizontal="10dp"
                             android:layout_marginTop="10dp"
+                            android:checked="false"
+                            android:switchMinWidth="56dp"
+                            app:switchPadding="10dp"
+                            android:text="KAKAO Library"
+                            android:textColor="@android:color/white"
+
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
                              />
 
                         <androidx.recyclerview.widget.RecyclerView
