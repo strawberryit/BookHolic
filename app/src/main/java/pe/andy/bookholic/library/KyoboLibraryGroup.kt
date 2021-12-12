@@ -11,7 +11,7 @@ object KyoboLibraryGroup {
     private val libraries = listOf(
             Library(name = "안산시 중앙도서관", url = "http://ebook.ansan.go.kr"),
             Library(name = "아산시립도서관", url = "http://elib.asan.go.kr:8090"),
-            Library(name = "강북문화정보도서관", url = "http://ebook.gblib.or.kr", encoding = Encoding_EUCKR),
+            Library(name = "강북문화정보도서관", url = "http://ebook.gblib.or.kr"),
             Library(name = "강진군 전자도서관", url = "http://www.gjlib.go.kr:8080"),
             Library(name = "김제시립도서관", url = "http://ebook-gjl.gimje.go.kr:8000"),
             Library(name = "광양시립도서관", url = "http://ebook.gwangyang.go.kr:81"),
