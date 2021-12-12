@@ -14,9 +14,9 @@ import pe.andy.bookholic.databinding.BookItemBinding
 import pe.andy.bookholic.model.Ebook
 import pe.andy.bookholic.util.BookColor
 
-class BookAdapter(
-        private var books: List<Ebook> = emptyList()
-) : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
+class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
+
+    private var books = mutableListOf<Ebook>()
 
     lateinit var bookColor: BookColor
 
@@ -36,6 +36,22 @@ class BookAdapter(
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         val book = this.books[position]
         holder.bind(book)
+    }
+
+    fun add(list: List<Ebook>) {
+        books.addAll(list)
+        notifyDataSetChanged()
+    }
+
+    fun set(list: List<Ebook>) {
+        books.clear()
+        books.addAll(list)
+        notifyDataSetChanged()
+    }
+
+    fun clear() {
+        books.clear()
+        notifyDataSetChanged()
     }
 
     private fun loadThumbnail(view: ImageView, url: String) {

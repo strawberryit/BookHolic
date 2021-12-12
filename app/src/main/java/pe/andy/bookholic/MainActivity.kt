@@ -6,21 +6,23 @@ import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import pe.andy.bookholic.databinding.MainActivityBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import pe.andy.bookholic.adapter.BookAdapter
+import pe.andy.bookholic.adapter.LibraryAdapter
+import pe.andy.bookholic.databinding.ActivityMainBinding
 import pe.andy.bookholic.model.SearchField
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.model.SortBy
 import pe.andy.bookholic.service.BookSearchService
-import pe.andy.bookholic.ui.BookRecyclerList
-import pe.andy.bookholic.ui.LibraryRecyclerList
 import pe.andy.bookholic.ui.ScrollVerticalButton
 import pe.andy.bookholic.ui.SearchDoneSnackBar
 
 class MainActivity : AppCompatActivity() {
-    lateinit var mBinding: MainActivityBinding
+    lateinit var mBinding: ActivityMainBinding
 
-    lateinit var libraryRecyclerList: LibraryRecyclerList
-    lateinit var bookRecyclerList: BookRecyclerList
+    lateinit var libraryAdapter: LibraryAdapter
+    lateinit var bookAdapter: BookAdapter
+
     lateinit var scrollVerticalButton: ScrollVerticalButton
     lateinit var searchDoneSnackBar: SearchDoneSnackBar
     lateinit var searchView: SearchView
@@ -29,34 +31,25 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = MainActivityBinding.inflate(layoutInflater)
+        mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
         searchService = BookSearchService(this, mBinding)
 
-        libraryRecyclerList = LibraryRecyclerList(mBinding, searchService)
-        bookRecyclerList = BookRecyclerList(mBinding, searchService)
+        setupLibraryRecyclerView()
+        setupBookRecyclerView()
+
+        mBinding.loadMore.setOnClickListener {
+            hideLoadMore()
+            showLoadProgress()
+
+            searchService.search(searchService.query, false)
+        }
 
         scrollVerticalButton = ScrollVerticalButton(mBinding)
         searchDoneSnackBar = SearchDoneSnackBar(mBinding)
 
-        mBinding.fab.setOnClickListener {
-            searchView.apply {
-                if (hasFocus()) {
-                    setQuery(query, true)
-                }
-                else {
-                    mBinding.nestedScrollView.scrollTo(0, 0)
-                    isIconified = false
-                }
-            }
-        }
-
-        mBinding.fabCancel.setOnClickListener {
-            searchService.cancelAll()
-            mBinding.fab.visibility = View.VISIBLE
-            mBinding.fabCancel.visibility = View.GONE
-        }
+        setupFabButton()
 
         // 테스트를 위한 리스트
         //bookRecyclerList.add(TestData.generateTestBooks());
@@ -99,5 +92,59 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         searchService.cancelAll()
+    }
+
+    private fun setupLibraryRecyclerView() {
+        val libraries = searchService.tasks.toMutableList()
+        libraryAdapter = LibraryAdapter(libraries)
+        with(mBinding.libraryRecyclerview) {
+            adapter = libraryAdapter
+            layoutManager = LinearLayoutManager(this@MainActivity)
+        }
+    }
+
+    private fun setupBookRecyclerView() {
+        bookAdapter = BookAdapter()
+        with(mBinding.bookRecyclerview) {
+            setHasFixedSize(true)
+            adapter = bookAdapter
+            layoutManager = LinearLayoutManager(this@MainActivity)
+        }
+    }
+
+    private fun setupFabButton() {
+        mBinding.fab.setOnClickListener {
+            searchView.apply {
+                if (hasFocus()) {
+                    setQuery(query, true)
+                }
+                else {
+                    mBinding.nestedScrollView.scrollTo(0, 0)
+                    isIconified = false
+                }
+            }
+        }
+
+        mBinding.fabCancel.setOnClickListener {
+            searchService.cancelAll()
+            mBinding.fab.visibility = View.VISIBLE
+            mBinding.fabCancel.visibility = View.GONE
+        }
+    }
+
+    fun showLoadMore() {
+        mBinding.loadMore.visibility = View.VISIBLE
+    }
+
+    fun hideLoadMore() {
+        mBinding.loadMore.visibility = View.GONE
+    }
+
+    fun showLoadProgress() {
+        mBinding.loadProgress.visibility = View.VISIBLE
+    }
+
+    fun hideLoadProgress() {
+        mBinding.loadProgress.visibility = View.GONE
     }
 }

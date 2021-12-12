@@ -1,7 +1,7 @@
 package pe.andy.bookholic.service
 
 import pe.andy.bookholic.MainActivity
-import pe.andy.bookholic.databinding.MainActivityBinding
+import pe.andy.bookholic.databinding.ActivityMainBinding
 import pe.andy.bookholic.library.*
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.searcher.LibrarySearchTask
@@ -11,7 +11,7 @@ import java.util.stream.Collectors
 
 class BookSearchService(
         private val mActivity: MainActivity,
-        private val mBinding: MainActivityBinding
+        private val mBinding: ActivityMainBinding
 ) {
     lateinit var query: SearchQuery
     var tasks: List<LibrarySearchTask>
@@ -53,19 +53,20 @@ class BookSearchService(
             else -> searchProceeding()
         }
 
-        tasks.stream()
-                .parallel()
-                .forEach{ it.execute() }
+        tasks.shuffled()
+            .stream()
+            .parallel()
+            .forEach{ it.execute() }
     }
 
     private fun searchInFirstTime() {
-        mActivity.bookRecyclerList.clear()
+        mActivity.bookAdapter.clear()
 
         tasks = makeTasks()
         query.page = 1
         setQueryOnAllTask(query)
 
-        mActivity.libraryRecyclerList.set(tasks)
+        mActivity.libraryAdapter.set(tasks)
     }
 
     private fun searchProceeding() {
@@ -85,7 +86,7 @@ class BookSearchService(
                             it
                         }
 
-                        mActivity.libraryRecyclerList.refresh()
+                        mActivity.libraryAdapter.refresh()
                         nextTask
                     }
                     catch (e: Exception) {

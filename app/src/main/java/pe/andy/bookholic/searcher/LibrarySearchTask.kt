@@ -29,7 +29,7 @@ abstract class LibrarySearchTask(
 
     override fun onPreExecute() {
         searchStatus = LibrarySearchStatus.PROGRESS
-        mActivity.libraryRecyclerList.refresh()
+        mActivity.libraryAdapter.refresh()
     }
 
     override fun doInBackground(vararg params: Void?): List<Ebook>? {
@@ -66,25 +66,25 @@ abstract class LibrarySearchTask(
 
         // Update Library list
         searchStatus = LibrarySearchStatus.DONE
-        mActivity.libraryRecyclerList.refresh()
+        mActivity.libraryAdapter.refresh()
 
         // Update Book list
-        val bookRecyclerList = mActivity.bookRecyclerList
+        val bookRecyclerList = mActivity.bookAdapter
         bookRecyclerList.add(books!!)
 
         //Log.d("BookHolic", this.libraryName + ": hasNext - " + this.hasNext());
         val service = mActivity.searchService
         val isFinished = service.isFinished()
         if (hasNext()) {
-            bookRecyclerList.hideLoadProgress()
-            bookRecyclerList.showLoadMore()
+            mActivity.hideLoadProgress()
+            mActivity.showLoadMore()
         } else {
             val isAllLastPage = service.isAllLastPage()
 
             //Log.d("BookHolic", this.libraryName + ": isFinished - " + isFinished + ", isAllLastPage - " + isAllLastPage);
             if (isFinished && isAllLastPage) {
-                bookRecyclerList.hideLoadProgress()
-                bookRecyclerList.hideLoadMore()
+                mActivity.hideLoadProgress()
+                mActivity.hideLoadMore()
             }
         }
         if (isFinished) {
@@ -97,7 +97,7 @@ abstract class LibrarySearchTask(
 
     override fun onCancelled() {
         searchStatus = LibrarySearchStatus.FAIL
-        mActivity.libraryRecyclerList.refresh()
+        mActivity.libraryAdapter.refresh()
     }
 
     operator fun hasNext(): Boolean {

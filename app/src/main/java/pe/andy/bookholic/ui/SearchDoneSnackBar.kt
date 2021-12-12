@@ -2,9 +2,9 @@ package pe.andy.bookholic.ui
 
 import com.google.android.material.snackbar.Snackbar
 
-import pe.andy.bookholic.databinding.MainActivityBinding
+import pe.andy.bookholic.databinding.ActivityMainBinding
 
-class SearchDoneSnackBar(private val mBinding: MainActivityBinding) {
+class SearchDoneSnackBar(private val mBinding: ActivityMainBinding) {
 
     fun show() {
         lateinit var snackbar: Snackbar

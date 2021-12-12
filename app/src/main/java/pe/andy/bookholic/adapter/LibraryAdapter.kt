@@ -12,9 +12,7 @@ import pe.andy.bookholic.databinding.LibraryItemBinding
 import pe.andy.bookholic.searcher.LibrarySearchTask
 import pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.*
 
-class LibraryAdapter(
-        private val libraries: List<LibrarySearchTask>
-) : RecyclerView.Adapter<LibraryAdapter.LibraryViewHolder>() {
+class LibraryAdapter(var libraries: MutableList<LibrarySearchTask>) : RecyclerView.Adapter<LibraryAdapter.LibraryViewHolder>() {
 
     var textMuted: Int = 0
     var textDefault: Int = 0
@@ -34,6 +32,21 @@ class LibraryAdapter(
     override fun onBindViewHolder(holder: LibraryViewHolder, position: Int) {
         val library = libraries[position]
         holder.bind(library)
+    }
+
+    fun set(list: List<LibrarySearchTask>) {
+        libraries.clear()
+        libraries.addAll(list)
+        notifyDataSetChanged()
+    }
+
+    fun clear() {
+        libraries.clear()
+        notifyDataSetChanged()
+    }
+
+    fun refresh() {
+        notifyDataSetChanged()
     }
 
     inner class LibraryViewHolder(val binding: LibraryItemBinding)
