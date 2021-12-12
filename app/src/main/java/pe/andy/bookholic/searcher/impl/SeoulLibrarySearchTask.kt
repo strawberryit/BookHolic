@@ -84,8 +84,10 @@ class SeoulLibrarySearchTask(
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     @Throws(IOException::class)
     override fun parse(json: String): List<Ebook> {
-        parseMetaCount(json)
-        return parseBooks(json)
+        json.replace("([\r\n])".toRegex(), "").let {
+            parseMetaCount(json)
+            return parseBooks(json)
+        }
     }
 
     private fun parseMetaCount(json: String) {
