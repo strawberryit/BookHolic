@@ -55,8 +55,8 @@ class SeoulLibrarySearchTask(
                 .build()
 
         return OkHttpClient.Builder()
-                .connectTimeout(30L, SECONDS)
-                .readTimeout(30L, SECONDS)
+                .connectTimeout(120L, SECONDS)
+                .readTimeout(120L, SECONDS)
                 .build()
                 .newCall(req)
                 .execute()
