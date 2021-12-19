@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         mBinding.bookResultTitle.visibility = View.GONE
 
         // 테스트를 위한 리스트
-        bookAdapter.add(TestData.generateTestBooks())
+        //bookAdapter.add(TestData.generateTestBooks())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
