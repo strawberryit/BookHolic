@@ -13,6 +13,9 @@ import com.bumptech.glide.Glide
 import pe.andy.bookholic.databinding.BookItemBinding
 import pe.andy.bookholic.model.Ebook
 import pe.andy.bookholic.util.BookColor
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
@@ -101,6 +104,11 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
                     setBackgroundColor(backgroundColor)
                 }
 
+                imageRecent.visibility = when {
+                    isRecentlyPublished(book.date) -> View.VISIBLE
+                    else -> View.GONE
+                }
+
                 // Bind onclick url
                 bookView.setOnClickListener {
                     if (book.url.isNotEmpty()) {
@@ -110,6 +118,26 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
                 }
 
                 loadThumbnail(thumbnail, book.thumbnailUrl)
+            }
+        }
+
+        /**
+         * 2년 내에 출판된 책인지 확인
+         */
+        internal fun isRecentlyPublished(date: String): Boolean {
+            try {
+                val dateTimeFormatter = when {
+                    date.matches("""^\d\d\d\d-\d\d-\d\d""".toRegex()) -> DateTimeFormatter.ISO_DATE
+                    date.matches("""^\d\d\d\d\d\d\d\d""".toRegex()) -> DateTimeFormatter.ofPattern("yyyyMMdd")
+                    else -> return false
+                }
+
+                return ChronoUnit.DAYS.between(
+                    LocalDate.parse(date, dateTimeFormatter),
+                    LocalDate.now()) < (365 * 2)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                return false
             }
         }
     }

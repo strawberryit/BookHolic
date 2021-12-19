@@ -32,7 +32,7 @@ object TestData {
             url = "http://elib.seoul.go.kr/ebooks/detail.do?no=PRD000115946"
             countTotal = 5
             countRent = 5
-            date = "2018-01-01"
+            date = "2019-01-01"
         }
 
         val b3 = Ebook("테스트 도서관")
@@ -47,7 +47,7 @@ object TestData {
             url = "http://elib.seoul.go.kr/ebooks/detail.do?no=PRD000115946"
             countTotal = -1
             countRent = -1
-            date = "2018-01-01"
+            date = "2020-01-01"
         }
 
         return listOf(b1, b2, b3, b1, b2, b3)

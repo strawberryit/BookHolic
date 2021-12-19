@@ -14,12 +14,12 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
 
-        android:padding="4dp"
+        android:padding="2dp"
 
-        app:tint="#9FA2A4"
+        app:tint="@color/bgGray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_lens_black_24dp" />
+        app:srcCompat="@drawable/ic_menu_book" />
 
     <ProgressBar
         android:id="@+id/search_progress"
@@ -33,10 +33,12 @@
         android:id="@+id/search_done"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        app:tint="#009688"
+        android:padding="2dp"
+        app:srcCompat="@drawable/ic_menu_book"
+        app:tint="@color/bgGreen"
         app:layout_constraintStart_toEndOf="@id/search_progress"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_check_circle_black_24dp" />
+        />
 
     <ImageView
         android:id="@+id/search_fail"

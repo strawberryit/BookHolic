@@ -14,6 +14,7 @@ import pe.andy.bookholic.model.SearchField
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.model.SortBy
 import pe.andy.bookholic.service.BookSearchService
+import pe.andy.bookholic.test.TestData
 import pe.andy.bookholic.ui.ScrollVerticalButton
 import pe.andy.bookholic.ui.SearchDoneSnackBar
 
@@ -51,8 +52,10 @@ class MainActivity : AppCompatActivity() {
 
         setupFabButton()
 
+        mBinding.bookResultTitle.visibility = View.GONE
+
         // 테스트를 위한 리스트
-        //bookRecyclerList.add(TestData.generateTestBooks());
+        bookAdapter.add(TestData.generateTestBooks())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

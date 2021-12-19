@@ -1,5 +1,6 @@
 package pe.andy.bookholic.service
 
+import android.view.View
 import pe.andy.bookholic.MainActivity
 import pe.andy.bookholic.databinding.ActivityMainBinding
 import pe.andy.bookholic.library.*
@@ -60,6 +61,7 @@ class BookSearchService(
     }
 
     private fun searchInFirstTime() {
+        mBinding.bookResultTitle.visibility = View.VISIBLE
         mActivity.bookAdapter.clear()
 
         tasks = makeTasks()
