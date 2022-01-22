@@ -17,7 +17,8 @@ object Yes24LibraryGroup {
             Yes24Library(name = "영천시립도서관", url = "http://www.yclib.go.kr:8080", encoding = Encoding_EUCKR, yes24Type = TypeA),
             Yes24Library(name = "여의도 전자책도서관", url = "http://ebook.yulib.or.kr", encoding = Encoding_EUCKR, yes24Type = TypeA),
             Yes24Library(name = "경산시립도서관", url = "http://elib.gbgs.go.kr", encoding = Encoding_EUCKR, yes24Type = TypeA),
-            Yes24Library(name = "강서구 전자도서관", url = "https://ebook.gangseo.seoul.kr", encoding = Encoding_EUCKR, yes24Type = TypeB)
+            Yes24Library(name = "강서구 전자도서관", url = "https://ebook.gangseo.seoul.kr", encoding = Encoding_EUCKR, yes24Type = TypeB),
+            Yes24Library(name = "광주남구 통합도서관", url = "http://ebook.namgu.gwangju.kr:8080", encoding = Encoding_EUCKR, yes24Type = TypeA),
     )
 
     fun getLibraryList(mainActivity: MainActivity): List<LibrarySearchTask> {
