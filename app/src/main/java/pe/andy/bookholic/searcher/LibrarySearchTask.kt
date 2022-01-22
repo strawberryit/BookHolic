@@ -88,6 +88,9 @@ abstract class LibrarySearchTask(
             }
         }
         if (isFinished) {
+            mActivity.bookAdapter.books.sort()
+            mActivity.bookAdapter.notifyItemRangeChanged(0, mActivity.bookAdapter.books.size)
+
             mActivity.searchDoneSnackBar.show()
 
             mActivity.mBinding.fab.visibility = View.VISIBLE

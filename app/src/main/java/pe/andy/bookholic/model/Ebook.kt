@@ -33,6 +33,16 @@ data class Ebook(var libraryName: String) : Comparable<Ebook>, Serializable {
         get() = (countRent < countTotal)
 
     override fun compareTo(other: Ebook): Int {
+        var ret = this.title.compareTo(other.title)
+        if (ret != 0) {
+            return ret
+        }
+
+        ret = this.libraryName.compareTo(other.libraryName)
+        if (ret != 0) {
+            return ret
+        }
+
         if (this == other || this.countTotal <= 0 || other.countTotal <= 0) {
             return 0
         }

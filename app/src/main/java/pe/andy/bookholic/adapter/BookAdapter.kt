@@ -19,7 +19,7 @@ import java.time.temporal.ChronoUnit
 
 class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
-    private var books = mutableListOf<Ebook>()
+    var books = mutableListOf<Ebook>()
 
     lateinit var bookColor: BookColor
 

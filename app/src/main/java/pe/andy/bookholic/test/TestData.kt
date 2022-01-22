@@ -13,11 +13,11 @@ object TestData {
             publisher = "길벗"
             libraryName = "테스트 도서관"
             platform = "교보문고"
-            thumbnailUrl = "http://seoullib.barob.co.kr/resources/images/Lsize/PRD000115946.jpg"
+            thumbnailUrl = "http://image.kyobobook.co.kr/images/book/large/093/l9791189909093.jpg"
             url = "http://elib.seoul.go.kr/ebooks/detail.do?no=PRD000115946"
             countTotal = 5
             countRent = 2
-            date = "2018-01-01"
+            date = "2021-01-01"
         }
 
         val b2 = Ebook("테스트 도서관")
@@ -28,7 +28,7 @@ object TestData {
             publisher = "길벗"
             libraryName = "테스트 도서관"
             platform = "교보문고"
-            thumbnailUrl = "http://seoullib.barob.co.kr/resources/images/Lsize/PRD000115946.jpg"
+            thumbnailUrl = "http://image.kyobobook.co.kr/images/book/large/879/l9791162243879.jpg"
             url = "http://elib.seoul.go.kr/ebooks/detail.do?no=PRD000115946"
             countTotal = 5
             countRent = 5
