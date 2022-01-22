@@ -26,6 +26,7 @@ object KyoboLibraryGroup {
             Library(name = "중구 통합전자도서관", url = "http://ebook.e-junggulib.or.kr:8080"),
             Library(name = "중랑구립정보도서관", url = "http://ebookjungnanglib.seoul.kr:8080/"),
             Library(name = "동대문구립도서관", url = "http://e-book.l4d.or.kr"),
+            Library(name = "마포구 전자도서관", url = "http://ebook.mapo.go.kr:8088"),
     )
 
     fun getLibraryList(mainActivity: MainActivity): List<LibrarySearchTask> {
