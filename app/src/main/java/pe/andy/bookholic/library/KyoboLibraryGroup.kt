@@ -23,7 +23,6 @@ object KyoboLibraryGroup {
             Library(name = "여수시립도서관", url = "http://yslibeb.yeosu.go.kr"),
             Library(name = "의정부 전자도서관", url = "https://ebook.uilib.go.kr"),
             Library(name = "노원구 구립도서관", url = "http://eb.nowonlib.kr"),
-            Library(name = "중구 통합전자도서관", url = "http://ebook.e-junggulib.or.kr:8080"),
             Library(name = "중랑구립정보도서관", url = "http://ebookjungnanglib.seoul.kr:8080/"),
             Library(name = "동대문구립도서관", url = "http://e-book.l4d.or.kr"),
             Library(name = "마포구 전자도서관", url = "http://ebook.mapo.go.kr:8088"),
