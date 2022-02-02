@@ -12,6 +12,7 @@ object KyoboSubscriptionGroup {
             Library(name = "용산구립도서관", url = "http://ebook.yslibrary.or.kr/elibrary-front"),
             Library(name = "서초구 전자도서관", url = "http://ebook.seocholib.or.kr", path="/elibrary-front"),
             Library(name = "중구 통합전자도서관", url = "https://ebook.junggulib.or.kr/elibrary-front"),
+            Library(name = "광양시립도서관 (구독)", url = "https://gwangyanglib.dkyobobook.co.kr"),
         )
 
     fun getLibraryList(mainActivity: MainActivity): List<LibrarySearchTask> {
