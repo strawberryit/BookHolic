@@ -3,13 +3,11 @@ package pe.andy.bookholic.adapter
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import pe.andy.bookholic.databinding.BookItemBinding
 import pe.andy.bookholic.model.Ebook
 import pe.andy.bookholic.util.BookColor
@@ -55,16 +53,6 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
     fun clear() {
         books.clear()
         notifyDataSetChanged()
-    }
-
-    private fun loadThumbnail(view: ImageView, url: String) {
-        try {
-            Glide.with(view.context)
-                    .load(url)
-                    .into(view)
-        } catch (ex: Exception) {
-            Log.d("BookHolic", "Thumbnail url loading failure: ${url}")
-        }
     }
 
     inner class BookViewHolder(val binding: BookItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -117,7 +105,7 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
                     }
                 }
 
-                loadThumbnail(thumbnail, book.thumbnailUrl)
+                thumbnail.load(book.thumbnailUrl)
             }
         }
 
