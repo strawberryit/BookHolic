@@ -29,7 +29,7 @@ class SeoulLibrarySearchTask(
     companion object {
         val library = Library(
                 name = "서울시 전자도서관",
-                url = "http://elib.seoul.go.kr",
+                url = "https://elib.seoul.go.kr",
                 code = "SeoulLibrary")
     }
 
@@ -63,18 +63,16 @@ class SeoulLibrarySearchTask(
     }
 
     private fun getUrl(query: SearchQuery): String {
-        val url = "${library.url}/ebooks/ContentsSearch.do"
+        val url = "${library.url}/api/contents/search"
         return url.toHttpUrlOrNull()!!.newBuilder()
             .addQueryParameters(
                 mapOf(
-                    "libCode" to 111314.toString(),
                     "searchKeyword" to query.keyword,
+                    "sortOption" to "1",
+                    "contentType" to "EB",
+                    "innerSearchYN" to "N",
                     "currentCount" to query.page.toString(),
-                    "searchOption" to getField(query),
-                    "pageCount" to 20.toString(),
-                    "userId" to "nologin",
-                    "sType" to "TT",
-                    "sortOption" to 1.toString()
+                    "_" to System.currentTimeMillis()
                 )
             )
                 .build()
@@ -91,12 +89,12 @@ class SeoulLibrarySearchTask(
     }
 
     private fun parseMetaCount(json: String) {
-        resultCount = json.parseInt("/Contents/TotalCount")
-        resultPageCount = json.parseInt("/Contents/TotalPage")
+        resultCount = json.parseInt("/totalCount")
+        resultPageCount = json.parseInt("/totalPage")
     }
 
     private fun parseBooks(json: String): List<Ebook> {
-        return json.parseToListMap("/Contents/ContentDataList")
+        return json.parseToListMap("/ContentDataList")
                 .asSequence()
                 .map { bookParser(it, library = library) }
                 .toList()
@@ -104,14 +102,16 @@ class SeoulLibrarySearchTask(
 
     private fun bookParser(map: Map<String, String>, library: Library): Ebook {
         return Ebook(library.name).apply {
-            seq = map["ContentKey"] ?: ""
-            title = map["ContentTitle"] ?: ""
-            author = map["ContentAuthor"] ?: ""
-            publisher = map["ContentPublisher"] ?: ""
-            thumbnailUrl = map["ContentCoverUrlS"] ?: ""
-            date = map["ContentPubDate"]?.replace(" 00:00:00.0", "") ?: ""
-            platform = map["OwnerCodeDesc"] ?: ""
-            url = "${library.url}/ebooks/detail.do?no=${seq}"
+            seq = map["contentsKey"] ?: ""
+            title = map["title"] ?: ""
+            author = map["author"] ?: ""
+            publisher = map["publisher"] ?: ""
+            thumbnailUrl = map["coverSSizeUrl"] ?: ""
+            date = map["publishDate"]?.replace(" 00:00:00.0", "") ?: ""
+            platform = map["ownerCode"] ?: ""
+
+            // https://elib.seoul.go.kr/contents/detail.do?no=PRD000142672
+            url = "${library.url}/contents/detail.do?no=${seq}"
         }
     }
 
