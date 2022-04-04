@@ -36,6 +36,7 @@ class BookSearchService(
                         GangnamLibrarySearchTask(mActivity),
                         SeoulEduLibrarySearchTask(mActivity),
                         GyunggidoCyberLibrarySearchTask(mActivity),
+                        SejongLibrarySearchTask(mActivity),
                 ))
                 .filter { it.isNotEmpty() }
                 .flatMap { it.toMutableList() }

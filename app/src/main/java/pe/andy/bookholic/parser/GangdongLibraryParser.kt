@@ -37,6 +37,7 @@ object GangdongLibraryParser: LibraryParser, StringExtension {
 
                 // Platform
                 platform = it.textOfFirst("li[title='공급사']")
+                if (platform == "예스이십사") platform = "YES24"
             }
 
             val text = element.textOfFirst("div.info div.rentinfo")
