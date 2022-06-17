@@ -6,7 +6,7 @@ import okhttp3.Request
 import okhttp3.Response
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import pe.andy.bookholic.MainActivity
+import pe.andy.bookholic.fragment.SearchFragment
 import pe.andy.bookholic.model.Ebook
 import pe.andy.bookholic.model.SearchField.Yes24LibrarySearchField.Companion.getValue
 import pe.andy.bookholic.model.SearchQuery
@@ -24,9 +24,9 @@ import java.io.IOException
 import java.lang.ref.SoftReference
 
 class Yes24LibrarySearchTask(
-        val mainActivity: MainActivity,
+        override var searchFragment: SearchFragment,
         val yes24Library: Yes24Library
-) : LibrarySearchTask(mainActivity, yes24Library),
+) : LibrarySearchTask(searchFragment, yes24Library),
         StringExtension, HttpExtension {
 
     init {
@@ -37,7 +37,7 @@ class Yes24LibrarySearchTask(
 
     override fun create(): LibrarySearchTask {
         return SoftReference<LibrarySearchTask>(
-                Yes24LibrarySearchTask(mActivity, yes24Library)
+                Yes24LibrarySearchTask(searchFragment, yes24Library)
         ).get()!!
     }
 

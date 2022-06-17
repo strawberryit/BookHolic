@@ -6,7 +6,7 @@ import okhttp3.Request
 import okhttp3.Response
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import pe.andy.bookholic.MainActivity
+import pe.andy.bookholic.fragment.SearchFragment
 import pe.andy.bookholic.model.Ebook
 import pe.andy.bookholic.model.Library
 import pe.andy.bookholic.model.SearchQuery
@@ -19,8 +19,8 @@ import java.lang.ref.SoftReference
 import java.util.*
 
 class GangdongLibrarySearchTask(
-        activity: MainActivity
-) : LibrarySearchTask(activity, library),
+        searchFragment: SearchFragment
+) : LibrarySearchTask(searchFragment, library),
         StringExtension, HttpExtension {
 
     init {
@@ -35,7 +35,7 @@ class GangdongLibrarySearchTask(
 
     override fun create(): LibrarySearchTask {
         return SoftReference<LibrarySearchTask>(
-                GangdongLibrarySearchTask(mActivity)
+                GangdongLibrarySearchTask(searchFragment)
         ).get()!!
     }
 

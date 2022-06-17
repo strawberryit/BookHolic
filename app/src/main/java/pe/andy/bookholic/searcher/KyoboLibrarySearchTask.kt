@@ -6,7 +6,7 @@ import okhttp3.Request
 import okhttp3.Response
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import pe.andy.bookholic.MainActivity
+import pe.andy.bookholic.fragment.SearchFragment
 import pe.andy.bookholic.model.Ebook
 import pe.andy.bookholic.model.Library
 import pe.andy.bookholic.model.SearchField.ZeroIndexSearchField.Companion.getValue
@@ -20,9 +20,9 @@ import java.lang.ref.SoftReference
 
 
 class KyoboLibrarySearchTask(
-        val mainActivity: MainActivity,
+        override var searchFragment: SearchFragment,
         library: Library
-): LibrarySearchTask(mainActivity, library),
+): LibrarySearchTask(searchFragment, library),
         StringExtension, HttpExtension {
 
     init {
@@ -31,7 +31,7 @@ class KyoboLibrarySearchTask(
 
     override fun create(): LibrarySearchTask {
         return SoftReference(
-                KyoboLibrarySearchTask(mainActivity = mainActivity, library = library)
+                KyoboLibrarySearchTask(searchFragment = searchFragment, library = library)
         ).get()!!
     }
 

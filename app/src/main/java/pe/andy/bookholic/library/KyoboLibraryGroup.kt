@@ -1,6 +1,7 @@
 package pe.andy.bookholic.library
 
 import pe.andy.bookholic.MainActivity
+import pe.andy.bookholic.fragment.SearchFragment
 import pe.andy.bookholic.model.Library
 import pe.andy.bookholic.model.Library.Companion.Encoding_EUCKR
 import pe.andy.bookholic.searcher.KyoboLibrarySearchTask
@@ -28,9 +29,9 @@ object KyoboLibraryGroup {
             Library(name = "마포구 전자도서관", url = "http://ebook.mapo.go.kr:8088"),
     )
 
-    fun getLibraryList(mainActivity: MainActivity): List<LibrarySearchTask> {
+    fun getLibraryList(searchFragment: SearchFragment): List<LibrarySearchTask> {
         return libraries.map {
-            SoftReference(KyoboLibrarySearchTask(mainActivity = mainActivity, library = it))
+            SoftReference(KyoboLibrarySearchTask(searchFragment = searchFragment, library = it))
                     .get()!!
         }
     }

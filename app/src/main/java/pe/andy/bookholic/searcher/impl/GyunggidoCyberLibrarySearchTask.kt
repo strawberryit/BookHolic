@@ -5,7 +5,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import org.jsoup.Jsoup
-import pe.andy.bookholic.MainActivity
+import pe.andy.bookholic.fragment.SearchFragment
 import pe.andy.bookholic.model.Ebook
 import pe.andy.bookholic.model.Library
 import pe.andy.bookholic.model.SearchField
@@ -19,8 +19,8 @@ import java.lang.ref.SoftReference
 
 
 class GyunggidoCyberLibrarySearchTask(
-        activity: MainActivity
-) : LibrarySearchTask(activity, library),
+        searchFragment: SearchFragment
+) : LibrarySearchTask(searchFragment, library),
         StringExtension, HttpExtension {
 
     init {
@@ -38,7 +38,7 @@ class GyunggidoCyberLibrarySearchTask(
 
     override fun create(): LibrarySearchTask {
         return SoftReference<LibrarySearchTask>(
-                GyunggidoCyberLibrarySearchTask(mActivity)
+                GyunggidoCyberLibrarySearchTask(searchFragment)
         ).get()!!
     }
 

@@ -15,7 +15,9 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
-class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
+class BookAdapter(
+    val onItemLongClick: (Ebook) -> Unit
+) : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
     var books = mutableListOf<Ebook>()
 
@@ -103,6 +105,10 @@ class BookAdapter : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
                         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(book.url))
                         bookView.context.startActivity(browserIntent)
                     }
+                }
+                bookView.setOnLongClickListener {
+                    onItemLongClick.invoke(book)
+                    true
                 }
 
                 thumbnail.load(book.thumbnailUrl)

@@ -4,7 +4,7 @@ import android.icu.text.SimpleDateFormat
 import okhttp3.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import pe.andy.bookholic.MainActivity
+import pe.andy.bookholic.fragment.SearchFragment
 import pe.andy.bookholic.model.Ebook
 import pe.andy.bookholic.model.Library
 import pe.andy.bookholic.model.SearchField
@@ -18,8 +18,8 @@ import java.lang.ref.SoftReference
 import java.util.*
 
 class SeoulEduLibrarySearchTask(
-        activity: MainActivity
-) : LibrarySearchTask(activity, library),
+        searchFragment: SearchFragment
+) : LibrarySearchTask(searchFragment, library),
         StringExtension, HttpExtension {
 
     init {
@@ -37,7 +37,7 @@ class SeoulEduLibrarySearchTask(
 
     override fun create(): LibrarySearchTask {
         return SoftReference<LibrarySearchTask>(
-                SeoulEduLibrarySearchTask(mActivity)
+                SeoulEduLibrarySearchTask(searchFragment)
         ).get()!!
     }
 

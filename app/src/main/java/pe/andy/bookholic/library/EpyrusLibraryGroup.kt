@@ -1,6 +1,6 @@
 package pe.andy.bookholic.library
 
-import pe.andy.bookholic.MainActivity
+import pe.andy.bookholic.fragment.SearchFragment
 import pe.andy.bookholic.model.Library
 import pe.andy.bookholic.searcher.EpyrusLibrarySearchTask
 import pe.andy.bookholic.searcher.LibrarySearchTask
@@ -14,9 +14,9 @@ object EpyrusLibraryGroup {
     */
     private val libraries = emptyList<Library>()
 
-    fun getLibraryList(mainActivity: MainActivity): List<LibrarySearchTask> {
+    fun getLibraryList(searchFragment: SearchFragment): List<LibrarySearchTask> {
         return libraries.map {
-            SoftReference(EpyrusLibrarySearchTask(mainActivity = mainActivity, library = it))
+            SoftReference(EpyrusLibrarySearchTask(searchFragment = searchFragment, library = it))
                     .get()!!
         }
     }

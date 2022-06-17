@@ -1,8 +1,8 @@
 package pe.andy.bookholic.service
 
 import android.view.View
-import pe.andy.bookholic.MainActivity
-import pe.andy.bookholic.databinding.ActivityMainBinding
+import pe.andy.bookholic.databinding.FragmentSearchBinding
+import pe.andy.bookholic.fragment.SearchFragment
 import pe.andy.bookholic.library.*
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.searcher.LibrarySearchTask
@@ -11,8 +11,8 @@ import java.util.*
 import java.util.stream.Collectors
 
 class BookSearchService(
-        private val mActivity: MainActivity,
-        private val mBinding: ActivityMainBinding
+        private val searchFragment: SearchFragment,
+        private val mBinding: FragmentSearchBinding
 ) {
     lateinit var query: SearchQuery
     var tasks: List<LibrarySearchTask>
@@ -24,19 +24,19 @@ class BookSearchService(
     fun makeTasks(): List<LibrarySearchTask> {
         val includeKakaoLibrary = mBinding.libraryListSwitchKakao.isChecked
         return listOf(
-                if (includeKakaoLibrary) KakaoLibraryGroup.getLibraryList(mActivity) else emptyList(),
-                KyoboLibraryGroup.getLibraryList(mActivity),
-                KyoboSubscriptionGroup.getLibraryList(mActivity),
-                Yes24LibraryGroup.getLibraryList(mActivity),
-                EpyrusLibraryGroup.getLibraryList(mActivity),
-                FxLibraryGroup.getLibraryList(mActivity),
+                if (includeKakaoLibrary) KakaoLibraryGroup.getLibraryList(searchFragment) else emptyList(),
+                KyoboLibraryGroup.getLibraryList(searchFragment),
+                KyoboSubscriptionGroup.getLibraryList(searchFragment),
+                Yes24LibraryGroup.getLibraryList(searchFragment),
+                EpyrusLibraryGroup.getLibraryList(searchFragment),
+                FxLibraryGroup.getLibraryList(searchFragment),
                 listOf<LibrarySearchTask>(
-                        SeoulLibrarySearchTask(mActivity),
-                        GangdongLibrarySearchTask(mActivity),
-                        GangnamLibrarySearchTask(mActivity),
-                        SeoulEduLibrarySearchTask(mActivity),
-                        GyunggidoCyberLibrarySearchTask(mActivity),
-                        SejongLibrarySearchTask(mActivity),
+                        SeoulLibrarySearchTask(searchFragment),
+                        GangdongLibrarySearchTask(searchFragment),
+                        GangnamLibrarySearchTask(searchFragment),
+                        SeoulEduLibrarySearchTask(searchFragment),
+                        GyunggidoCyberLibrarySearchTask(searchFragment),
+                        SejongLibrarySearchTask(searchFragment),
                 ))
                 .filter { it.isNotEmpty() }
                 .flatMap { it.toMutableList() }
@@ -63,13 +63,13 @@ class BookSearchService(
 
     private fun searchInFirstTime() {
         mBinding.bookResultTitle.visibility = View.VISIBLE
-        mActivity.bookAdapter.clear()
+        searchFragment.bookAdapter.clear()
 
         tasks = makeTasks()
         query.page = 1
         setQueryOnAllTask(query)
 
-        mActivity.libraryAdapter.set(tasks)
+        searchFragment.libraryAdapter.set(tasks)
     }
 
     private fun searchProceeding() {
@@ -89,7 +89,7 @@ class BookSearchService(
                             it
                         }
 
-                        mActivity.libraryAdapter.refresh()
+                        searchFragment.libraryAdapter.refresh()
                         nextTask
                     }
                     catch (e: Exception) {

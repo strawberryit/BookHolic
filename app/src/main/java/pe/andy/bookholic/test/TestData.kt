@@ -22,7 +22,7 @@ object TestData {
 
         val b2 = Ebook("테스트 도서관")
         b2.apply {
-            seq = "1234"
+            seq = "5678"
             title = "인프라 엔지니어의 교과서-시스템 구축과 관리편 테스트"
             author = "기술평론사 편집부"
             publisher = "길벗"
@@ -37,7 +37,7 @@ object TestData {
 
         val b3 = Ebook("테스트 도서관")
         b3.apply {
-            seq = "1234"
+            seq = "9101"
             title = "인프라 엔지니어의 교과서-시스템 구축과 관리편 테스트"
             author = "기술평론사 편집부"
             publisher = "길벗"

@@ -3,9 +3,9 @@ package pe.andy.bookholic.ui
 import android.view.View
 import android.view.animation.AlphaAnimation
 import androidx.core.widget.NestedScrollView
-import pe.andy.bookholic.databinding.ActivityMainBinding
+import pe.andy.bookholic.databinding.FragmentSearchBinding
 
-class ScrollVerticalButton(private var mBinding: ActivityMainBinding) {
+class ScrollVerticalButton(private var mBinding: FragmentSearchBinding) {
 
     private val showAnimation = AlphaAnimation(0f, 1f)
     private val hideAnimation = AlphaAnimation(1f, 0f)

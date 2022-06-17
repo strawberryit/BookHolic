@@ -1,15 +1,14 @@
 package pe.andy.bookholic.ui
 
 import com.google.android.material.snackbar.Snackbar
+import pe.andy.bookholic.databinding.FragmentSearchBinding
 
-import pe.andy.bookholic.databinding.ActivityMainBinding
-
-class SearchDoneSnackBar(private val mBinding: ActivityMainBinding) {
+class SearchDoneSnackBar(private val mBinding: FragmentSearchBinding) {
 
     fun show() {
         lateinit var snackbar: Snackbar
         snackbar = Snackbar
-                .make(mBinding.mainLayout, "검색이 완료되었습니다.", Snackbar.LENGTH_LONG)
+                .make(mBinding.layout, "검색이 완료되었습니다.", Snackbar.LENGTH_LONG)
                 .setAction("확인") { snackbar.dismiss() }
         snackbar.show()
     }

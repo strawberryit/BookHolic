@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tab_search"
+    app:startDestination="@id/fragment_search"
+    >
+
+    <fragment
+        android:id="@+id/fragment_search"
+        android:name="pe.andy.bookholic.fragment.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+
+</navigation>

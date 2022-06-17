@@ -4,13 +4,13 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'jacoco'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion '30.0.3'
 
     defaultConfig {
         applicationId "pe.andy.bookholic"
         minSdkVersion 27
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -46,7 +46,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
 
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'com.google.android.material:material:1.6.1'
 
     implementation 'com.fasterxml.jackson.core:jackson-core:2.12.5'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.5'
@@ -58,6 +58,22 @@ dependencies {
 
     // Rounded Image view
     implementation 'com.makeramen:roundedimageview:2.3.0'
+
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
+
+    // Android lifecycle
+    def lifecycleVersion = "2.4.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+
+    // Room database
+    def roomVersion = "2.4.2"
+    implementation "androidx.room:room-runtime:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:runner:1.4.0'

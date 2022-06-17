@@ -1,6 +1,6 @@
 package pe.andy.bookholic.library
 
-import pe.andy.bookholic.MainActivity
+import pe.andy.bookholic.fragment.SearchFragment
 import pe.andy.bookholic.model.Library
 import pe.andy.bookholic.searcher.KyoboSubscriptionSearchTask
 import pe.andy.bookholic.searcher.LibrarySearchTask
@@ -16,9 +16,9 @@ object KyoboSubscriptionGroup {
             Library(name = "경기도사이버도서관 (구독)", url = "https://cyberlibrary.dkyobobook.co.kr"),
         )
 
-    fun getLibraryList(mainActivity: MainActivity): List<LibrarySearchTask> {
+    fun getLibraryList(searchFragment: SearchFragment): List<LibrarySearchTask> {
         return libraries.map {
-            SoftReference(KyoboSubscriptionSearchTask(mainActivity = mainActivity, library = it))
+            SoftReference(KyoboSubscriptionSearchTask(searchFragment = searchFragment, library = it))
                     .get()!!
         }
     }

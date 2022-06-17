@@ -4,7 +4,7 @@ import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
-import pe.andy.bookholic.MainActivity
+import pe.andy.bookholic.fragment.SearchFragment
 import pe.andy.bookholic.model.Ebook
 import pe.andy.bookholic.model.Library
 import pe.andy.bookholic.model.SearchField.ZeroIndexSearchField.Companion.getValue
@@ -18,8 +18,8 @@ import java.lang.ref.SoftReference
 import java.util.concurrent.TimeUnit.SECONDS
 
 class SeoulLibrarySearchTask(
-        activity: MainActivity
-) : LibrarySearchTask(activity, library),
+        searchFragment: SearchFragment
+) : LibrarySearchTask(searchFragment, library),
         StringExtension, HttpExtension, JsonExtension {
 
     init {
@@ -37,7 +37,7 @@ class SeoulLibrarySearchTask(
 
     override fun create(): LibrarySearchTask {
         return SoftReference<LibrarySearchTask>(
-                SeoulLibrarySearchTask(mActivity)
+                SeoulLibrarySearchTask(searchFragment)
         ).get()!!
     }
 

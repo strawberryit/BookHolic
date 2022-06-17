@@ -1,6 +1,6 @@
 package pe.andy.bookholic.library
 
-import pe.andy.bookholic.MainActivity
+import pe.andy.bookholic.fragment.SearchFragment
 import pe.andy.bookholic.model.Library.Companion.Encoding_EUCKR
 import pe.andy.bookholic.model.Yes24Library
 import pe.andy.bookholic.model.Yes24Library.Companion.Yes24Type.TypeA
@@ -21,9 +21,9 @@ object Yes24LibraryGroup {
             Yes24Library(name = "광주남구 통합도서관", url = "http://ebook.namgu.gwangju.kr:8080", encoding = Encoding_EUCKR, yes24Type = TypeA),
     )
 
-    fun getLibraryList(mainActivity: MainActivity): List<LibrarySearchTask> {
+    fun getLibraryList(searchFragment: SearchFragment): List<LibrarySearchTask> {
         return libraries.map {
-            SoftReference(Yes24LibrarySearchTask(mainActivity = mainActivity, yes24Library = it))
+            SoftReference(Yes24LibrarySearchTask(searchFragment = searchFragment, yes24Library = it))
                     .get()!!
         }
     }

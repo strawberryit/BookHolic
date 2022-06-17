@@ -3,7 +3,7 @@ package pe.andy.bookholic.searcher
 import android.os.AsyncTask
 import android.view.View
 import okhttp3.Response
-import pe.andy.bookholic.MainActivity
+import pe.andy.bookholic.fragment.SearchFragment
 import pe.andy.bookholic.model.Ebook
 import pe.andy.bookholic.model.Library
 import pe.andy.bookholic.model.SearchQuery
@@ -14,8 +14,8 @@ import java.nio.charset.Charset
 
 
 abstract class LibrarySearchTask(
-        protected var mActivity: MainActivity,
-        val library: Library
+    protected open var searchFragment: SearchFragment,
+    val library: Library
 ) : AsyncTask<Void?, Void?, List<Ebook>?>(), Comparable<LibrarySearchTask> {
 
     lateinit var query: SearchQuery
@@ -29,7 +29,7 @@ abstract class LibrarySearchTask(
 
     override fun onPreExecute() {
         searchStatus = LibrarySearchStatus.PROGRESS
-        mActivity.libraryAdapter.refresh()
+        searchFragment.libraryAdapter.refresh()
     }
 
     override fun doInBackground(vararg params: Void?): List<Ebook>? {
@@ -66,41 +66,41 @@ abstract class LibrarySearchTask(
 
         // Update Library list
         searchStatus = LibrarySearchStatus.DONE
-        mActivity.libraryAdapter.refresh()
+        searchFragment.libraryAdapter.refresh()
 
         // Update Book list
-        val bookRecyclerList = mActivity.bookAdapter
+        val bookRecyclerList = searchFragment.bookAdapter
         bookRecyclerList.add(books!!)
 
         //Log.d("BookHolic", this.libraryName + ": hasNext - " + this.hasNext());
-        val service = mActivity.searchService
+        val service = searchFragment.searchService
         val isFinished = service.isFinished()
         if (hasNext()) {
-            mActivity.hideLoadProgress()
-            mActivity.showLoadMore()
+            searchFragment.hideLoadProgress()
+            searchFragment.showLoadMore()
         } else {
             val isAllLastPage = service.isAllLastPage()
 
             //Log.d("BookHolic", this.libraryName + ": isFinished - " + isFinished + ", isAllLastPage - " + isAllLastPage);
             if (isFinished && isAllLastPage) {
-                mActivity.hideLoadProgress()
-                mActivity.hideLoadMore()
+                searchFragment.hideLoadProgress()
+                searchFragment.hideLoadMore()
             }
         }
         if (isFinished) {
-            mActivity.bookAdapter.books.sort()
-            mActivity.bookAdapter.notifyItemRangeChanged(0, mActivity.bookAdapter.books.size)
+            searchFragment.bookAdapter.books.sort()
+            searchFragment.bookAdapter.notifyItemRangeChanged(0, searchFragment.bookAdapter.books.size)
 
-            mActivity.searchDoneSnackBar.show()
+            searchFragment.searchDoneSnackBar.show()
 
-            mActivity.mBinding.fab.visibility = View.VISIBLE
-            mActivity.mBinding.fabCancel.visibility = View.GONE
+            searchFragment.binding.fab.visibility = View.VISIBLE
+            searchFragment.binding.fabCancel.visibility = View.GONE
         }
     }
 
     override fun onCancelled() {
         searchStatus = LibrarySearchStatus.FAIL
-        mActivity.libraryAdapter.refresh()
+        searchFragment.libraryAdapter.refresh()
     }
 
     operator fun hasNext(): Boolean {

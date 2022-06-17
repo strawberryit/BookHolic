@@ -6,7 +6,7 @@ import okhttp3.Request
 import okhttp3.Response
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import pe.andy.bookholic.MainActivity
+import pe.andy.bookholic.fragment.SearchFragment
 import pe.andy.bookholic.model.Ebook
 import pe.andy.bookholic.model.Library
 import pe.andy.bookholic.model.SearchField.EpyrusLibrarySearchField.Companion.getValue
@@ -19,9 +19,9 @@ import java.lang.ref.SoftReference
 
 
 class EpyrusLibrarySearchTask(
-        val mainActivity: MainActivity,
+        override var searchFragment: SearchFragment,
         library: Library
-): LibrarySearchTask(mainActivity, library),
+): LibrarySearchTask(searchFragment, library),
         StringExtension, HttpExtension {
 
     init {
@@ -30,7 +30,7 @@ class EpyrusLibrarySearchTask(
 
     override fun create(): LibrarySearchTask {
         return SoftReference(
-                EpyrusLibrarySearchTask(mainActivity = mainActivity, library = library)
+                EpyrusLibrarySearchTask(searchFragment = searchFragment, library = library)
         ).get()!!
     }
 
