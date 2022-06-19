@@ -1,22 +1,23 @@
 package pe.andy.bookholic.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.kirich1409.viewbindingdelegate.viewBinding
+import pe.andy.bookholic.R
 import pe.andy.bookholic.adapter.FavoriteAdapter
 import pe.andy.bookholic.database.FavoriteDatabase
 import pe.andy.bookholic.databinding.FragmentFavoriteBinding
 import pe.andy.bookholic.viewmodel.FavoriteBookViewModel
 import pe.andy.bookholic.viewmodel.FavoriteBookViewModelFactory
 
-class FavoriteFragment : Fragment() {
+class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
 
-    lateinit var binding: FragmentFavoriteBinding
+    val binding by viewBinding(FragmentFavoriteBinding::bind)
+
     lateinit var favoriteViewModel: FavoriteBookViewModel
     lateinit var favoriteAdapter: FavoriteAdapter
 
@@ -26,14 +27,6 @@ class FavoriteFragment : Fragment() {
         val database = FavoriteDatabase.getInstance(this.requireContext())
         val viewModelFactory = FavoriteBookViewModelFactory(database)
         favoriteViewModel = ViewModelProvider(this, viewModelFactory)[FavoriteBookViewModel::class.java]
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentFavoriteBinding.inflate(layoutInflater, container, false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,5 +51,9 @@ class FavoriteFragment : Fragment() {
         favoriteViewModel.observeLiveData().observe(viewLifecycleOwner) {
             favoriteAdapter.differ.submitList(it)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
     }
 }

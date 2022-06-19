@@ -3,27 +3,20 @@ package pe.andy.bookholic
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
+import by.kirich1409.viewbindingdelegate.viewBinding
 import pe.andy.bookholic.databinding.ActivityMainBinding
 import pe.andy.bookholic.fragment.FavoriteFragment
 import pe.andy.bookholic.fragment.SearchFragment
 
-class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
+    val binding: ActivityMainBinding by viewBinding(ActivityMainBinding::bind)
 
     val searchFragment: SearchFragment = SearchFragment()
     val favoriteFragment: FavoriteFragment = FavoriteFragment()
     var activeFragment: Fragment = searchFragment
 
-    lateinit var navController: NavController
-    lateinit var appBarConfiguration: AppBarConfiguration
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
@@ -37,38 +30,57 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupBottomNavigationBar() {
         supportFragmentManager.beginTransaction()
-            .add(R.id.host_fragment, favoriteFragment, "2")
+            .add(R.id.host_fragment, favoriteFragment, "favoriteFragment")
             .hide(favoriteFragment)
             .commit()
+
         supportFragmentManager.beginTransaction()
-            .add(R.id.host_fragment, searchFragment, "1")
+            .add(R.id.host_fragment, searchFragment, "searchFragment")
             .commit()
 
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.fragment_search -> {
-                    supportFragmentManager.beginTransaction()
-                        .hide(favoriteFragment)
-                        .show(searchFragment)
-                        .commit()
+                R.id.bottom_navigation_search -> {
+                    if (activeFragment != searchFragment) {
+                        supportFragmentManager.beginTransaction()
+                            .show(searchFragment)
+                            .hide(favoriteFragment)
+                            .commit()
 
-                    activeFragment = searchFragment
+                        activeFragment = searchFragment
+                    }
                 }
 
-                R.id.fragment_favorite -> {
-                    supportFragmentManager.beginTransaction()
-                        .hide(searchFragment)
-                        .show(favoriteFragment)
-                        .commit()
+                R.id.bottom_navigation_favorite -> {
+                    if (activeFragment != favoriteFragment) {
+                        supportFragmentManager.beginTransaction()
+                            .show(favoriteFragment)
+                            .hide(searchFragment)
+                            .commit()
 
-                    activeFragment = favoriteFragment
+                        activeFragment = favoriteFragment
+                    }
                 }
             }
             true
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp(appBarConfiguration)
+    override fun onBackPressed() {
+        when (supportFragmentManager.fragments.lastOrNull()) {
+            searchFragment -> {
+                super.onBackPressed()
+            }
+            favoriteFragment -> {
+                supportFragmentManager.beginTransaction()
+                    .show(favoriteFragment)
+                    .hide(searchFragment)
+                    .commit()
+
+                activeFragment = searchFragment
+
+                binding.bottomNavigation.menu.getItem(0).isChecked = true
+            }
+        }
     }
 }

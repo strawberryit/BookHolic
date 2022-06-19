@@ -2,12 +2,15 @@ package pe.andy.bookholic.fragment
 
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.kirich1409.viewbindingdelegate.viewBinding
 import pe.andy.bookholic.R
 import pe.andy.bookholic.adapter.BookAdapter
 import pe.andy.bookholic.adapter.LibraryAdapter
@@ -18,15 +21,15 @@ import pe.andy.bookholic.model.SearchField
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.model.SortBy
 import pe.andy.bookholic.service.BookSearchService
-import pe.andy.bookholic.test.TestData
 import pe.andy.bookholic.ui.ScrollVerticalButton
 import pe.andy.bookholic.ui.SearchDoneSnackBar
 import pe.andy.bookholic.viewmodel.FavoriteBookViewModel
 import pe.andy.bookholic.viewmodel.FavoriteBookViewModelFactory
 
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(R.layout.fragment_search) {
 
-    lateinit var binding: FragmentSearchBinding
+    val binding by viewBinding(FragmentSearchBinding::bind)
+
     lateinit var libraryAdapter: LibraryAdapter
     lateinit var bookAdapter: BookAdapter
 
@@ -44,16 +47,8 @@ class SearchFragment : Fragment() {
         val database = FavoriteDatabase.getInstance(this.requireContext())
         val viewModelFactory = FavoriteBookViewModelFactory(database)
         favoriteViewModel = ViewModelProvider(this, viewModelFactory)[FavoriteBookViewModel::class.java]
-    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
         setHasOptionsMenu(true)
-
-        binding = FragmentSearchBinding.inflate(layoutInflater, container, false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,7 +74,7 @@ class SearchFragment : Fragment() {
         binding.bookResultTitle.visibility = View.GONE
 
         // 테스트를 위한 리스트
-        bookAdapter.add(TestData.generateTestBooks())
+        //bookAdapter.add(TestData.generateTestBooks())
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
