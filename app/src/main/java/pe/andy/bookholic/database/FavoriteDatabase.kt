@@ -21,7 +21,7 @@ abstract class FavoriteDatabase : RoomDatabase() {
         fun getInstance(context: Context): FavoriteDatabase {
             if (INSTANCE == null) {
                 INSTANCE = Room.databaseBuilder(
-                    context,
+                    context.applicationContext,
                     FavoriteDatabase::class.java,
                     "favorite.db"
                 ).fallbackToDestructiveMigration()
