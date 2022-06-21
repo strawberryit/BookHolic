@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Search"
+    <item android:title="@string/bottom_menu_search"
         android:icon="@drawable/ic_search"
-        android:id="@+id/fragment_search"
+        android:id="@+id/bottom_navigation_search"
         />
 
-    <item android:title="Favorite"
+    <item android:title="@string/bottom_menu_favorite"
         android:icon="@drawable/ic_favorite"
-        android:id="@+id/fragment_favorite"
+        android:id="@+id/bottom_navigation_favorite"
         />
 
 </menu>

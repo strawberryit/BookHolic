@@ -1,8 +1,6 @@
 package pe.andy.bookholic.adapter
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +14,7 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
 class BookAdapter(
-    val onItemLongClick: (Ebook) -> Unit
+    val onItemClick: (Ebook) -> Unit
 ) : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
     var books = mutableListOf<Ebook>()
@@ -101,14 +99,7 @@ class BookAdapter(
 
                 // Bind onclick url
                 bookView.setOnClickListener {
-                    if (book.url.isNotEmpty()) {
-                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(book.url))
-                        bookView.context.startActivity(browserIntent)
-                    }
-                }
-                bookView.setOnLongClickListener {
-                    onItemLongClick.invoke(book)
-                    true
+                    onItemClick.invoke(book)
                 }
 
                 thumbnail.load(book.thumbnailUrl)
