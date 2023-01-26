@@ -39,17 +39,26 @@ object GangnamLibraryParser: LibraryParser, StringExtension {
 
     override fun parseMetaCount(doc: Document, library: Library): Pair<Int, Int> {
 
-        val count = doc.select(".book_list p.location")
+        var count = doc.select(".book_list p.location")
                 .let {
                     it.select("font").remove()
                     it.text().toIntOnly(-1)
                 }
 
-        val page = doc.select(".book_list .paginate a")
+        var page = doc.select(".book_list .paginate a")
                 .last()
                 ?.attr("href")
                 ?.toIntOnly(-1)
                 ?: -1
+
+        // 강남구 전자도서관에서 검색결과 개수를 알려주지 않음
+        if (page <= 0) {
+            val current = doc.select(".book_list .paginate .num").text().trim()
+            if (current.isNotEmpty()) {
+                count = doc.select(".book").size
+                page = 1
+            }
+        }
 
         return Pair(count, page)
     }

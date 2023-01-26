@@ -93,8 +93,14 @@ class GangnamLibrarySearchTask(
 
     private fun parseMetaCount(doc: Document) {
         val pair = GangnamLibraryParser.parseMetaCount(doc, library)
-        resultCount = pair.first
+
         resultPageCount = pair.second
+        resultCount = pair.first
+
+        // 강남구 전자도서관에서 검색결과 개수를 알려주지 않음
+        if (resultCount == -1 && resultPageCount > 0) {
+            resultCount = resultPageCount * 20
+        }
     }
 
     private fun parseBook(doc: Document): List<Ebook> {
