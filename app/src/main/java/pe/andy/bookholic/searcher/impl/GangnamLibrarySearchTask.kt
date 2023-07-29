@@ -29,7 +29,7 @@ class GangnamLibrarySearchTask(
     }
 
     companion object {
-        val library = Library(name = "강남구 전자도서관", url = "http://ebook.gangnam.go.kr", encoding = Library.Encoding_EUCKR)
+        val library = Library(name = "강남구 전자도서관", url = "https://ebook.gangnam.go.kr", encoding = Library.Encoding_EUCKR)
         val searchFields: Map<SearchField, String> = mapOf(
                 SearchField.ALL to "도서명",
                 SearchField.TITLE to "도서명",

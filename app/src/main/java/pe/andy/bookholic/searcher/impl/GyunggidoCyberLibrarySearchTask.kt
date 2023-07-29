@@ -30,7 +30,7 @@ class GyunggidoCyberLibrarySearchTask(
     companion object {
         val library = Library(
                 name = "경기도사이버도서관",
-                url = "http://www.library.kr",
+                url = "https://www.library.kr",
                 encoding = Encoding_UTF8)
     }
 
