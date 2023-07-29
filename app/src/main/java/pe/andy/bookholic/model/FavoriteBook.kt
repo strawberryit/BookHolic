@@ -2,6 +2,7 @@ package pe.andy.bookholic.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.UUID
 
 @Entity(tableName = "favorite")
 data class FavoriteBook(
@@ -20,7 +21,7 @@ data class FavoriteBook(
     companion object {
         fun from(book: Ebook): FavoriteBook {
             return FavoriteBook(
-                seq = book.seq,
+                seq = UUID.randomUUID().toString(),
                 title = book.title,
                 author = book.author,
                 publisher = book.publisher,
