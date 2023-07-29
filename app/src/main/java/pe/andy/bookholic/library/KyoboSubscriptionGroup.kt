@@ -16,6 +16,7 @@ object KyoboSubscriptionGroup {
             Library(name = "광양시립도서관 (구독)", url = "https://gwangyanglib.dkyobobook.co.kr"),
             Library(name = "경기도사이버도서관 (구독)", url = "https://cyberlibrary.dkyobobook.co.kr"),
             Library(name = "김제시립도서관", url = "https://ebook-gjl.gimje.go.kr:444/elibrary-front/"),
+            Library(name = "안산시립도서관 (구독)", url = "https://ansan.dkyobobook.co.kr"),
         )
 
     fun getLibraryList(searchFragment: SearchFragment): List<LibrarySearchTask> {
