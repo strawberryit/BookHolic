@@ -9,6 +9,7 @@ import org.jsoup.nodes.Document
 import pe.andy.bookholic.fragment.SearchFragment
 import pe.andy.bookholic.model.Ebook
 import pe.andy.bookholic.model.Library
+import pe.andy.bookholic.model.LibraryType
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.parser.GangdongLibraryParser
 import pe.andy.bookholic.searcher.LibrarySearchTask
@@ -28,7 +29,12 @@ class GangdongLibrarySearchTask(
     }
 
     companion object {
-        val library = Library(name = "강동구 전자도서관", url = "http://ebook.gdlibrary.or.kr:8090", encoding = Encoding_EUCKR)
+        val library = Library(
+            name = "강동구 전자도서관",
+            url = "http://ebook.gdlibrary.or.kr:8090",
+            type = LibraryType.Gangdong,
+            encoding = Encoding_EUCKR,
+        )
     }
 
     override fun getLibraryCode() = library.code

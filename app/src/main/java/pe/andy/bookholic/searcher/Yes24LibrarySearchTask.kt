@@ -8,12 +8,11 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import pe.andy.bookholic.fragment.SearchFragment
 import pe.andy.bookholic.model.Ebook
+import pe.andy.bookholic.model.Library
+import pe.andy.bookholic.model.LibraryType
 import pe.andy.bookholic.model.SearchField.Yes24LibrarySearchField.Companion.getValue
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.model.SortBy.Yes24LibrarySortBy.Companion.getValue
-import pe.andy.bookholic.model.Yes24Library
-import pe.andy.bookholic.model.Yes24Library.Companion.Yes24Type.TypeA
-import pe.andy.bookholic.model.Yes24Library.Companion.Yes24Type.TypeB
 import pe.andy.bookholic.parser.Yes24TypeAParser
 import pe.andy.bookholic.parser.Yes24TypeBParser
 import pe.andy.bookholic.util.EncodingUtil.Companion.toEuckr
@@ -25,19 +24,19 @@ import java.lang.ref.SoftReference
 
 class Yes24LibrarySearchTask(
         override var searchFragment: SearchFragment,
-        val yes24Library: Yes24Library
-) : LibrarySearchTask(searchFragment, yes24Library),
+        library: Library
+) : LibrarySearchTask(searchFragment, library),
         StringExtension, HttpExtension {
 
     init {
-        this.encoding = yes24Library.encoding
+        this.encoding = library.encoding
     }
 
-    override fun getLibraryCode() = yes24Library.code
+    override fun getLibraryCode() = library.code
 
     override fun create(): LibrarySearchTask {
         return SoftReference<LibrarySearchTask>(
-                Yes24LibrarySearchTask(searchFragment, yes24Library)
+                Yes24LibrarySearchTask(searchFragment, library)
         ).get()!!
     }
 
@@ -53,7 +52,7 @@ class Yes24LibrarySearchTask(
     override fun request(query: SearchQuery): Response {
         val req: Request = Request.Builder()
                 .url(getUrl(query))
-                .accept(yes24Library.encoding)
+                .accept(library.encoding)
                 .userAgent(userAgent)
                 .build()
 
@@ -63,14 +62,15 @@ class Yes24LibrarySearchTask(
     }
 
     private fun getUrl(query: SearchQuery): String {
-        return when(yes24Library.yes24Type) {
-            TypeA -> getUrlTypeA(query)
-            TypeB -> getUrlTypeB(query)
+        return when(library.type) {
+            LibraryType.Yes24_A -> getUrlTypeA(query)
+            LibraryType.Yes24_B -> getUrlTypeB(query)
+            else -> ""
         }
     }
 
     private fun getUrlTypeA(query: SearchQuery): String {
-        val url = "${yes24Library.url}/ebook/search_list.asp"
+        val url = "${library.url}/ebook/search_list.asp"
         return url.toHttpUrlOrNull()!!.newBuilder()
             .addQueryParameters(
                 mapOf(
@@ -85,9 +85,9 @@ class Yes24LibrarySearchTask(
     }
 
     private fun getUrlTypeB(query: SearchQuery): String {
-        val url = "${yes24Library.url}/search/"
+        val url = "${library.url}/search/"
 
-        val keyword = when(yes24Library.encoding) {
+        val keyword = when(library.encoding) {
             Encoding_EUCKR -> query.keyword.encodeToEucKR()
             else -> query.keyword
         }
@@ -113,9 +113,10 @@ class Yes24LibrarySearchTask(
     }
 
     private fun parseMetaCount(doc: Document) {
-        val pair = when(yes24Library.yes24Type) {
-            TypeA -> Yes24TypeAParser.parseMetaCount(doc, yes24Library)
-            TypeB -> Yes24TypeBParser.parseMetaCount(doc, yes24Library)
+        val pair = when(library.type) {
+            LibraryType.Yes24_A -> Yes24TypeAParser.parseMetaCount(doc, library)
+            LibraryType.Yes24_B -> Yes24TypeBParser.parseMetaCount(doc, library)
+            else -> (0 to 0)
         }
         resultCount = pair.first
         resultPageCount = pair.second
@@ -126,19 +127,20 @@ class Yes24LibrarySearchTask(
         if (resultCount == 0)
             return emptyList()
 
-        return when(yes24Library.yes24Type) {
-            TypeA -> {
+        return when(library.type) {
+            LibraryType.Yes24_A -> {
                 doc.select("div.sub_main_total ul")
                         .asSequence()
-                        .map { Yes24TypeAParser.parse(it, library = yes24Library) }
+                        .map { Yes24TypeAParser.parse(it, library = library) }
                         .toList()
             }
-            TypeB -> {
+            LibraryType.Yes24_B -> {
                 doc.select("#booklist .line")
                         .asSequence()
-                        .map { Yes24TypeBParser.parse(it, library = yes24Library) }
+                        .map { Yes24TypeBParser.parse(it, library = library) }
                         .toList()
             }
+            else -> emptyList()
         }
     }
 }

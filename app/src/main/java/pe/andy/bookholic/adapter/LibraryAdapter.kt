@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import pe.andy.bookholic.R
 import pe.andy.bookholic.databinding.LibraryItemBinding
 import pe.andy.bookholic.searcher.LibrarySearchTask
-import pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.*
+import pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.DONE
+import pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.FAIL
+import pe.andy.bookholic.searcher.LibrarySearchTask.LibrarySearchStatus.PROGRESS
 
 class LibraryAdapter(var libraries: MutableList<LibrarySearchTask>) : RecyclerView.Adapter<LibraryAdapter.LibraryViewHolder>() {
 

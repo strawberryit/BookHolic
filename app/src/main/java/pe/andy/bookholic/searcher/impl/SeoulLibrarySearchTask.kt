@@ -7,6 +7,7 @@ import okhttp3.Response
 import pe.andy.bookholic.fragment.SearchFragment
 import pe.andy.bookholic.model.Ebook
 import pe.andy.bookholic.model.Library
+import pe.andy.bookholic.model.LibraryType
 import pe.andy.bookholic.model.SearchField.ZeroIndexSearchField.Companion.getValue
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.searcher.LibrarySearchTask
@@ -28,9 +29,11 @@ class SeoulLibrarySearchTask(
 
     companion object {
         val library = Library(
-                name = "서울시 전자도서관",
-                url = "https://elib.seoul.go.kr",
-                code = "SeoulLibrary")
+            name = "서울시 전자도서관",
+            url = "https://elib.seoul.go.kr",
+            type = LibraryType.Seoul,
+            code = "SeoulLibrary",
+        )
     }
 
     override fun getLibraryCode() = library.code
