@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import pe.andy.bookholic.databinding.BookItemBinding
@@ -17,9 +19,19 @@ class BookAdapter(
     val onItemClick: (Ebook) -> Unit
 ) : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
-    var books = mutableListOf<Ebook>()
-
     lateinit var bookColor: BookColor
+
+    private val diffUtil = object : DiffUtil.ItemCallback<Ebook>() {
+        override fun areItemsTheSame(oldItem: Ebook, newItem: Ebook): Boolean {
+            return oldItem.uuid == newItem.uuid
+        }
+
+        override fun areContentsTheSame(oldItem: Ebook, newItem: Ebook): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    val differ = AsyncListDiffer(this, diffUtil)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
 
@@ -31,28 +43,13 @@ class BookAdapter(
         return BookViewHolder(binding)
     }
 
-    override fun getItemCount(): Int
-            = this.books.size
+    override fun getItemCount(): Int {
+        return differ.currentList.size
+    }
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
-        val book = this.books[position]
+        val book = differ.currentList[position]
         holder.bind(book)
-    }
-
-    fun add(list: List<Ebook>) {
-        books.addAll(list)
-        notifyDataSetChanged()
-    }
-
-    fun set(list: List<Ebook>) {
-        books.clear()
-        books.addAll(list)
-        notifyDataSetChanged()
-    }
-
-    fun clear() {
-        books.clear()
-        notifyDataSetChanged()
     }
 
     inner class BookViewHolder(val binding: BookItemBinding) : RecyclerView.ViewHolder(binding.root) {

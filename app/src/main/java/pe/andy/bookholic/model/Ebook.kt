@@ -1,8 +1,15 @@
 package pe.andy.bookholic.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
+import java.util.UUID
 
+@Entity(tableName = "ebook")
 data class Ebook(var libraryName: String) : Comparable<Ebook>, Serializable {
+    @PrimaryKey
+    var uuid: String = UUID.randomUUID().toString()
+
     var seq: String = ""
     var title: String = ""
     var author: String = ""

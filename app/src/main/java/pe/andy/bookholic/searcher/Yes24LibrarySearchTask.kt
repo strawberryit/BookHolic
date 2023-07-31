@@ -15,7 +15,7 @@ import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.model.SortBy.Yes24LibrarySortBy.Companion.getValue
 import pe.andy.bookholic.parser.Yes24TypeAParser
 import pe.andy.bookholic.parser.Yes24TypeBParser
-import pe.andy.bookholic.util.EncodingUtil.Companion.toEuckr
+import pe.andy.bookholic.util.EncodingUtil.toEuckr
 import pe.andy.bookholic.util.HttpExtension
 import pe.andy.bookholic.util.SslTrust
 import pe.andy.bookholic.util.StringExtension

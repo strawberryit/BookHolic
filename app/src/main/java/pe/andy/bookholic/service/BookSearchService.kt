@@ -3,11 +3,10 @@ package pe.andy.bookholic.service
 import android.view.View
 import pe.andy.bookholic.databinding.FragmentSearchBinding
 import pe.andy.bookholic.fragment.SearchFragment
-import pe.andy.bookholic.library.*
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.searcher.LibrarySearchTask
-import pe.andy.bookholic.searcher.impl.*
-import java.util.*
+import pe.andy.bookholic.searcher.SearchTask
+import java.util.Objects
 import java.util.stream.Collectors
 
 class BookSearchService(
@@ -23,24 +22,17 @@ class BookSearchService(
 
     fun makeTasks(): List<LibrarySearchTask> {
         val includeKakaoLibrary = mBinding.libraryListSwitchKakao.isChecked
-        return listOf(
-                if (includeKakaoLibrary) KakaoLibraryGroup.getLibraryList(searchFragment) else emptyList(),
-                KyoboLibraryGroup.getLibraryList(searchFragment),
-                KyoboSubscriptionGroup.getLibraryList(searchFragment),
-                Yes24LibraryGroup.getLibraryList(searchFragment),
-                EpyrusLibraryGroup.getLibraryList(searchFragment),
-                FxLibraryGroup.getLibraryList(searchFragment),
-                listOf<LibrarySearchTask>(
-                        SeoulLibrarySearchTask(searchFragment),
-                        GangdongLibrarySearchTask(searchFragment),
-                        GangnamLibrarySearchTask(searchFragment),
-                        SeoulEduLibrarySearchTask(searchFragment),
-                        GyunggidoCyberLibrarySearchTask(searchFragment),
-                        SejongLibrarySearchTask(searchFragment),
-                ))
-                .filter { it.isNotEmpty() }
-                .flatMap { it.toMutableList() }
-                .sorted()
+
+        val libraries = SearchTask.libraries.let {
+            if (includeKakaoLibrary) {
+                it + SearchTask.kakaoLibrary
+            } else {
+                it
+            }
+        }
+
+        return SearchTask.of(libraries, searchFragment)
+            .sorted()
     }
 
     fun search(query: SearchQuery) {
@@ -63,7 +55,7 @@ class BookSearchService(
 
     private fun searchInFirstTime() {
         mBinding.bookResultTitle.visibility = View.VISIBLE
-        searchFragment.bookAdapter.clear()
+        searchFragment.ebookViewModel.clearAllTable()
 
         tasks = makeTasks()
         query.page = 1

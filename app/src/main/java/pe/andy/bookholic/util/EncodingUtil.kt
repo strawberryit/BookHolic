@@ -1,21 +1,23 @@
 package pe.andy.bookholic.util
 
 import java.net.URLEncoder
+import java.nio.charset.Charset
 
-class EncodingUtil {
-    companion object {
+object EncodingUtil {
 
-        @JvmStatic
-        fun toEuckr(text: String): String {
+    val Encoding_EUCKR: Charset = Charset.forName("EUC-KR")
 
-            return try {
-                URLEncoder.encode(text, "EUC-KR")
-                        .replace(Regex("%25"), "%")
-            }
-            catch (e: Exception) {
-                e.printStackTrace()
-                ""
-            }
+    val Encoding_UTF8: Charset = Charset.forName("UTF-8")
+
+    fun toEuckr(text: String): String {
+
+        return try {
+            URLEncoder.encode(text, "EUC-KR")
+                    .replace(Regex("%25"), "%")
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+            ""
         }
     }
 }

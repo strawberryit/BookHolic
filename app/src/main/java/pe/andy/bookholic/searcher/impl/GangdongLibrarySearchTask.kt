@@ -20,28 +20,20 @@ import java.lang.ref.SoftReference
 import java.util.*
 
 class GangdongLibrarySearchTask(
-        searchFragment: SearchFragment
+    library: Library,
+    searchFragment: SearchFragment
 ) : LibrarySearchTask(searchFragment, library),
-        StringExtension, HttpExtension {
+    StringExtension, HttpExtension {
 
     init {
         this.encoding = library.encoding
-    }
-
-    companion object {
-        val library = Library(
-            name = "강동구 전자도서관",
-            url = "http://ebook.gdlibrary.or.kr:8090",
-            type = LibraryType.Gangdong,
-            encoding = Encoding_EUCKR,
-        )
     }
 
     override fun getLibraryCode() = library.code
 
     override fun create(): LibrarySearchTask {
         return SoftReference<LibrarySearchTask>(
-                GangdongLibrarySearchTask(searchFragment)
+            GangdongLibrarySearchTask(library, searchFragment)
         ).get()!!
     }
 

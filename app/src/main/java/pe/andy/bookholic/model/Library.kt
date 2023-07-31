@@ -1,5 +1,6 @@
 package pe.andy.bookholic.model
 
+import pe.andy.bookholic.util.EncodingUtil
 import java.nio.charset.Charset
 
 data class Library(
@@ -8,10 +9,5 @@ data class Library(
     val path: String = "",
     val code: String = "",
     val type: LibraryType,
-    val encoding: Charset = Encoding_UTF8
-) {
-    companion object {
-        val Encoding_EUCKR: Charset = Charset.forName("EUC-KR")
-        val Encoding_UTF8: Charset = Charset.forName("UTF-8")
-    }
-}
+    val encoding: Charset = EncodingUtil.Encoding_UTF8
+)

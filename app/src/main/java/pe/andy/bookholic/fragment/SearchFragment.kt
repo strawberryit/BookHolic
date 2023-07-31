@@ -25,6 +25,7 @@ import pe.andy.bookholic.BuildConfig
 import pe.andy.bookholic.R
 import pe.andy.bookholic.adapter.BookAdapter
 import pe.andy.bookholic.adapter.LibraryAdapter
+import pe.andy.bookholic.database.EbookDatabase
 import pe.andy.bookholic.database.FavoriteDatabase
 import pe.andy.bookholic.databinding.BottomSheetAddFavoriteBinding
 import pe.andy.bookholic.databinding.FragmentSearchBinding
@@ -36,6 +37,8 @@ import pe.andy.bookholic.service.BookSearchService
 import pe.andy.bookholic.test.TestData
 import pe.andy.bookholic.ui.ScrollVerticalButton
 import pe.andy.bookholic.ui.SearchDoneSnackBar
+import pe.andy.bookholic.viewmodel.EbookViewModel
+import pe.andy.bookholic.viewmodel.EbookViewModelFactory
 import pe.andy.bookholic.viewmodel.FavoriteBookViewModel
 import pe.andy.bookholic.viewmodel.FavoriteBookViewModelFactory
 
@@ -55,12 +58,28 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     lateinit var favoriteViewModel: FavoriteBookViewModel
 
+    lateinit var ebookViewModel: EbookViewModel
+
     lateinit var searchService: BookSearchService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setupEbookViewModel()
+        setupFavoriteViewModel()
         setHasOptionsMenu(true)
+    }
+
+    private fun setupEbookViewModel() {
+        val database = EbookDatabase.getInstance(this.requireContext())
+        val viewModelFactory = EbookViewModelFactory(database)
+        ebookViewModel = ViewModelProvider(this, viewModelFactory)[EbookViewModel::class.java]
+    }
+
+    private fun setupFavoriteViewModel() {
+        val database = FavoriteDatabase.getInstance(this.requireContext())
+        val viewModelFactory = FavoriteBookViewModelFactory(database)
+        favoriteViewModel = ViewModelProvider(this, viewModelFactory)[FavoriteBookViewModel::class.java]
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,7 +88,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         searchService = BookSearchService(this, binding)
 
         setupLibraryRecyclerView()
-        setupBookRecyclerView()
 
         binding.loadMore.setOnClickListener {
             hideLoadMore()
@@ -87,14 +105,13 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
         previewBottomSheetDialog = BottomSheetDialog(requireContext())
 
-
-        val database = FavoriteDatabase.getInstance(this.requireContext())
-        val viewModelFactory = FavoriteBookViewModelFactory(database)
-        favoriteViewModel = ViewModelProvider(this, viewModelFactory)[FavoriteBookViewModel::class.java]
+        bookAdapter = setupBookAdapter()
+        setupBookRecyclerView()
+        observeEbookLiveData()
 
         // 테스트를 위한 리스트
         if (BuildConfig.DEBUG) {
-            bookAdapter.add(TestData.generateTestBooks())
+            ebookViewModel.upsert(TestData.generateTestBooks())
         }
     }
 
@@ -144,8 +161,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
     }
 
-    private fun setupBookRecyclerView() {
-        bookAdapter = BookAdapter(onItemClick = { ebook ->
+    private fun setupBookAdapter(): BookAdapter {
+        return BookAdapter(onItemClick = { ebook ->
             val dialogBinding = BottomSheetAddFavoriteBinding.inflate(
                 layoutInflater,
             )
@@ -220,11 +237,18 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 show()
             }
         })
+    }
 
+    private fun setupBookRecyclerView() {
         with(binding.bookRecyclerview) {
-            setHasFixedSize(true)
             adapter = bookAdapter
-            layoutManager = LinearLayoutManager(this@SearchFragment.context)
+            layoutManager = LinearLayoutManager(context)
+        }
+    }
+
+    private fun observeEbookLiveData() {
+        ebookViewModel.observeLiveData().observe(viewLifecycleOwner) {
+            bookAdapter.differ.submitList(it)
         }
     }
 

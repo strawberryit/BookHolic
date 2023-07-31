@@ -21,21 +21,16 @@ import java.io.IOException
 import java.lang.ref.SoftReference
 
 class GangnamLibrarySearchTask(
-        searchFragment: SearchFragment
+    library: Library,
+    searchFragment: SearchFragment
 ) : LibrarySearchTask(searchFragment, library),
-        StringExtension, HttpExtension {
+    StringExtension, HttpExtension {
 
     init {
         this.encoding = library.encoding
     }
 
     companion object {
-        val library = Library(
-            name = "강남구 전자도서관",
-            url = "https://ebook.gangnam.go.kr",
-            type = LibraryType.Gangnam,
-            encoding = Library.Encoding_EUCKR,
-        )
         val searchFields: Map<SearchField, String> = mapOf(
                 SearchField.ALL to "도서명",
                 SearchField.TITLE to "도서명",
@@ -48,7 +43,7 @@ class GangnamLibrarySearchTask(
 
     override fun create(): LibrarySearchTask {
         return SoftReference<LibrarySearchTask>(
-                GangnamLibrarySearchTask(searchFragment)
+            GangnamLibrarySearchTask(library, searchFragment)
         ).get()!!
     }
 

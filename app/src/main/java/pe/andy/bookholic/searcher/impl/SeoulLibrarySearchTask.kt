@@ -19,28 +19,20 @@ import java.lang.ref.SoftReference
 import java.util.concurrent.TimeUnit.SECONDS
 
 class SeoulLibrarySearchTask(
-        searchFragment: SearchFragment
+    library: Library,
+    searchFragment: SearchFragment
 ) : LibrarySearchTask(searchFragment, library),
-        StringExtension, HttpExtension, JsonExtension {
+    StringExtension, HttpExtension, JsonExtension {
 
     init {
         this.encoding = library.encoding
-    }
-
-    companion object {
-        val library = Library(
-            name = "서울시 전자도서관",
-            url = "https://elib.seoul.go.kr",
-            type = LibraryType.Seoul,
-            code = "SeoulLibrary",
-        )
     }
 
     override fun getLibraryCode() = library.code
 
     override fun create(): LibrarySearchTask {
         return SoftReference<LibrarySearchTask>(
-                SeoulLibrarySearchTask(searchFragment)
+            SeoulLibrarySearchTask(library, searchFragment)
         ).get()!!
     }
 

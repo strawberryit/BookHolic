@@ -69,8 +69,7 @@ abstract class LibrarySearchTask(
         searchFragment.libraryAdapter.refresh()
 
         // Update Book list
-        val bookRecyclerList = searchFragment.bookAdapter
-        bookRecyclerList.add(books!!)
+        searchFragment.ebookViewModel.upsert(books ?: emptyList())
 
         //Log.d("BookHolic", this.libraryName + ": hasNext - " + this.hasNext());
         val service = searchFragment.searchService
@@ -88,9 +87,6 @@ abstract class LibrarySearchTask(
             }
         }
         if (isFinished) {
-            searchFragment.bookAdapter.books.sort()
-            searchFragment.bookAdapter.notifyItemRangeChanged(0, searchFragment.bookAdapter.books.size)
-
             searchFragment.searchDoneSnackBar.show()
 
             searchFragment.binding.fab.visibility = View.VISIBLE
