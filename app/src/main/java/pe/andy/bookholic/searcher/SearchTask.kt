@@ -27,7 +27,6 @@ object SearchTask {
 
     val libraries = listOf(
         // Kyobo Library
-        Library(name = "안산시 중앙도서관 (소장)", url = "http://ebook.ansan.go.kr", type = Kyobo),
         //Library(name = "아산시립도서관", url = "http://elib.asan.go.kr:8090"),
         Library(name = "강북문화정보도서관", url = "https://ebook.gblib.or.kr", type = Kyobo),
         Library(name = "강진군 전자도서관", url = "http://www.gjlib.go.kr:8080", type = Kyobo),
@@ -47,11 +46,8 @@ object SearchTask {
         Library(name = "용산구립도서관", url = "https://ebook.yslibrary.or.kr/elibrary-front", type = KyoboSubscription),
         Library(name = "서초구 전자도서관", url = "https://ebook.seocholib.or.kr", path="/elibrary-front", type = KyoboSubscription),
         Library(name = "중구 통합전자도서관", url = "https://ebook.junggulib.or.kr/elibrary-front", type = KyoboSubscription),
-        Library(name = "광양시립도서관 (소장)", url = "https://ebook.gwangyang.go.kr:444", path="/elibrary-front", type = KyoboSubscription),
-        Library(name = "광양시립도서관 (구독)", url = "https://gwangyanglib.dkyobobook.co.kr", type = KyoboSubscription),
         Library(name = "경기도사이버도서관 (구독)", url = "https://cyberlibrary.dkyobobook.co.kr", type = KyoboSubscription),
         Library(name = "김제시립도서관", url = "https://ebook-gjl.gimje.go.kr:444/elibrary-front/", type = KyoboSubscription),
-        Library(name = "안산시립도서관 (구독)", url = "https://ansan.dkyobobook.co.kr", type = KyoboSubscription),
 
         // Yes24 Library
         Library(name = "전라남도 도립도서관", url = "http://152.99.134.221:8080", encoding = EncodingUtil.Encoding_EUCKR, type = Yes24_B),
@@ -63,7 +59,7 @@ object SearchTask {
         Library(name = "광주남구 통합도서관", url = "http://ebook.namgu.gwangju.kr:8080", encoding = EncodingUtil.Encoding_EUCKR, type = Yes24_A),
 
         // 서울시 전자도서관
-        Library(name = "서울시 전자도서관", url = "https://elib.seoul.go.kr", type = Seoul, code = "SeoulLibrary"),
+        Library(name = "서울시 전자도서관 (웹)", url = "https://elib.seoul.go.kr", type = Seoul, code = "SeoulLibrary"),
 
         // 강동구 전자도서관
         Library(name = "강동구 전자도서관", url = "http://ebook.gdlibrary.or.kr:8090", type = Gangdong, encoding = EncodingUtil.Encoding_EUCKR),
