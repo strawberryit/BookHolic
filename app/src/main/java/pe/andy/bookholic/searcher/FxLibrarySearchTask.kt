@@ -12,6 +12,7 @@ import pe.andy.bookholic.model.Library
 import pe.andy.bookholic.model.SearchField.ZeroIndexSearchField.Companion.getValue
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.parser.FxLibraryParser
+import pe.andy.bookholic.util.EncodingUtil
 import pe.andy.bookholic.util.HttpExtension
 import pe.andy.bookholic.util.StringExtension
 import java.io.IOException
@@ -44,7 +45,7 @@ class FxLibrarySearchTask(
 
         val req: Request = Request.Builder()
                 .url(getUrl(query))
-                .accept(Encoding_UTF8)
+                .accept(EncodingUtil.Encoding_UTF8)
                 .userAgent(userAgent)
                 .build()
 

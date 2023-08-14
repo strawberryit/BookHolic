@@ -13,6 +13,7 @@ import pe.andy.bookholic.model.SearchField
 import pe.andy.bookholic.model.SearchQuery
 import pe.andy.bookholic.parser.GyunggidoCyberLibraryParser
 import pe.andy.bookholic.searcher.LibrarySearchTask
+import pe.andy.bookholic.util.EncodingUtil
 import pe.andy.bookholic.util.HttpExtension
 import pe.andy.bookholic.util.StringExtension
 import java.io.IOException
@@ -48,7 +49,7 @@ class GyunggidoCyberLibrarySearchTask(
     override fun request(query: SearchQuery): Response {
         val req = Request.Builder()
                 .url(getUrl(query))
-                .accept(Encoding_UTF8)
+                .accept(EncodingUtil.Encoding_UTF8)
                 .userAgent(userAgent)
                 .build()
 

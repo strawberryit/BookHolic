@@ -7,6 +7,7 @@ import pe.andy.bookholic.fragment.SearchFragment
 import pe.andy.bookholic.model.Ebook
 import pe.andy.bookholic.model.Library
 import pe.andy.bookholic.model.SearchQuery
+import pe.andy.bookholic.util.EncodingUtil
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -20,7 +21,7 @@ abstract class LibrarySearchTask(
 
     lateinit var query: SearchQuery
 
-    var encoding: Charset = Encoding_UTF8
+    var encoding: Charset = EncodingUtil.Encoding_UTF8
 
     var resultCount = -1
     var resultPageCount = -1
@@ -52,7 +53,7 @@ abstract class LibrarySearchTask(
 
     @Suppress("unused")
     fun Response.readText(encoding: Charset): String {
-        return if (encoding == Encoding_UTF8) {
+        return if (encoding == EncodingUtil.Encoding_UTF8) {
             return this.body?.string() ?: ""
         } else {
             BufferedReader(InputStreamReader(this.body?.byteStream(), encoding))
@@ -140,8 +141,6 @@ abstract class LibrarySearchTask(
 
     companion object {
         const val userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
-        val Encoding_UTF8 = Charset.forName("UTF-8")
-        val Encoding_EUCKR = Charset.forName("EUC-KR")
     }
 
 }
