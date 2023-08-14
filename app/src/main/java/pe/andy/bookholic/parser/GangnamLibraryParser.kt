@@ -42,7 +42,7 @@ object GangnamLibraryParser: LibraryParser, StringExtension {
         var count = doc.select(".book_list p.location")
                 .let {
                     it.select("font").remove()
-                    it.text().toIntOnly(-1)
+                    it.text().toIntOnly(0)
                 }
 
         var page = doc.select(".book_list .paginate a")
